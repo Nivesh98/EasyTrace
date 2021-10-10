@@ -9,7 +9,7 @@ import android.widget.Button;
 
 //kjejjefjkfjkfjkjkdjf
 
-//ffkjvkjvkdjdjkdlvjkdljv
+// you are wron in this line
 public class AboutBus extends AppCompatActivity {
     Button busA, busB, busC, busD, busE, busF, busG, busH, busI, busJ;
 
