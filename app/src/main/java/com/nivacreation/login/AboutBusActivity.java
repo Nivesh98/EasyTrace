@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.nivacreation.login.adapter.BusAdapter;
 import com.nivacreation.login.model.Bus;
@@ -40,7 +38,7 @@ public class AboutBusActivity extends AppCompatActivity implements BusAdapter.It
     @Override
     public void onBusItem(String name) {
         // when bus clicked load this screen
-        Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
+        Intent i =  new Intent(AboutBusActivity.this, BusInsideDetailsActivity.class);
         i.putExtra("bus_name", name);
         startActivity(i);
 

@@ -7,7 +7,7 @@
     android:background="@drawable/bgcolor"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".BookSeats">
+    tools:context=".BookSeatsActivity">
 
     <TextView
         android:layout_width="wrap_content"

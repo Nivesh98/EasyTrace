@@ -24,7 +24,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 //import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class qrScanner extends AppCompatActivity  {
+public class QAScannerActivity extends AppCompatActivity  {
 
     CodeScanner codeScanner;
     CodeScannerView scannerView;
@@ -47,14 +47,14 @@ public class qrScanner extends AppCompatActivity  {
                     public void run() {
                         resultData.setText(result.getText());
                         if (result.getText().equals("87HATPpL1MQ0hhunLRzQkzXQoDt2")){
-                            Intent i = new Intent(qrScanner.this,BusDetailsQR.class);
+                            Intent i = new Intent(QAScannerActivity.this, BusDetailsQRActivity.class);
                             startActivity(i);
 //                            Intent signInActivity = new Intent(qrScanner.this, BusDetailsQR.class);
 //                            signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                            startActivity(signInActivity);
 //                            finish();
                         }else if (result.getText().equals("0pAVSdvrbtU46n2wt3xvVEAj6Kx1")){
-                            Intent signInActivity = new Intent(qrScanner.this, Bus2_Details.class);
+                            Intent signInActivity = new Intent(QAScannerActivity.this, Bus2DetailsActivity.class);
                             signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(signInActivity);
                             finish();
@@ -81,7 +81,7 @@ public class qrScanner extends AppCompatActivity  {
 
             @Override
             public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                Toast.makeText(qrScanner.this, "Camera Permission is Required.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(QAScannerActivity.this, "Camera Permission is Required.",Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -28,7 +28,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-public class Driver extends AppCompatActivity {
+public class DriverActivity extends AppCompatActivity {
     TextView userFullNameTxt, userEmailTxt, userTypeTxt;
     Button logOutBtn;
     FirebaseAuth fAuth;
@@ -75,7 +75,7 @@ public class Driver extends AppCompatActivity {
             public void onClick(View v) {
                 fAuth.signOut();
                 //startActivity(new Intent(getApplicationContext(),SignInActivity.class));
-                Intent goPassengerActivity = new Intent(Driver.this,SignInActivity.class);
+                Intent goPassengerActivity = new Intent(DriverActivity.this,SignInActivity.class);
                 goPassengerActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 goPassengerActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

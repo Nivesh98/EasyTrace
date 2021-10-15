@@ -14,7 +14,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.preference.PreferenceActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -41,8 +39,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.concurrent.Executor;
 
 public class HomeFragment extends Fragment {
 
@@ -127,14 +123,14 @@ public class HomeFragment extends Fragment {
 //                Intent signInActivity = new Intent(getActivity(), BusDetails.class);
 //                signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                startActivity(signInActivity);
-                startActivity(new Intent(getActivity(),BusDetails.class));
+                startActivity(new Intent(getActivity(), BusDetailsActivity.class));
             }
         });
 
         qrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),qrScanner.class));
+                startActivity(new Intent(getActivity(), QAScannerActivity.class));
             }
         });
 

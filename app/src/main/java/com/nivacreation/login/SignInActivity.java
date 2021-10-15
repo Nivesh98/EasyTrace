@@ -142,7 +142,7 @@ public class SignInActivity extends AppCompatActivity {
                             case "Passenger":
                                 //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();
                                 // startActivity(new Intent(SignInActivity.this, HomeActivity.class));
-                                Intent goPassengerActivity = new Intent(SignInActivity.this, Passenger_Navigation.class);
+                                Intent goPassengerActivity = new Intent(SignInActivity.this, PassengerNavigationActivity.class);
                                 goPassengerActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 goPassengerActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -152,7 +152,7 @@ public class SignInActivity extends AppCompatActivity {
                             case "Driver":
                                 //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();
                                 //startActivity(new Intent(SignInActivity.this, Driver.class));
-                                Intent goPassengerActivity2 = new Intent(SignInActivity.this, Driver_Navigation.class);
+                                Intent goPassengerActivity2 = new Intent(SignInActivity.this, DriverNavigationActivity.class);
                                 goPassengerActivity2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 goPassengerActivity2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -161,8 +161,8 @@ public class SignInActivity extends AppCompatActivity {
                                 break;
                             case "Admin":
                                 //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(SignInActivity.this, Admin.class));
-                                Intent goPassengerActivity3 = new Intent(SignInActivity.this, Admin.class);
+                                startActivity(new Intent(SignInActivity.this, AdminActivity.class));
+                                Intent goPassengerActivity3 = new Intent(SignInActivity.this, AdminActivity.class);
                                 goPassengerActivity3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 goPassengerActivity3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

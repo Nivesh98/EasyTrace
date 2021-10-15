@@ -5,27 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
-public class BusDetailsQR extends AppCompatActivity {
+public class BusDetailsQRActivity extends AppCompatActivity {
 
     //EditText editText,editText1;
     Spinner spinner_start, spinner_end;
@@ -62,7 +54,7 @@ public class BusDetailsQR extends AppCompatActivity {
         townList_start.add("Moratuwa");
         townList_start.add("Colombo");
 
-        spinner_start.setAdapter(new ArrayAdapter<>(BusDetailsQR.this, android.R.layout.simple_spinner_dropdown_item,townList_start));
+        spinner_start.setAdapter(new ArrayAdapter<>(BusDetailsQRActivity.this, android.R.layout.simple_spinner_dropdown_item,townList_start));
 
         spinner_start.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -101,7 +93,7 @@ public class BusDetailsQR extends AppCompatActivity {
         townList_end.add("Colombo");
 
 
-        spinner_end.setAdapter(new ArrayAdapter<>(BusDetailsQR.this, android.R.layout.simple_spinner_dropdown_item,townList_end));
+        spinner_end.setAdapter(new ArrayAdapter<>(BusDetailsQRActivity.this, android.R.layout.simple_spinner_dropdown_item,townList_end));
 
         spinner_end.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -187,7 +179,7 @@ public class BusDetailsQR extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(BusDetailsQR.this,BusInsideDetailsQR.class);
+                Intent i = new Intent(BusDetailsQRActivity.this, BusInsideDetailsQRActivity.class);
                 startActivity(i);
             }
         });

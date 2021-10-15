@@ -6,7 +6,7 @@
     android:background="@drawable/mask_login"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".BusInsideDetailsQR">
+    tools:context=".BusInsideDetailsQRActivity">
 
     <ImageView
         android:layout_width="115dp"

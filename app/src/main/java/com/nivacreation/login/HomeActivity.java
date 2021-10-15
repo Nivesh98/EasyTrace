@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
        naviBtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent signInActivity = new Intent(HomeActivity.this, Passenger_Navigation.class);
+               Intent signInActivity = new Intent(HomeActivity.this, PassengerNavigationActivity.class);
                signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                startActivity(signInActivity);
                finish();
@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
        qrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),qrScanner.class));
+                startActivity(new Intent(getApplicationContext(), QAScannerActivity.class));
             }
         });
         logOutBtn.setOnClickListener(new View.OnClickListener() {

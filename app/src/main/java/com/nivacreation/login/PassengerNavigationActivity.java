@@ -7,7 +7,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -26,10 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,16 +44,9 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
-
 //import id.zelory.compressor.Compressor;
 
-public class Passenger_Navigation extends AppCompatActivity {
+public class PassengerNavigationActivity extends AppCompatActivity {
 
    // private ImageView userImage;
     private Uri imageUri;
@@ -167,9 +157,9 @@ public class Passenger_Navigation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-                    if (ContextCompat.checkSelfPermission(Passenger_Navigation.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(Passenger_Navigation.this,"Permission Denied", Toast.LENGTH_SHORT).show();
-                        ActivityCompat.requestPermissions(Passenger_Navigation.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+                    if (ContextCompat.checkSelfPermission(PassengerNavigationActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(PassengerNavigationActivity.this,"Permission Denied", Toast.LENGTH_SHORT).show();
+                        ActivityCompat.requestPermissions(PassengerNavigationActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
                     }else {
 
                         ChoseImage();
@@ -255,7 +245,7 @@ public class Passenger_Navigation extends AppCompatActivity {
 
     private void ChoseImage() {
 
-        CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1,1).start(Passenger_Navigation.this);
+        CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1,1).start(PassengerNavigationActivity.this);
     }
 
     @Override
@@ -303,13 +293,13 @@ public class Passenger_Navigation extends AppCompatActivity {
                         Picasso.get().load(uri).into(userImage);
                     }
                 });
-                Toast.makeText(Passenger_Navigation.this,"Image Uploaded !",Toast.LENGTH_SHORT).show();
+                Toast.makeText(PassengerNavigationActivity.this,"Image Uploaded !",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
                 progressDialog.dismiss();
-                Toast.makeText(Passenger_Navigation.this,"Failed !",Toast.LENGTH_SHORT).show();
+                Toast.makeText(PassengerNavigationActivity.this,"Failed !",Toast.LENGTH_SHORT).show();
             }
         });
     }

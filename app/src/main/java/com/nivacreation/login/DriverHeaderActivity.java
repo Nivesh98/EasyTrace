@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class layout_header_driver extends AppCompatActivity {
+public class DriverHeaderActivity extends AppCompatActivity {
     private TextView name;
 
     FirebaseAuth fAuth;

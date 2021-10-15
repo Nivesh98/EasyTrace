@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class BusDetails extends AppCompatActivity {
+public class BusDetailsActivity extends AppCompatActivity {
 
     EditText editText,editText1;
     Spinner spinner_start, spinner_end;
@@ -63,7 +63,7 @@ public class BusDetails extends AppCompatActivity {
         townList_start.add("Gampaha");
 
 
-        spinner_start.setAdapter(new ArrayAdapter<>(BusDetails.this, android.R.layout.simple_spinner_dropdown_item,townList_start));
+        spinner_start.setAdapter(new ArrayAdapter<>(BusDetailsActivity.this, android.R.layout.simple_spinner_dropdown_item,townList_start));
 
         spinner_start.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -101,7 +101,7 @@ public class BusDetails extends AppCompatActivity {
         townList_end.add("Gampaha");
 
 
-        spinner_end.setAdapter(new ArrayAdapter<>(BusDetails.this, android.R.layout.simple_spinner_dropdown_item,townList_end));
+        spinner_end.setAdapter(new ArrayAdapter<>(BusDetailsActivity.this, android.R.layout.simple_spinner_dropdown_item,townList_end));
 
         spinner_end.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -138,7 +138,7 @@ public class BusDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(BusDetails.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(BusDetailsActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
@@ -155,7 +155,7 @@ public class BusDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(BusDetails.this, android.R.style.Theme_Holo_Dialog_MinWidth, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(BusDetailsActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
@@ -187,7 +187,7 @@ public class BusDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(BusDetails.this, AboutBusActivity.class);
+                Intent i = new Intent(BusDetailsActivity.this, AboutBusActivity.class);
                 startActivity(i);
             }
         });

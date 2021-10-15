@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -13,7 +12,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class Welcome extends AppCompatActivity {
+import com.nivacreation.login.adapter.SliderAdapter;
+
+public class WelcomeActivity extends AppCompatActivity {
 
     private ViewPager slideViewPager;
     private LinearLayout dotLayout;
@@ -42,7 +43,7 @@ public class Welcome extends AppCompatActivity {
 //                Intent signInActivity = new Intent(Welcome.this, SignInActivity.class);
 //                signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                startActivity(signInActivity);
-                startActivity(new Intent(Welcome.this, SignInActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, SignInActivity.class));
                 finish();
             }
         });
@@ -70,7 +71,7 @@ public class Welcome extends AppCompatActivity {
 //                        @Override
 //                        public void onClick(View v) {
 
-                            Intent signInActivity = new Intent(Welcome.this, SignInActivity.class);
+                            Intent signInActivity = new Intent(WelcomeActivity.this, SignInActivity.class);
                             signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(signInActivity);
                             finish();

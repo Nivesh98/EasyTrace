@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import org.jetbrains.annotations.NotNull;
 
-public class layout_header extends AppCompatActivity{
+public class HeaderActivity extends AppCompatActivity{
 
     private TextView name;
 

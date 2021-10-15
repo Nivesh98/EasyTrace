@@ -1,4 +1,4 @@
-package com.nivacreation.login;
+package com.nivacreation.login.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.nivacreation.login.R;
 
 import org.jetbrains.annotations.NotNull;
 
