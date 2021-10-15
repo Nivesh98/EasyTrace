@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_about_bus.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/list_bus.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/layout/list_transaction.xml" value="0.22871376811594202" />
       </map>
     </option>
   </component>
