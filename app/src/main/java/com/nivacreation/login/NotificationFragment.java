@@ -69,11 +69,11 @@ public class NotificationFragment extends Fragment implements TransactionAdapter
 
         }
 
-
         RecyclerView transactionRecyclerView = view.findViewById(R.id.transactionRecyclerView);
         transactionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         TransactionAdapter busAdapter = new TransactionAdapter(getContext(), this, transactionList);
         transactionRecyclerView.setAdapter(busAdapter);
+
 
         swipeButton.setOnStateChangeListener(new OnStateChangeListener() {
             @Override
