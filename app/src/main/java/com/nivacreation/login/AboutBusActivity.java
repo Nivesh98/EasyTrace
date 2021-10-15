@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AboutBusActivity extends AppCompatActivity implements BusAdapter.ItemClickListener {
-    Button busA, busB, busC, busD, busE, busF, busG, busH, busI, busJ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,97 +35,6 @@ public class AboutBusActivity extends AppCompatActivity implements BusAdapter.It
         BusAdapter busAdapter = new BusAdapter(this, this, busList);
         budRecyclerView.setAdapter(busAdapter);
 
-
-        busA = findViewById(R.id.bus_A);
-        busB = findViewById(R.id.bus_B);
-        busC = findViewById(R.id.bus_C);
-        busD = findViewById(R.id.bus_D);
-        busE = findViewById(R.id.bus_E);
-        busF = findViewById(R.id.bus_F);
-        busG = findViewById(R.id.bus_G);
-        busH = findViewById(R.id.bus_H);
-        busI = findViewById(R.id.bus_I);
-        busJ = findViewById(R.id.bus_J);
-
-        busA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
-
-        busB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
-
-        busC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
-
-        busD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
-
-        busE.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
-
-        busF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
-
-        busG.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
-
-        busH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
-
-        busI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
-
-        busJ.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
