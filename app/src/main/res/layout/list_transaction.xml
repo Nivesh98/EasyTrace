@@ -4,29 +4,44 @@
     android:id="@+id/transactionRecycler"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/transaction_item_background"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvDate"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wed 8.39 a.m"/>
-        <TextView
-            android:id="@+id/tvStartEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Matara - Gampaha"/>
-    </LinearLayout>
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvCost"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rs. 250.00"/>
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:textSize="18sp"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wed 8.39 a.m"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tvStartEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Matara - Gampaha"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginRight="20dp"
+            android:textStyle="bold"
+            android:id="@+id/tvCost"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rs. 250.00"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
