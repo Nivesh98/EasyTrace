@@ -1,19 +1,40 @@
 package com.nivacreation.login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class AboutBus extends AppCompatActivity {
+import com.nivacreation.login.adapter.BusAdapter;
+import com.nivacreation.login.model.Bus;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AboutBusActivity extends AppCompatActivity implements BusAdapter.ItemClickListener {
     Button busA, busB, busC, busD, busE, busF, busG, busH, busI, busJ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_bus);
+
+
+        List<Bus> busList = new ArrayList<>();
+        for(int i=0; i<10;i++){
+            Bus newBus = new Bus();
+            newBus.setBusId("Bus "+(i+1));
+            busList.add(newBus);
+        }
+
+        RecyclerView budRecyclerView = findViewById(R.id.busRecyclerView);
+        budRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        BusAdapter busAdapter = new BusAdapter(this, this, busList);
+        budRecyclerView.setAdapter(busAdapter);
 
 
         busA = findViewById(R.id.bus_A);
@@ -30,7 +51,7 @@ public class AboutBus extends AppCompatActivity {
         busA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
@@ -38,7 +59,7 @@ public class AboutBus extends AppCompatActivity {
         busB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
@@ -46,7 +67,7 @@ public class AboutBus extends AppCompatActivity {
         busC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
@@ -54,7 +75,7 @@ public class AboutBus extends AppCompatActivity {
         busD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
@@ -62,7 +83,7 @@ public class AboutBus extends AppCompatActivity {
         busE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
@@ -70,7 +91,7 @@ public class AboutBus extends AppCompatActivity {
         busF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
@@ -78,7 +99,7 @@ public class AboutBus extends AppCompatActivity {
         busG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
@@ -86,7 +107,7 @@ public class AboutBus extends AppCompatActivity {
         busH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
@@ -94,7 +115,7 @@ public class AboutBus extends AppCompatActivity {
         busI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
@@ -102,9 +123,18 @@ public class AboutBus extends AppCompatActivity {
         busJ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent(AboutBus.this,BusInsideDetails.class);
+                Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public void onBusItem(String name) {
+        // when bus clicked load this screen
+        Intent i =  new Intent(AboutBusActivity.this,BusInsideDetails.class);
+        i.putExtra("bus_name", name);
+        startActivity(i);
+
     }
 }

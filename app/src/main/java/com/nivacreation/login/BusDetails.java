@@ -194,7 +194,7 @@ public class BusDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(BusDetails.this,AboutBus.class);
+                Intent i = new Intent(BusDetails.this, AboutBusActivity.class);
                 startActivity(i);
             }
         });
