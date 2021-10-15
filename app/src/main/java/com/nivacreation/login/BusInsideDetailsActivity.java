@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class BusInsideDetails extends AppCompatActivity {
+public class BusInsideDetailsActivity extends AppCompatActivity {
 
     Button bookSeats;
 
@@ -20,7 +20,7 @@ public class BusInsideDetails extends AppCompatActivity {
         bookSeats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(BusInsideDetails.this,BookSeats.class);
+                Intent i = new Intent(BusInsideDetailsActivity.this, BookSeatsActivity.class);
                 startActivity(i);
             }
         });

@@ -143,15 +143,15 @@ public class MainActivity extends AppCompatActivity {
         switch (userType)
         {
             case "Passenger":
-                startActivity(new Intent(MainActivity.this, Passenger_Navigation.class));
+                startActivity(new Intent(MainActivity.this, PassengerNavigationActivity.class));
                 finish();
                 break;
             case "Driver":
-                startActivity(new Intent(MainActivity.this, Driver_Navigation.class));
+                startActivity(new Intent(MainActivity.this, DriverNavigationActivity.class));
                 finish();
                 break;
             case "Admin":
-                startActivity(new Intent(MainActivity.this, Admin.class));
+                startActivity(new Intent(MainActivity.this, AdminActivity.class));
                 finish();
                 break;
         }
@@ -313,12 +313,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "Driver":
                         //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, Driver.class));
+                        startActivity(new Intent(MainActivity.this, DriverActivity.class));
                         finish();
                         break;
                     case "Admin":
                         //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, Admin.class));
+                        startActivity(new Intent(MainActivity.this, AdminActivity.class));
                         finish();
                         break;
 

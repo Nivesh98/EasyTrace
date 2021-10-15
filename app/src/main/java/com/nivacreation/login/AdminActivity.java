@@ -22,7 +22,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
-public class Admin extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity {
     TextView userFullNameTxt, userEmailTxt, userTypeTxt;
     Button logOutBtn;
     FirebaseAuth fAuth;
@@ -50,7 +50,7 @@ public class Admin extends AppCompatActivity {
             public void onClick(View v) {
                 fAuth.signOut();
                 //startActivity(new Intent(getApplicationContext(),SignInActivity.class));
-                Intent goPassengerActivity = new Intent(Admin.this,SignInActivity.class);
+                Intent goPassengerActivity = new Intent(AdminActivity.this,SignInActivity.class);
                 goPassengerActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 goPassengerActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

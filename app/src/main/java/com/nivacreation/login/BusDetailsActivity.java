@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class BusDetails extends AppCompatActivity {
+public class BusDetailsActivity extends AppCompatActivity {
 
 
     //EditText editText,editText1;
@@ -70,7 +70,7 @@ public class BusDetails extends AppCompatActivity {
         townList_start.add("Gampaha");
 
 
-        spinner_start.setAdapter(new ArrayAdapter<>(BusDetails.this, android.R.layout.simple_spinner_dropdown_item,townList_start));
+        spinner_start.setAdapter(new ArrayAdapter<>(BusDetailsActivity.this, android.R.layout.simple_spinner_dropdown_item,townList_start));
 
         spinner_start.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -108,7 +108,7 @@ public class BusDetails extends AppCompatActivity {
         townList_end.add("Gampaha");
 
 
-        spinner_end.setAdapter(new ArrayAdapter<>(BusDetails.this, android.R.layout.simple_spinner_dropdown_item,townList_end));
+        spinner_end.setAdapter(new ArrayAdapter<>(BusDetailsActivity.this, android.R.layout.simple_spinner_dropdown_item,townList_end));
 
         spinner_end.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -132,6 +132,7 @@ public class BusDetails extends AppCompatActivity {
 
 
 
+<<<<<<< HEAD:app/src/main/java/com/nivacreation/login/BusDetails.java
 //        Calendar calendar = Calendar.getInstance();
 //        final int year = calendar.get(Calendar.YEAR);
 //        final int month = calendar.get(Calendar.MONTH);
@@ -189,12 +190,71 @@ public class BusDetails extends AppCompatActivity {
 //                timePickerDialog.show();
 //            }
 //        });
+=======
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int min = calendar.get(Calendar.MINUTE);
+
+
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(BusDetailsActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                        month = month + 1;
+                        String date = dayOfMonth + "/" + month + "/" + year;
+                        editText.setText(date);
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        editText1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(BusDetailsActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                        int h = hourOfDay;
+                        int m = minute;
+
+                        String time = hourOfDay + ":" + minute;
+
+                        SimpleDateFormat f24Hours = new SimpleDateFormat("HH:mm");
+                        try {
+                            Date date = f24Hours.parse(time);
+
+                            SimpleDateFormat f12Hours = new SimpleDateFormat("hh:mm aa");
+                            editText1.setText(f12Hours.format(date));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }, 12, 0, false
+                );
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePickerDialog.updateTime(hour,min);
+                timePickerDialog.show();
+            }
+        });
+>>>>>>> changed app layout:app/src/main/java/com/nivacreation/login/BusDetailsActivity.java
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(BusDetails.this, AboutBusActivity.class);
+                Intent i = new Intent(BusDetailsActivity.this, AboutBusActivity.class);
                 startActivity(i);
             }
         });

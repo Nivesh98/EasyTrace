@@ -44,7 +44,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Driver_Navigation extends AppCompatActivity {
+public class DriverNavigationActivity extends AppCompatActivity {
 
     // private ImageView userImage;
     private Uri imageUri;
@@ -153,9 +153,9 @@ public class Driver_Navigation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-                    if (ContextCompat.checkSelfPermission(Driver_Navigation.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(Driver_Navigation.this,"Permission Denied", Toast.LENGTH_SHORT).show();
-                        ActivityCompat.requestPermissions(Driver_Navigation.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+                    if (ContextCompat.checkSelfPermission(DriverNavigationActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(DriverNavigationActivity.this,"Permission Denied", Toast.LENGTH_SHORT).show();
+                        ActivityCompat.requestPermissions(DriverNavigationActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
                     }else {
 
                         ChoseImage();
@@ -169,7 +169,7 @@ public class Driver_Navigation extends AppCompatActivity {
     }
 
     private void ChoseImage() {
-        CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1,1).start(Driver_Navigation.this);
+        CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1,1).start(DriverNavigationActivity.this);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
@@ -216,13 +216,13 @@ public class Driver_Navigation extends AppCompatActivity {
                         Picasso.get().load(uri).into(userImage);
                     }
                 });
-                Toast.makeText(Driver_Navigation.this,"Image Uploaded !",Toast.LENGTH_SHORT).show();
+                Toast.makeText(DriverNavigationActivity.this,"Image Uploaded !",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
                 progressDialog.dismiss();
-                Toast.makeText(Driver_Navigation.this,"Failed !",Toast.LENGTH_SHORT).show();
+                Toast.makeText(DriverNavigationActivity.this,"Failed !",Toast.LENGTH_SHORT).show();
             }
         });
     }

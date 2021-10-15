@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mask_login"
-    tools:context=".Driver">
+    tools:context=".DriverActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"

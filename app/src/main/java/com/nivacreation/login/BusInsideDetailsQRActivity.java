@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class BookSeats extends AppCompatActivity {
+public class BusInsideDetailsQRActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_seats);
+        setContentView(R.layout.activity_bus_inside_details_qr);
     }
 }

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -14,7 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class splashScreen extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity {
 
     private static  int SPLASH_SCREEN = 4000;
     Animation topAnim, bottomAnim;
@@ -44,11 +43,11 @@ public class splashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 if(isShow.equals("1")){
-                    Intent goSplash = new Intent(splashScreen.this,SignInActivity.class);
+                    Intent goSplash = new Intent(SplashScreenActivity.this,SignInActivity.class);
                     startActivity(goSplash);
                     finish();
                 }else{
-                    Intent goSplash = new Intent(splashScreen.this,Welcome.class);
+                    Intent goSplash = new Intent(SplashScreenActivity.this, WelcomeActivity.class);
                     startActivity(goSplash);
                     finish();
                 }

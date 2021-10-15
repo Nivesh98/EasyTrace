@@ -11,10 +11,6 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <!-- this is test text -->
-=======
-<!--    this is test text2-->
->>>>>>> 23c2d8e948dd8cf9fa4157eacc70b29260225366
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -45,7 +41,6 @@
         android:roundIcon="@drawable/bus_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Login">
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -57,29 +52,29 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <activity
             android:name=".PassengerFindMap"
             android:label="@string/title_activity_passenger_find_map"></activity>
-        <activity android:name=".BusInsideDetailsQR" />
-        <activity android:name=".BusDetailsQR" />
-        <activity android:name=".BusInsideDetails" />
-        <activity android:name=".BookSeats" />
+        <activity android:name=".BusInsideDetailsQRActivity"></activity>
+        <activity android:name=".BusDetailsQRActivity" />
+        <activity android:name=".BusInsideDetailsActivity" />
+        <activity android:name=".BookSeatsActivity" />
+
         <activity android:name=".AboutBusActivity" />
-        <activity android:name=".Driver_Navigation" />
-        <activity android:name=".Passenger_Navigation" />
-        <activity android:name=".Bus2_Details" />
-        <activity android:name=".BusDetails" />
-        <activity android:name=".Welcome" />
+        <activity android:name=".DriverNavigationActivity" />
+        <activity android:name=".PassengerNavigationActivity" />
+        <activity android:name=".Bus2DetailsActivity" />
+        <activity android:name=".BusDetailsActivity" />
+        <activity android:name=".WelcomeActivity" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".Admin" />
-        <activity android:name=".Driver" />
-        <activity android:name=".qrScanner" />
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".DriverActivity" />
+        <activity android:name=".QAScannerActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".layout_header" />
+        <activity android:name=".HeaderActivity" />
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".splashScreen"
+            android:name=".SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
