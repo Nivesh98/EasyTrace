@@ -123,11 +123,7 @@ public class HomeFragment extends Fragment {
 //                Intent signInActivity = new Intent(getActivity(), BusDetails.class);
 //                signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                startActivity(signInActivity);
-<<<<<<< HEAD
                 startActivity(new Intent(getActivity(),PassengerFindMap.class));
-=======
-                startActivity(new Intent(getActivity(), BusDetailsActivity.class));
->>>>>>> changed app layout
             }
         });
 
