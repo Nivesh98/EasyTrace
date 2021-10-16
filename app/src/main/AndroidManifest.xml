@@ -59,7 +59,6 @@
         <activity android:name=".BusDetailsQRActivity" />
         <activity android:name=".BusInsideDetailsActivity" />
         <activity android:name=".BookSeatsActivity" />
-
         <activity android:name=".AboutBusActivity" />
         <activity android:name=".DriverNavigationActivity" />
         <activity android:name=".PassengerNavigationActivity" />
