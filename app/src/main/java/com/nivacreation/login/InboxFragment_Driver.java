@@ -1,7 +1,6 @@
 package com.nivacreation.login;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -21,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -62,6 +60,10 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
     private String mParam1;
     private String mParam2;
+
+    String selectedDestination = "";
+
+    boolean isActive = false;
 
     Spinner spinner_start;
 
@@ -227,8 +229,15 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                 checkBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        if (busStatus.isChecked() == true){
+
+                        if(selectedDestination.equals("")){
+                            Toast.makeText(getActivity(),"Please Select Destination!",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (!isActive){
+                            isActive = true;
                             checkBtn.setText("STOP");
+                            spinner_start.setEnabled(false);
 
                             //checkBtn.isClickable() = false;
                             Toast.makeText(getActivity(),"Bus Started!",Toast.LENGTH_SHORT).show();
@@ -257,28 +266,23 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
                                 }
                             }, 0, 30, TimeUnit.SECONDS);
-//                        }else if (busStatus.isChecked() == false) {
-//                            checkBtn.setText("RUN");
-//                            mMap.clear();
-//                            for (MarkerOptions mark : markerOptions){
-//                                mMap.addMarker(mark);
-//                            }
-//                            Toast.makeText(getActivity(),"Bus Stopped!",Toast.LENGTH_SHORT).show();
-//                            // checkBtn.isClickable();
-//
-//                            String userID ;
-//                            userID = fAuth.getCurrentUser().getUid();
-//                            DocumentReference documentReference = fStore.collection("BusLocations").document(userID);
-//                            Map<String,Object> user = new HashMap<>();
-//                            user.put("isStarted","False");
-//                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                @Override
-//                                public void onSuccess(Void unused) {
-//                                    Log.d(TAG,"onSuccess: Success isStarted False! "+ userID);
-//                                }
-//                            });
-//                            scheduler.shutdownNow();
-//                        }
+                        }else {
+                            spinner_start.setEnabled(true);
+                            isActive = false;
+                            checkBtn.setText("RUN");
+                            mMap.clear();
+                            for (MarkerOptions mark : markerOptions){
+                                mMap.addMarker(mark);
+                            }
+                            Toast.makeText(getActivity(),"Bus Stopped!",Toast.LENGTH_SHORT).show();
+                            // checkBtn.isClickable();
+
+                            String userID ;
+                            userID = fAuth.getCurrentUser().getUid();
+                            firebaseUploaded(false, userID, null);
+
+                            scheduler.shutdownNow();
+                        }
                     }
                 });
                 // [END_EXCLUDE]
@@ -287,7 +291,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
 
                 // Get the current location of the device and set the position of the map.
-                getDeviceLocation();
+                //getDeviceLocation();
 
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerlocation,10));
 
@@ -295,6 +299,29 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
         });
 
         return view;
+    }
+
+    private void firebaseUploaded(boolean isRun, String userID, Location lastKnownLocation) {
+        DocumentReference documentReference = fStore.collection("BusLocations").document(userID);
+        Map<String,Object> user = new HashMap<>();
+
+
+        if(isRun){
+            user.put("lat",lastKnownLocation.getLatitude());
+            user.put("log",lastKnownLocation.getLongitude());
+            user.put("to",selectedDestination);
+            user.put("isStarted","True");
+
+
+        }else{
+            user.put("isStarted","False");
+        }
+        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG,"onSuccess: Success isStarted False! "+ userID);
+            }
+        });
     }
 
     @Override
@@ -342,19 +369,9 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                                 Toast.makeText(getActivity(), "circle is here", Toast.LENGTH_SHORT).show();
                                 String userID ;
                                 userID = fAuth.getCurrentUser().getUid();
-                                DocumentReference documentReference = fStore.collection("BusLocations").document(userID);
-                                Map<String,Object> user = new HashMap<>();
-                                user.put("lat",lastKnownLocation.getLatitude());
-                                user.put("log",lastKnownLocation.getLongitude());
-                                user.put("to","Gampaha");
-                                user.put("isStarted","True");
-                                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Log.d(TAG,"onSuccess: Success Updated LatLong! "+ userID);
-                                    }
-                                });
-                                Toast.makeText(getActivity(), "Success Updated LatLong!", Toast.LENGTH_SHORT).show();
+
+                                firebaseUploaded(true,userID,lastKnownLocation);
+
 
                             }
                         } else {
@@ -441,7 +458,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
     //Select Destination
     private void selectDestination(){
         ArrayList<String> townList_start = new ArrayList<>();
-
+        townList_start.add("Choose Destination! ");
         townList_start.add("Kirindiwela");
         townList_start.add("Gampaha");
 
@@ -453,12 +470,12 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position == 0){
+                    selectedDestination = "";
                     Toast.makeText(getActivity(),
                             "Select Start Location",Toast.LENGTH_SHORT).show();
                     //start.setText("");
                 }else {
-                    String STown = parent.getItemAtPosition(position).toString();
-                    //start.setText(STown);
+                    selectedDestination =  parent.getItemAtPosition(position).toString();
                 }
             }
 

@@ -1,11 +1,13 @@
 package com.nivacreation.login;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,12 +31,19 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.nivacreation.login.databinding.ActivityPassengerFindMapBinding;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static com.nivacreation.login.MainActivity.TAG;
 
 public class PassengerFindMap extends FragmentActivity implements OnMapReadyCallback {
 
@@ -49,6 +60,8 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
     String userId;
     Double lat;
     Double log;
+
+    int startPoint=0, endPoint =0;
 
     Spinner spinner_start, spinner_end;
     Button submit;
@@ -70,6 +83,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
         //selectLocation();
+       // getDriverLocation();
     }
 
     @Override
@@ -81,6 +95,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
 
     private void selectLocation() {
         //        editText = findViewById(R.id.Date);
@@ -115,6 +130,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                             "Select Start Location",Toast.LENGTH_SHORT).show();
                     //start.setText("");
                 }else {
+                    startPoint = position;
                     String STown = parent.getItemAtPosition(position).toString();
                     //start.setText(STown);
                 }
@@ -153,6 +169,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                             "Select End Location",Toast.LENGTH_SHORT).show();
                     //end.setText("");
                 }else {
+                    endPoint = position;
                     String ETown = parent.getItemAtPosition(position).toString();
                     //end.setText(ETown);
                 }
@@ -765,61 +782,95 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                 }
             }
 
-            private void getDriverLocation() {
-                FirebaseUser user = fAuth.getCurrentUser();
 
-
-                if (fAuth.getCurrentUser().getUid() != null){
-
-                    userId = fAuth.getCurrentUser().getUid();
-
-
-                    DocumentReference documentReference = fStore.collection("BusLocations").document("87HATPpL1MQ0hhunLRzQkzXQoDt2");
-                    documentReference.addSnapshotListener( PassengerFindMap.this, new EventListener<DocumentSnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
-
-                            if (value != null && value.exists()) {
-                                lat = value.getDouble("lat");
-                                log = value.getDouble("log");
-
-//                                double dLog = Double.valueOf(log);
-//                                double dLat = Double.valueOf(lat);
-
-
-                                scheduler.scheduleAtFixedRate(new Runnable()
-                                {
-                                    public void run()
-                                    {
-                                        if(isrun){
-                                            runOnUiThread(new Runnable(){
-                                                @Override
-                                                public void run(){
-                                                    LatLng Gampaha = new LatLng(lat, log);
-                                                    mMap.addMarker(new MarkerOptions().position(Gampaha).title("Bus Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icon_map)));
-                                                    Toast.makeText(PassengerFindMap.this,"Changed Bus Location!",Toast.LENGTH_SHORT).show();
-                                                    LatLng sydney = new LatLng(lat,log);
-                                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,18));
-                                                }
-                                            });
-                                        }else{
-                                            isrun = true;
-                                            //scheduler.shutdownNow();
-                                        }
-
-                                    }
-                                }, 0, 15, TimeUnit.SECONDS);
-                               // scheduler.shutdownNow();
-                            }
-
-                        }
-                    });
-                    //scheduler.shutdownNow();
-                }
-            }
         });
     }
 
+    private void getDriverLocation() {
 
+
+        if (fAuth.getCurrentUser().getUid() != null){
+
+            userId = fAuth.getCurrentUser().getUid();
+
+            fStore.collection("BusLocations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    Log.d("12345", "is Success"+ task.isSuccessful());
+                    if (task.isSuccessful()) {
+                        List<String> list = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                            if (document.get("isStarted") == null) {
+                                Log.i("12345", "ssss "+document.getId());
+                                return;
+                            }
+
+                            String isStarted = document.get("isStarted").toString();
+
+                            if (isStarted.equals("True")){
+                                String direction = document.get("to").toString();
+                                String parengerDirection = startPoint>endPoint? "Kiridiwala" : "Gampaha";
+                                if (direction.equals(parengerDirection)) { //Gampaha -> kiridiwala
+                                    Log.i("12345", "show buses "+document.getId());
+                                    double lat = document.getDouble("lat");
+                                    double log = document.getDouble("log");
+
+                                    LatLng Miriswaththa = new LatLng(lat, log);
+                                    mMap.addMarker(new MarkerOptions().position(Miriswaththa).title("Bus Location"));
+
+                                }
+                            }
+
+                        }
+
+                    } else {
+                        Log.d("12345", "Error getting documents: ", task.getException());
+                    }
+                }
+            });
+//                    DocumentReference documentReference = fStore.collection("BusLocations").document("87HATPpL1MQ0hhunLRzQkzXQoDt2");
+//                    documentReference.addSnapshotListener( PassengerFindMap.this, new EventListener<DocumentSnapshot>() {
+//                        @Override
+//                        public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+//
+//                            if (value != null && value.exists()) {
+//                                lat = value.getDouble("lat");
+//                                log = value.getDouble("log");
+//
+////                                double dLog = Double.valueOf(log);
+////                                double dLat = Double.valueOf(lat);
+//
+//
+//                                scheduler.scheduleAtFixedRate(new Runnable()
+//                                {
+//                                    public void run()
+//                                    {
+//                                        if(isrun){
+//                                            runOnUiThread(new Runnable(){
+//                                                @Override
+//                                                public void run(){
+//                                                    LatLng Gampaha = new LatLng(lat, log);
+//                                                    mMap.addMarker(new MarkerOptions().position(Gampaha).title("Bus Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icon_map)));
+//                                                    Toast.makeText(PassengerFindMap.this,"Changed Bus Location!",Toast.LENGTH_SHORT).show();
+//                                                    LatLng sydney = new LatLng(lat,log);
+//                                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,18));
+//                                                }
+//                                            });
+//                                        }else{
+//                                            isrun = true;
+//                                            //scheduler.shutdownNow();
+//                                        }
+//
+//                                    }
+//                                }, 0, 15, TimeUnit.SECONDS);
+//                               // scheduler.shutdownNow();
+//                            }
+//
+//                        }
+//                    });
+            //scheduler.shutdownNow();
+        }
+    }
 
 }
