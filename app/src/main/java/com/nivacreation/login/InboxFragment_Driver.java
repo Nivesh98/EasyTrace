@@ -17,7 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -42,6 +45,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -59,6 +63,8 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
     private String mParam1;
     private String mParam2;
 
+    Spinner spinner_start;
+
     //firebase
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -75,7 +81,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
     private boolean isrun = false;
 
 
-    private static final int DEFAULT_ZOOM = 11;
+    private static final int DEFAULT_ZOOM = 12;
 
     MarkerOptions marker;
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
@@ -129,8 +135,10 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        spinner_start = view.findViewById(R.id.spinner_start);
 
-        Switch busStatus = (Switch) view.findViewById(R.id.busStatusSwitch);
+
+        //Switch busStatus = (Switch) view.findViewById(R.id.busStatusSwitch);
         Button checkBtn = (Button) view.findViewById(R.id.busStatusBtn);
 
 //        if (busStatus.isChecked() == true){
@@ -186,6 +194,14 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                         .position(new LatLng(7.09199,79.99321))
                         .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
+                markerOptions.add(new MarkerOptions().title("Ranavirugama 2")
+                        .position(new LatLng(7.009945,80.074702))
+                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                );
+                markerOptions.add(new MarkerOptions().title("Ranavirugama 1")
+                        .position(new LatLng(7.011150,80.075165))
+                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                );
 
                 mMap = googleMap;
                 // Add a marker in Sydney and move the camera
@@ -207,10 +223,11 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                 getLocationPermission();
                 updateLocationUI();
                 //TaskRunInCycle();
+                selectDestination();
                 checkBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (busStatus.isChecked() == true){
+//                        if (busStatus.isChecked() == true){
                             checkBtn.setText("STOP");
 
                             //checkBtn.isClickable() = false;
@@ -240,15 +257,28 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
                                 }
                             }, 0, 30, TimeUnit.SECONDS);
-                        }else if (busStatus.isChecked() == false) {
-                            checkBtn.setText("RUN");
-                            mMap.clear();
-                            for (MarkerOptions mark : markerOptions){
-                                mMap.addMarker(mark);
-                            }
-                            Toast.makeText(getActivity(),"Bus Stopped!",Toast.LENGTH_SHORT).show();
-                            // checkBtn.isClickable();
-                        }
+//                        }else if (busStatus.isChecked() == false) {
+//                            checkBtn.setText("RUN");
+//                            mMap.clear();
+//                            for (MarkerOptions mark : markerOptions){
+//                                mMap.addMarker(mark);
+//                            }
+//                            Toast.makeText(getActivity(),"Bus Stopped!",Toast.LENGTH_SHORT).show();
+//                            // checkBtn.isClickable();
+//
+//                            String userID ;
+//                            userID = fAuth.getCurrentUser().getUid();
+//                            DocumentReference documentReference = fStore.collection("BusLocations").document(userID);
+//                            Map<String,Object> user = new HashMap<>();
+//                            user.put("isStarted","False");
+//                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void unused) {
+//                                    Log.d(TAG,"onSuccess: Success isStarted False! "+ userID);
+//                                }
+//                            });
+//                            scheduler.shutdownNow();
+//                        }
                     }
                 });
                 // [END_EXCLUDE]
@@ -316,6 +346,8 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                                 Map<String,Object> user = new HashMap<>();
                                 user.put("lat",lastKnownLocation.getLatitude());
                                 user.put("log",lastKnownLocation.getLongitude());
+                                user.put("to","Gampaha");
+                                user.put("isStarted","True");
                                 documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
@@ -403,6 +435,38 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
         Circle mapCircle = mMap.addCircle(circleOptions);
         //We can remove above circle with code bellow
         //mapCircle.remove();
+
+    }
+
+    //Select Destination
+    private void selectDestination(){
+        ArrayList<String> townList_start = new ArrayList<>();
+
+        townList_start.add("Kirindiwela");
+        townList_start.add("Gampaha");
+
+
+        spinner_start.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item,townList_start));
+
+        spinner_start.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position == 0){
+                    Toast.makeText(getActivity(),
+                            "Select Start Location",Toast.LENGTH_SHORT).show();
+                    //start.setText("");
+                }else {
+                    String STown = parent.getItemAtPosition(position).toString();
+                    //start.setText(STown);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 }

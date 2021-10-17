@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home_admin"
+        android:icon="@drawable/home"
+        android:title="Home"/>
+    <item
+        android:id="@+id/navigation_profile_admin"
+        android:icon="@drawable/user"
+        android:title="Profile"/>
+
+    <item
+        android:id="@+id/navigation_notification_admin"
+        android:icon="@drawable/notification"
+        android:title="Notification"/>
+
+    <item
+        android:id="@+id/navigation_inbox_admin"
+        android:icon="@drawable/ic_baseline_location_on_24"
+        android:title="Map"/>
+    <item
+        android:title="@string/others">
+        <menu>
+            <item
+                android:id="@+id/navigation_settings_admin"
+                android:icon="@drawable/settings"
+                android:title="@string/settings"/>
+            <item
+                android:id="@+id/navigation_support_admin"
+                android:icon="@drawable/customer"
+                android:title="@string/support"/>
+            <item
+                android:id="@+id/navigation_aboutUs_admin"
+                android:icon="@drawable/info"
+                android:title="@string/about_us"/>
+        </menu>
+    </item>
+</menu>

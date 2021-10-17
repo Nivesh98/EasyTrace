@@ -68,6 +68,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
+        scheduler = Executors.newSingleThreadScheduledExecutor();
         //selectLocation();
     }
 
@@ -240,12 +241,13 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDriverLocation();
+                //getDriverLocation();
                 String stLo = spinner_start.getSelectedItem().toString();
                 String enLo = spinner_end.getSelectedItem().toString();
                 if(!stLo.isEmpty()){
                     if(!enLo.isEmpty()){
                         mMap.clear();
+
                         if((stLo.equals("Kirindiwela") && enLo.equals("Radawana"))||(stLo.equals("Radawana") && enLo.equals("Kirindiwela"))){
                             double kiLat = 7.0427287;
                             double kiLong = 80.1300031;
@@ -263,6 +265,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat,comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,13));
+                            getDriverLocation();
 
                         }else if((stLo.equals("Kirindiwela") && enLo.equals("Henegama"))||(stLo.equals("Henegama") && enLo.equals("Kirindiwela"))){
                             double kiLat = 7.0427287;
@@ -780,10 +783,10 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                                 lat = value.getDouble("lat");
                                 log = value.getDouble("log");
 
-                                double dLog = Double.valueOf(log);
-                                double dLat = Double.valueOf(lat);
+//                                double dLog = Double.valueOf(log);
+//                                double dLat = Double.valueOf(lat);
 
-                                scheduler = Executors.newSingleThreadScheduledExecutor();
+
                                 scheduler.scheduleAtFixedRate(new Runnable()
                                 {
                                     public void run()
@@ -792,22 +795,26 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                                             runOnUiThread(new Runnable(){
                                                 @Override
                                                 public void run(){
-                                                    LatLng Gampaha = new LatLng(dLat, dLog);
-                                                    mMap.addMarker(new MarkerOptions().position(Gampaha).title("Bus Location"));
+                                                    LatLng Gampaha = new LatLng(lat, log);
+                                                    mMap.addMarker(new MarkerOptions().position(Gampaha).title("Bus Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icon_map)));
                                                     Toast.makeText(PassengerFindMap.this,"Changed Bus Location!",Toast.LENGTH_SHORT).show();
+                                                    LatLng sydney = new LatLng(lat,log);
+                                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,18));
                                                 }
                                             });
                                         }else{
                                             isrun = true;
+                                            //scheduler.shutdownNow();
                                         }
 
                                     }
-                                }, 0, 30, TimeUnit.SECONDS);
-
+                                }, 0, 15, TimeUnit.SECONDS);
+                               // scheduler.shutdownNow();
                             }
 
                         }
                     });
+                    //scheduler.shutdownNow();
                 }
             }
         });

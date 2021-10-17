@@ -43,22 +43,11 @@
             map:layout_constraintVertical_bias="0.023"
             tools:ignore="NotSibling">
 
-            <Switch
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bus Status :- "
-                android:background="@color/white"
-                android:textColor="@color/purple_700"
-                android:textSize="20sp"
                 android:layout_marginRight="20dp"
-                android:textStyle="bold"
-                android:checked="false"
-                android:textOff="off"
-                android:textOn="on"
-                map:showText="true"
-                map:track="@drawable/thumb_track"
-                android:thumb="@drawable/thumb"
-                android:id="@+id/busStatusSwitch"/>
+                android:id="@+id/spinner_start" />
 
             <Button
                 android:layout_width="wrap_content"

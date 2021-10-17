@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 break;
             case "Admin":
-                startActivity(new Intent(MainActivity.this, AdminActivity.class));
+                startActivity(new Intent(MainActivity.this, AdminNavigationActivity.class));
                 finish();
                 break;
         }

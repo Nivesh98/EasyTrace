@@ -162,7 +162,7 @@ public class SignInActivity extends AppCompatActivity {
                             case "Admin":
                                 //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignInActivity.this, AdminActivity.class));
-                                Intent goPassengerActivity3 = new Intent(SignInActivity.this, AdminActivity.class);
+                                Intent goPassengerActivity3 = new Intent(SignInActivity.this, AdminNavigationActivity.class);
                                 goPassengerActivity3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 goPassengerActivity3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
