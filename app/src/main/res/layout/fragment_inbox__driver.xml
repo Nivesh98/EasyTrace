@@ -13,7 +13,6 @@
         android:background="@drawable/mask_login">
 
 
-
         <fragment
             android:id="@+id/mapDriver"
             android:name="com.google.android.gms.maps.SupportMapFragment"

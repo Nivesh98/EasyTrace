@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                     case "Passenger":
                         //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();
                         // startActivity(new Intent(SignInActivity.this, HomeActivity.class));
-                        Intent goPassengerActivity = new Intent(MainActivity.this,HomeActivity.class);
+                        Intent goPassengerActivity = new Intent(MainActivity.this,PassengerNavigationActivity.class);
                         goPassengerActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         goPassengerActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -313,12 +313,19 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "Driver":
                         //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, DriverActivity.class));
+                        Intent goDriverActivity = new Intent(MainActivity.this,DriverNavigationActivity.class);
+                        goDriverActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        goDriverActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        startActivity(goDriverActivity);
                         finish();
                         break;
                     case "Admin":
-                        //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, AdminActivity.class));
+                        Intent goAdminActivity = new Intent(MainActivity.this,AdminNavigationActivity.class);
+                        goAdminActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        goAdminActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        startActivity(goAdminActivity);
                         finish();
                         break;
 
