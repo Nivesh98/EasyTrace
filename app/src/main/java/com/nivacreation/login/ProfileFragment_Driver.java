@@ -132,8 +132,8 @@ public class ProfileFragment_Driver extends Fragment {
                     if (value != null && value.exists()) {
 
                         userEmailTxt.setText(value.getString("email"));
-                        userFullNameTxt.setText(value.getString("First Name") + " " + value.getString("Last Name"));
-                        userUserName_Profile.setText("@"+value.getString("First Name").toLowerCase()+"_"+value.getString("Last Name").toLowerCase());
+                        userFullNameTxt.setText(value.getString("firstName") + " " + value.getString("lastName"));
+                        userUserName_Profile.setText("@"+value.getString("firstName").toLowerCase()+"_"+value.getString("lastName").toLowerCase());
                         //userTypeTxt.setText(value.getString("User Type"));
                         // vui = value.getString("User Type");
                         //userTypeTxt.setText(vui);

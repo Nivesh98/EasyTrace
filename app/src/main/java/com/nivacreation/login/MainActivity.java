@@ -196,10 +196,10 @@ public class MainActivity extends AppCompatActivity {
                                                             userID = mAuth.getCurrentUser().getUid();
                                                             DocumentReference documentReference = fStore.collection("Users").document(userID);
                                                             Map<String,Object> user = new HashMap<>();
-                                                            user.put("First Name",firstName);
-                                                            user.put("Last Name",lastName);
+                                                            user.put("firstName",firstName);
+                                                            user.put("lastName",lastName);
                                                             user.put("email",email);
-                                                            user.put("User Type", userType);
+                                                            user.put("userType", userType);
 
                                                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         documentReference.addSnapshotListener(MainActivity.this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
-                verifyUserType = value.getString("User Type");
+                verifyUserType = value.getString("userType");
                 switch (verifyUserType) {
                     case "Passenger":
                         //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();

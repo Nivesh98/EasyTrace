@@ -137,7 +137,7 @@ public class SignInActivity extends AppCompatActivity {
                 public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
 
                     if (value != null && value.exists()) {
-                        verifyUserType = value.getString("User Type");
+                        verifyUserType = value.getString("userType");
                         switch (verifyUserType) {
                             case "Passenger":
                                 //Toast.makeText(SignInActivity.this, "Login Successfully !!", Toast.LENGTH_SHORT).show();

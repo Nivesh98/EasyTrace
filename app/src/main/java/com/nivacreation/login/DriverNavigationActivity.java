@@ -133,7 +133,7 @@ public class DriverNavigationActivity extends AppCompatActivity {
                         View headerView = navigationView.getHeaderView(0);
                         TextView navUserName = (TextView) headerView.findViewById(R.id.userName_driver);
 
-                        navUserName.setText(value.getString("First Name") + " " + value.getString("Last Name"));
+                        navUserName.setText(value.getString("firstName") + " " + value.getString("lastName"));
 
                     }
 

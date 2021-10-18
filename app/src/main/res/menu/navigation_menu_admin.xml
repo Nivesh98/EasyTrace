@@ -12,8 +12,8 @@
 
     <item
         android:id="@+id/navigation_notification_admin"
-        android:icon="@drawable/notification"
-        android:title="Notification"/>
+        android:icon="@drawable/group_users"
+        android:title="Users Details"/>
 
     <item
         android:id="@+id/navigation_inbox_admin"

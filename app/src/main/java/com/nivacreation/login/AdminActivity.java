@@ -75,8 +75,8 @@ public class AdminActivity extends AppCompatActivity {
 
                         if (value != null && value.exists()) {
                             userEmailTxt.setText(value.getString("email"));
-                            userFullNameTxt.setText(value.getString("First Name") + " " + value.getString("Last Name"));
-                            userTypeTxt.setText(value.getString("User Type"));
+                            userFullNameTxt.setText(value.getString("firstName") + " " + value.getString("lastName"));
+                            userTypeTxt.setText(value.getString("userType"));
                         }
 
 

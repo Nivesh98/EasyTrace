@@ -183,72 +183,6 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
 
 
-//        Calendar calendar = Calendar.getInstance();
-//        final int year = calendar.get(Calendar.YEAR);
-//        final int month = calendar.get(Calendar.MONTH);
-//        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//        final int min = calendar.get(Calendar.MINUTE);
-
-
-
-//        editText.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                DatePickerDialog datePickerDialog = new DatePickerDialog(BusDetails.this, new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//
-//                        month = month + 1;
-//                        String date = dayOfMonth + "/" + month + "/" + year;
-//                        editText.setText(date);
-//                    }
-//                }, year, month, day);
-//                datePickerDialog.show();
-//            }
-//        });
-//
-//        editText1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                TimePickerDialog timePickerDialog = new TimePickerDialog(BusDetails.this, android.R.style.Theme_Holo_Dialog_MinWidth, new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//
-//                        int h = hourOfDay;
-//                        int m = minute;
-//
-//                        String time = hourOfDay + ":" + minute;
-//
-//                        SimpleDateFormat f24Hours = new SimpleDateFormat("HH:mm");
-//                        try {
-//                            Date date = f24Hours.parse(time);
-//
-//                            SimpleDateFormat f12Hours = new SimpleDateFormat("hh:mm aa");
-//                            editText1.setText(f12Hours.format(date));
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                }, 12, 0, false
-//                );
-//                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                timePickerDialog.updateTime(hour,min);
-//                timePickerDialog.show();
-//            }
-//        });
-
-//        submit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent i = new Intent(PassengerFindMap.this,AboutBus.class);
-//                startActivity(i);
-//            }
-//        });
     }
 
     private void busLocation() {
@@ -829,47 +763,8 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                     }
                 }
             });
-//                    DocumentReference documentReference = fStore.collection("BusLocations").document("87HATPpL1MQ0hhunLRzQkzXQoDt2");
-//                    documentReference.addSnapshotListener( PassengerFindMap.this, new EventListener<DocumentSnapshot>() {
-//                        @Override
-//                        public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
-//
-//                            if (value != null && value.exists()) {
-//                                lat = value.getDouble("lat");
-//                                log = value.getDouble("log");
-//
-////                                double dLog = Double.valueOf(log);
-////                                double dLat = Double.valueOf(lat);
-//
-//
-//                                scheduler.scheduleAtFixedRate(new Runnable()
-//                                {
-//                                    public void run()
-//                                    {
-//                                        if(isrun){
-//                                            runOnUiThread(new Runnable(){
-//                                                @Override
-//                                                public void run(){
-//                                                    LatLng Gampaha = new LatLng(lat, log);
-//                                                    mMap.addMarker(new MarkerOptions().position(Gampaha).title("Bus Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icon_map)));
-//                                                    Toast.makeText(PassengerFindMap.this,"Changed Bus Location!",Toast.LENGTH_SHORT).show();
-//                                                    LatLng sydney = new LatLng(lat,log);
-//                                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,18));
-//                                                }
-//                                            });
-//                                        }else{
-//                                            isrun = true;
-//                                            //scheduler.shutdownNow();
-//                                        }
-//
-//                                    }
-//                                }, 0, 15, TimeUnit.SECONDS);
-//                               // scheduler.shutdownNow();
-//                            }
-//
-//                        }
-//                    });
-            //scheduler.shutdownNow();
+
+
         }
     }
 
