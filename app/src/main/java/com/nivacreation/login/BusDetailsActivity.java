@@ -31,6 +31,8 @@ public class BusDetailsActivity extends AppCompatActivity {
     //EditText editText,editText1;
     Spinner spinner_start, spinner_end;
     Button submit;
+
+    int startPoint=0, endPoint =0;
     //TextView start,end;
     //DatePickerDialog.OnDateSetListener listener;
     //TimePickerDialog.OnTimeSetListener timeSetListener;
@@ -79,6 +81,7 @@ public class BusDetailsActivity extends AppCompatActivity {
                             "Select Start Location",Toast.LENGTH_SHORT).show();
                     //start.setText("");
                 }else {
+                    startPoint = position;
                     String STown = parent.getItemAtPosition(position).toString();
                     //start.setText(STown);
                 }
@@ -117,6 +120,7 @@ public class BusDetailsActivity extends AppCompatActivity {
                             "Select End Location",Toast.LENGTH_SHORT).show();
                     //end.setText("");
                 }else {
+                    endPoint = position;
                     String ETown = parent.getItemAtPosition(position).toString();
                     //end.setText(ETown);
                 }

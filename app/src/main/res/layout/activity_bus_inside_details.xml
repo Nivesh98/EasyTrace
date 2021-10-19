@@ -20,15 +20,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bus Name:"
-            android:layout_marginTop="20dp"
+            android:text="Bus ID:"
+            android:layout_marginTop="18dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bus_name" />
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:id="@+id/bus_id" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,13 +43,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Driver Name:"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:id="@+id/driver_name" />
     </LinearLayout>
 
@@ -58,18 +64,62 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Driver Contact:"
-            android:layout_marginTop="5dp"
+            android:text="Travel Route:"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:id="@+id/route" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Location:"
+            android:layout_marginTop="3dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/driver_contact" />
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:id="@+id/stLocation" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Location:"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:id="@+id/endLocation" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,15 +129,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Travel Route:"
-            android:layout_marginTop="5dp"
+            android:text="Payment Per One Seat:"
+            android:layout_marginTop="3dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/route" />
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:id="@+id/payment" />
     </LinearLayout>
 
     <LinearLayout
@@ -99,14 +152,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Available Seats:"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/available_seats" />
+            android:textSize="18dp"
+            android:id="@+id/available_seats"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
     <LinearLayout

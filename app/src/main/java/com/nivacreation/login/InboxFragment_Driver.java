@@ -311,10 +311,13 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
             user.put("log",lastKnownLocation.getLongitude());
             user.put("to",selectedDestination);
             user.put("isStarted","True");
+            user.put("userID",userID);
 
 
         }else{
+            user.put("to",selectedDestination);
             user.put("isStarted","False");
+            user.put("userID",userID);
         }
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

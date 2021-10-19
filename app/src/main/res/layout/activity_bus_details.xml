@@ -8,7 +8,7 @@
     android:gravity="start"
     android:padding="16dp"
     android:background="@drawable/mask_login"
-    tools:context=".MainActivity">
+    tools:context=".BusDetailsActivity">
 
     <TextView
         android:layout_width="wrap_content"

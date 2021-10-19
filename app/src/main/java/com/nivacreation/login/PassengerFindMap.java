@@ -21,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -235,7 +236,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat,comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Kirindiwela") && enLo.equals("Waliweriya"))||(stLo.equals("Waliweriya") && enLo.equals("Kirindiwela"))){
 
                             double kiLat = 7.0427287;
@@ -254,7 +255,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat,comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Kirindiwela") && enLo.equals("Nadungamuwa"))||(stLo.equals("Nadungamuwa") && enLo.equals("Kirindiwela"))){
                             double kiLat = 7.0427287;
                             double kiLong = 80.1300031;
@@ -272,7 +273,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat,comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,11));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Kirindiwela") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Kirindiwela"))){
                             double kiLat = 7.0427287;
                             double kiLong = 80.1300031;
@@ -290,7 +291,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat,comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,11));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Kirindiwela") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Kirindiwela"))) {
                             double kiLat = 7.0427287;
                             double kiLong = 80.1300031;
@@ -308,7 +309,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 11));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Kirindiwela") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Kirindiwela"))) {
                             double kiLat = 7.0427287;
                             double kiLong = 80.1300031;
@@ -326,7 +327,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 11));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Radawana") && enLo.equals("Henegama"))||(stLo.equals("Henegama") && enLo.equals("Radawana"))) {
                             double raLat = 7.0312;
                             double raLong = 80.1045;
@@ -344,7 +345,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Radawana") && enLo.equals("Waliweriya"))||(stLo.equals("Waliweriya") && enLo.equals("Radawana"))) {
                             double raLat = 7.0312;
                             double raLong = 80.1045;
@@ -362,7 +363,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Radawana") && enLo.equals("Nadungamuwa"))||(stLo.equals("Nadungamuwa") && enLo.equals("Radawana"))) {
                             double raLat = 7.0312;
                             double raLong = 80.1045;
@@ -380,7 +381,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Radawana") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Radawana"))) {
                             double raLat = 7.0312;
                             double raLong = 80.1045;
@@ -398,7 +399,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Radawana") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Radawana"))) {
                             double raLat = 7.0312;
                             double raLong = 80.1045;
@@ -416,7 +417,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 11));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Radawana") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Radawana"))) {
                             double raLat = 7.0312;
                             double raLong = 80.1045;
@@ -434,7 +435,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 11));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Henegama") && enLo.equals("Waliweriya"))||(stLo.equals("Waliweriya") && enLo.equals("Henegama"))) {
                             double heLat = 7.02166;
                             double heLong = 80.05446;
@@ -452,7 +453,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Henegama") && enLo.equals("Nadungamuwa"))||(stLo.equals("Nadungamuwa") && enLo.equals("Henegama"))) {
                             double heLat = 7.02166;
                             double heLong = 80.05446;
@@ -470,7 +471,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Henegama") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Henegama"))) {
                             double heLat = 7.02166;
                             double heLong = 80.05446;
@@ -488,7 +489,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Henegama") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Henegama"))) {
                             double heLat = 7.02166;
                             double heLong = 80.05446;
@@ -506,7 +507,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Henegama") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Henegama"))) {
                             double heLat = 7.02166;
                             double heLong = 80.05446;
@@ -524,7 +525,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Waliweriya") && enLo.equals("Nadungamuwa"))||(stLo.equals("Nadungamuwa") && enLo.equals("Waliweriya"))) {
                             double waLat = 7.03150;
                             double waLong = 80.02781;
@@ -542,7 +543,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Waliweriya") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Waliweriya"))) {
                             double waLat = 7.03150;
                             double waLong = 80.02781;
@@ -560,7 +561,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Waliweriya") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Waliweriya"))) {
                             double waLat = 7.03150;
                             double waLong = 80.02781;
@@ -578,7 +579,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Waliweriya") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Waliweriya"))) {
                             double waLat = 7.03150;
                             double waLong = 80.02781;
@@ -596,7 +597,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Nadungamuwa") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Nadungamuwa"))) {
                             double naLat = 7.05312;
                             double naLong = 80.01614;
@@ -614,7 +615,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Nadungamuwa") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Nadungamuwa"))) {
                             double naLat = 7.05312;
                             double naLong = 80.01614;
@@ -632,7 +633,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Nadungamuwa") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Nadungamuwa"))) {
                             double naLat = 7.05312;
                             double naLong = 80.01614;
@@ -650,7 +651,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Mudungoda") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Mudungoda"))) {
                             double muLat = 7.06615;
                             double muLong = 80.01228;
@@ -668,7 +669,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Mudungoda") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Mudungoda"))) {
                             double muLat = 7.06615;
                             double muLong = 80.01228;
@@ -686,7 +687,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
-
+                            getDriverLocation();
                         }else if ((stLo.equals("Miriswaththa") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Miriswaththa"))) {
                             double miLat = 7.07339;
                             double miLong = 80.01610;
@@ -704,7 +705,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             LatLng sydney = new LatLng(comLat, comLong);
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
-
+                            getDriverLocation();
                         }
 
                     }else{
@@ -749,9 +750,30 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                                     Log.i("12345", "show buses "+document.getId());
                                     double lat = document.getDouble("lat");
                                     double log = document.getDouble("log");
+                                    String userId = document.get("userID").toString();
+                                    String getUID = document.getId();
 
                                     LatLng Miriswaththa = new LatLng(lat, log);
-                                    mMap.addMarker(new MarkerOptions().position(Miriswaththa).title("Bus Location"));
+                                    mMap.addMarker(new MarkerOptions().position(Miriswaththa).title(userId) .snippet("Bus Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icon_map)));
+
+                                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                        @Override
+                                        public boolean onMarkerClick(Marker marker) {
+
+                                            String markertitle = marker.getTitle();
+                                            String stlo = spinner_start.getSelectedItem().toString();
+                                            String enlo = spinner_end.getSelectedItem().toString();
+                                            String trRoute = parengerDirection;
+
+                                            Intent i = new Intent(PassengerFindMap.this,BusInsideDetailsActivity.class);
+                                            i.putExtra("title",markertitle);
+                                            i.putExtra("stLocation",stlo);
+                                            i.putExtra("endLocation",enlo);
+                                            i.putExtra("trRoute",trRoute);
+                                            startActivity(i);
+                                            return false;
+                                        }
+                                    });
 
                                 }
                             }
