@@ -56,6 +56,10 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
     final Handler mHandler = new Handler();
     private Thread mUiThread;
 
+    String selectedDestinationStart = "";
+    String selectedDestinationEnd = "";
+    boolean isActive = false;
+
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
@@ -127,12 +131,12 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position == 0){
-                    Toast.makeText(getApplicationContext(),
-                            "Select Start Location",Toast.LENGTH_SHORT).show();
+                    selectedDestinationStart ="";
+                    //Toast.makeText(getApplicationContext(), "Select Start Location",Toast.LENGTH_SHORT).show();
                     //start.setText("");
                 }else {
                     startPoint = position;
-                    String STown = parent.getItemAtPosition(position).toString();
+                    selectedDestinationStart = parent.getItemAtPosition(position).toString();
                     //start.setText(STown);
                 }
             }
@@ -166,12 +170,12 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position == 0){
-                    Toast.makeText(getApplicationContext(),
-                            "Select End Location",Toast.LENGTH_SHORT).show();
+                    selectedDestinationEnd ="";
+                    //Toast.makeText(getApplicationContext(),"Select End Location",Toast.LENGTH_SHORT).show();
                     //end.setText("");
                 }else {
                     endPoint = position;
-                    String ETown = parent.getItemAtPosition(position).toString();
+                    selectedDestinationEnd = parent.getItemAtPosition(position).toString();
                     //end.setText(ETown);
                 }
             }
@@ -196,6 +200,15 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                 //getDriverLocation();
                 String stLo = spinner_start.getSelectedItem().toString();
                 String enLo = spinner_end.getSelectedItem().toString();
+
+                if(selectedDestinationStart.equals("")){
+                    Toast.makeText(PassengerFindMap.this,"Please Select StartPoint!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(selectedDestinationEnd.equals("")){
+                    Toast.makeText(PassengerFindMap.this,"Please Select EndPoint!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(!stLo.isEmpty()){
                     if(!enLo.isEmpty()){
                         mMap.clear();
@@ -750,11 +763,13 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                                     Log.i("12345", "show buses "+document.getId());
                                     double lat = document.getDouble("lat");
                                     double log = document.getDouble("log");
+                                    double location = document.getDouble("location");
+                                    float f = (float) location;
                                     String userId = document.get("userID").toString();
                                     String getUID = document.getId();
 
                                     LatLng Miriswaththa = new LatLng(lat, log);
-                                    mMap.addMarker(new MarkerOptions().position(Miriswaththa).title(userId) .snippet("Bus Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icon_map)));
+                                    mMap.addMarker(new MarkerOptions().position(Miriswaththa).title(userId) .snippet("Bus Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_top_icon)).rotation(f).anchor((float)0.5,(float)0.5));
 
                                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                         @Override

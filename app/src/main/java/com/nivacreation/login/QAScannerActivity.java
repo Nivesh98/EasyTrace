@@ -67,39 +67,7 @@ public class QAScannerActivity extends AppCompatActivity  {
                     public void run() {
 
                         verifyBusQrCode(result.getText());
-
-
-                        Toast.makeText(QAScannerActivity.this,result.getText(),Toast.LENGTH_SHORT).show();
                         resultData.setText(result.getText());
-                        Log.d("12345", "Outside is value"+ isValue);
-                        if (isValue==true){
-                            Log.d("12345", "inside is value"+ isValue);
-                            Intent i = new Intent(QAScannerActivity.this, BusDetailsQRActivity.class);
-                            startActivity(i);
-                        }
-
-//                        if (result.getText().equals("87HATPpL1MQ0hhunLRzQkzXQoDt2")){
-//                            Intent i = new Intent(QAScannerActivity.this, BusDetailsQRActivity.class);
-//                            startActivity(i);
-////                            Intent signInActivity = new Intent(qrScanner.this, BusDetailsQR.class);
-////                            signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-////                            startActivity(signInActivity);
-////                            finish();
-//                        }else if (result.getText().equals("0pAVSdvrbtU46n2wt3xvVEAj6Kx1")){
-//                            Intent i = new Intent(QAScannerActivity.this, BusDetailsQRActivity.class);
-//                            startActivity(i);
-////                            Intent signInActivity = new Intent(QAScannerActivity.this, Bus2DetailsActivity.class);
-////                            signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-////                            startActivity(signInActivity);
-////                            finish();
-//                        }else if(result.getText().equals("8RRcncO8IANHf7vsbVBZyi65MO92")){
-//                            Intent i = new Intent(QAScannerActivity.this, BusDetailsQRActivity.class);
-//                            startActivity(i);
-////                            Intent signInActivity = new Intent(QAScannerActivity.this, Bus2DetailsActivity.class);
-////                            signInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-////                            startActivity(signInActivity);
-////                            finish();
-//                        }
                     }
                 });
             }
@@ -138,28 +106,21 @@ public class QAScannerActivity extends AppCompatActivity  {
                                 String driverQrCode = document.get("userID").toString();
 
                                 list.add(driverQrCode);
-                                Log.i("12345", "show buses out sides "+document.getId());
+                                Log.i("12345", "driver qr: "+driverQrCode+" text: "+text);
 
-                                if (text.equals(driverQrCode)) {
+                                if (text.trim().toString().equals(driverQrCode.trim().toString())) {
+                                    Intent i = new Intent(QAScannerActivity.this, BusDetailsQRActivity.class);
+                                    startActivity(i);
                                     Log.i("12345", "show buses insides "+document.getId());
-                                    isValue = true;
+                                    return;
                                 }
                             }
                         }
-                        String g = text;
-                        for (int i=0; i<list.size(); i++){
 
-                                if (list.contains(g)){
-                                    Intent goes= new Intent(QAScannerActivity.this, BusDetailsQRActivity.class);
-                                    startActivity(goes);
-                                    Log.d("12345", "array list Driver "+list.get(i));
-                                    break;
-                                }
-                            Log.d("12345", "array list values "+list.get(i)+" and g is "+g);
-                            }
                     } else {
                         isValue = false;
                         Log.d("12345", "Error getting documents: ", task.getException());
+
                     }
                 }
             });

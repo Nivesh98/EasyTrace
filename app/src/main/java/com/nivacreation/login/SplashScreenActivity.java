@@ -38,7 +38,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         String isShow = PreferenceManager
                 .getDefaultSharedPreferences(this).getString("isShow", "Empty");
 
-        Toast.makeText(this, "iswelcome load "+isShow, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "iswelcome load "+isShow, Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

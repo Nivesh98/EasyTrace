@@ -312,6 +312,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
             user.put("to",selectedDestination);
             user.put("isStarted","True");
             user.put("userID",userID);
+            user.put("location",lastKnownLocation.getBearing());
 
 
         }else{
@@ -360,16 +361,18 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                             // Set the map's camera position to the current location of the device.
                             lastKnownLocation = task.getResult();
                             if (lastKnownLocation != null) {
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(lastKnownLocation.getLatitude(),
-                                                lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                                LatLng currentlocation = new LatLng(lastKnownLocation.getLatitude(),
-                                        lastKnownLocation.getLongitude());
-                                mMap.addMarker(new
-                                        MarkerOptions().position(currentlocation).title("current location"));
+
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+                                LatLng currentlocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+
+                                mMap.addMarker(new MarkerOptions().position(currentlocation).title("current location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_top_icon)).rotation(lastKnownLocation.getBearing()).anchor((float)0.5,(float)0.5));
+
                                 Toast.makeText(getActivity(), "latitude:" + lastKnownLocation.getLatitude() + " longitude:" +lastKnownLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+
                                 drawCircle(new LatLng(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude()),2);
                                 Toast.makeText(getActivity(), "circle is here", Toast.LENGTH_SHORT).show();
+
                                 String userID ;
                                 userID = fAuth.getCurrentUser().getUid();
 
