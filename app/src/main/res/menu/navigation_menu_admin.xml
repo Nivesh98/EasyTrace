@@ -26,10 +26,7 @@
                 android:id="@+id/navigation_settings_admin"
                 android:icon="@drawable/settings"
                 android:title="@string/settings"/>
-            <item
-                android:id="@+id/navigation_support_admin"
-                android:icon="@drawable/customer"
-                android:title="@string/support"/>
+
             <item
                 android:id="@+id/navigation_aboutUs_admin"
                 android:icon="@drawable/info"

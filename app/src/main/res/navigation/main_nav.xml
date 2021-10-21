@@ -30,4 +30,14 @@
         android:name="com.nivacreation.login.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/navigation_support"
+        android:name="com.nivacreation.login.SupportFragment"
+        android:label="Support"
+        tools:layout="@layout/fragment_support"/>
+    <fragment
+        android:id="@+id/navigation_aboutUs"
+        android:name="com.nivacreation.login.AboutUsFragment"
+        android:label="About Us"
+        tools:layout="@layout/fragment_about_us"/>
 </navigation>

@@ -19,12 +19,13 @@
         android:textStyle="bold"
         android:textSize="24dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="0dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="0dp"
+        android:visibility="invisible">
 
         <ImageView
             android:layout_width="43dp"
@@ -42,7 +43,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="0dp">
 
         <ImageView
             android:layout_marginTop="10dp"

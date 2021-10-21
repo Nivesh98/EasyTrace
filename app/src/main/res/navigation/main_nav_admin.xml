@@ -30,5 +30,10 @@
         android:name="com.nivacreation.login.HomeFragment_Admin"
         android:label="Home"
         tools:layout="@layout/fragment_home__admin" />
+    <fragment
+        android:id="@+id/navigation_aboutUs_admin"
+        android:name="com.nivacreation.login.AboutUsFragment_Admin"
+        android:label="About Us"
+        tools:layout="@layout/fragment_about_us__admin"/>
 
 </navigation>

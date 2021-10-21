@@ -168,22 +168,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp">
+        android:gravity="center"
+        >
 
         <Button
             android:id="@+id/book_seat"
             android:layout_width="150dp"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
             android:background="@drawable/book_seats" />
-
-        <Button
-            android:id="@+id/track_location"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/track_location"/>
 
     </LinearLayout>
 

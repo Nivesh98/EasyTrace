@@ -26,8 +26,20 @@
         android:label="Profile"
         tools:layout="@layout/fragment_profile__driver" />
     <fragment
-        android:id="@+id/navigation_setting_driver"
-        android:name="com.nivacreation.login.SettingsFragment"
+        android:id="@+id/navigation_settings_driver"
+        android:name="com.nivacreation.login.SettingFragment_Driver"
         android:label="Setting"
         tools:layout="@layout/fragment_setting__driver" />
+
+    <fragment
+        android:id="@+id/navigation_support_driver"
+        android:name="com.nivacreation.login.SupportFragment_Driver"
+        android:label="Support"
+        tools:layout="@layout/fragment_support__driver"/>
+
+    <fragment
+        android:id="@+id/navigation_aboutUs_driver"
+        android:name="com.nivacreation.login.AboutUsFragment_Driver"
+        android:label="About Us"
+        tools:layout="@layout/fragment_about_us__driver"/>
 </navigation>

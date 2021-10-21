@@ -109,7 +109,12 @@ public class QAScannerActivity extends AppCompatActivity  {
                                 Log.i("12345", "driver qr: "+driverQrCode+" text: "+text);
 
                                 if (text.trim().toString().equals(driverQrCode.trim().toString())) {
+
+                                    String pUserId = userId;
+                                    String dUserId = text.trim().toString();
                                     Intent i = new Intent(QAScannerActivity.this, BusDetailsQRActivity.class);
+                                    i.putExtra("passengerUserId",pUserId);
+                                    i.putExtra("driverUserId",dUserId);
                                     startActivity(i);
                                     Log.i("12345", "show buses insides "+document.getId());
                                     return;

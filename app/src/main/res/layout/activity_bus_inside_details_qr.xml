@@ -18,18 +18,43 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="20dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bus Name:"
-            android:layout_marginTop="20dp"
+            android:text="Passenger ID:"
+            android:layout_marginTop="5dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bus_name" />
+            android:id="@+id/passengerId"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+       >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bus ID:"
+            android:layout_marginTop="0dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bus_id"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -48,29 +73,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/driver_name" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Driver Contact:"
-            android:layout_marginTop="5dp"
+            android:id="@+id/driver_name"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/driver_contact" />
     </LinearLayout>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,7 +95,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/route" />
+            android:id="@+id/route"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -107,7 +117,32 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/available_seats" />
+            android:text="50"
+            android:id="@+id/available_seats"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Payment:"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/paymentBus"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
@@ -120,18 +155,10 @@
         android:layout_marginTop="30dp">
 
         <Button
-            android:layout_width="149dp"
-            android:layout_height="72dp"
+            android:layout_width="169dp"
+            android:layout_height="55dp"
             android:layout_gravity="center"
             android:background="@drawable/pay_here_btn" />
 
     </LinearLayout>
-
-
-
-
-
-
-
-
 </LinearLayout>
