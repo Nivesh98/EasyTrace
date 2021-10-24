@@ -33,7 +33,7 @@ public class ProfileFragment_Driver extends Fragment {
 
     private static final int RESULT_OK = -1;
     private Button qrBtn, logOut,findBusBtn;
-    private TextView userFullNameTxt, userEmailTxt, userTypeTxt, sUserName,userUserName_Profile;
+    private TextView userFullNameTxt, userEmailTxt, contact, address,userUserName_Profile;
 
     private Uri imageUri;
     private Bitmap compressor;
@@ -80,9 +80,9 @@ public class ProfileFragment_Driver extends Fragment {
 
         userEmailTxt = view.findViewById(R.id.passenger_profile_email);
         userFullNameTxt = view.findViewById(R.id.passenger_profile_name);
-        //userTypeTxt = view.findViewById(R.id.txtUserType);
+        contact = view.findViewById(R.id.passenger_profile_phonenumberB3);
         userUserName_Profile = view.findViewById(R.id.passenger_profile_usernameB2);
-        sUserName = view.findViewById(R.id.userName);
+        address = view.findViewById(R.id.passenger_profile_user_address);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
@@ -134,9 +134,8 @@ public class ProfileFragment_Driver extends Fragment {
                         userEmailTxt.setText(value.getString("email"));
                         userFullNameTxt.setText(value.getString("firstName") + " " + value.getString("lastName"));
                         userUserName_Profile.setText("@"+value.getString("firstName").toLowerCase()+"_"+value.getString("lastName").toLowerCase());
-                        //userTypeTxt.setText(value.getString("User Type"));
-                        // vui = value.getString("User Type");
-                        //userTypeTxt.setText(vui);
+                        contact.setText(value.getString("contact"));
+                        address.setText(value.getString("city")+", "+value.getString("street"));
 
                     }
 

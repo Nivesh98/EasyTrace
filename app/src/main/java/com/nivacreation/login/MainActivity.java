@@ -201,6 +201,9 @@ public class MainActivity extends AppCompatActivity {
                                                             user.put("email",email);
                                                             user.put("userType", userType);
                                                             user.put("userID",userID);
+                                                            user.put("contact","");
+                                                            user.put("city","");
+                                                            user.put("street","");
 
                                                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override

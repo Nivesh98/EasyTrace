@@ -60,6 +60,10 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
     String selectedDestinationEnd = "";
     boolean isActive = false;
 
+    ArrayList<LatLng> destinationLatLong;
+    ArrayList<String> townList_end;
+    ArrayList<String> townList_start;
+
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
@@ -111,7 +115,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
         //end = findViewById(R.id.txt_end);
         submit = findViewById(R.id.btnSubmit);
 
-        ArrayList<String> townList_start = new ArrayList<>();
+        townList_start = new ArrayList<>();
 
         townList_start.add("Select Start Location");
         townList_start.add("Kirindiwela");
@@ -150,7 +154,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
         //.................End Location..................
 
-        ArrayList<String> townList_end = new ArrayList<>();
+        townList_end = new ArrayList<>();
 
         townList_end.add("Select End Location");
         townList_end.add("Kirindiwela");
@@ -161,6 +165,43 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
         townList_end.add("Miriswaththa");
         townList_end.add("Mudungoda");
         townList_end.add("Gampaha");
+
+        //LatLong
+        //Kirindiwela
+        LatLng Kirindiwela = new LatLng( 7.042869765280313, 80.12968951041988);
+
+        //Radawana
+        LatLng Radawana = new LatLng(7.0334659995603435, 80.09290565519682);
+
+        //Henegama
+        LatLng Henegama = new LatLng(7.022026231737852, 80.05525135700815);
+
+        //Waliweriya
+        LatLng Waliweriya = new LatLng(7.032076348406431, 80.02829747222384);
+
+        //Nadungamuwa
+        LatLng Nadungamuwa = new LatLng(7.053384345245499, 80.01657207619385);
+
+        //Mudungoda
+        LatLng Mudungoda = new LatLng(7.066219118010275, 80.01296881316584);
+
+        //Miriswaththa
+        LatLng Miriswaththa = new LatLng(7.073011397441073, 80.01599033016919);
+
+        //Gampaha
+        LatLng Gampaha = new LatLng(7.091658180200923, 79.99269939532508);
+
+        destinationLatLong = new ArrayList<>();
+
+        destinationLatLong.add(Kirindiwela);
+        destinationLatLong.add(Kirindiwela);
+        destinationLatLong.add(Radawana);
+        destinationLatLong.add(Henegama);
+        destinationLatLong.add(Waliweriya);
+        destinationLatLong.add(Nadungamuwa);
+        destinationLatLong.add(Mudungoda);
+        destinationLatLong.add(Miriswaththa);
+        destinationLatLong.add(Gampaha);
 
 
         spinner_end.setAdapter(new ArrayAdapter<>(PassengerFindMap.this, android.R.layout.simple_spinner_dropdown_item,townList_end));
@@ -197,7 +238,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getDriverLocation();
+
                 String stLo = spinner_start.getSelectedItem().toString();
                 String enLo = spinner_end.getSelectedItem().toString();
 
@@ -209,525 +250,22 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                     Toast.makeText(PassengerFindMap.this,"Please Select EndPoint!",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!stLo.isEmpty()){
-                    if(!enLo.isEmpty()){
-                        mMap.clear();
 
-                        if((stLo.equals("Kirindiwela") && enLo.equals("Radawana"))||(stLo.equals("Radawana") && enLo.equals("Kirindiwela"))){
-                            double kiLat = 7.0427287;
-                            double kiLong = 80.1300031;
-                            double raLat = 7.0312;
-                            double raLong = 80.1045;
+                mMap.clear();
+                            mMap.addMarker(new MarkerOptions().position(destinationLatLong.get(startPoint)).title(stLo));
+                            mMap.addMarker(new MarkerOptions().position(destinationLatLong.get(endPoint)).title(enLo));
 
-                            double comLat = (7.0427287 + 7.0312)/2;
-                            double comLong = (80.1300031 + 80.1045)/2;
+                            int difer = startPoint-endPoint;
 
-                            LatLng kirindiwela = new LatLng(7.0427287,80.1300031);
-                            mMap.addMarker(new MarkerOptions().position(kirindiwela).title("Kirindiwela"));
+                            if(difer>=-4 && difer<=4){
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destinationLatLong.get(startPoint),12));
+                            }else {
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destinationLatLong.get(startPoint),11));
+                            }
 
-                            LatLng radawana = new LatLng(7.0312,80.1045);
-                            mMap.addMarker(new MarkerOptions().position(radawana).title("Radawana"));
 
-                            LatLng sydney = new LatLng(comLat,comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,13));
                             getDriverLocation();
 
-                        }else if((stLo.equals("Kirindiwela") && enLo.equals("Henegama"))||(stLo.equals("Henegama") && enLo.equals("Kirindiwela"))){
-                            double kiLat = 7.0427287;
-                            double kiLong = 80.1300031;
-                            double heLat = 7.02166;
-                            double heLong = 80.05446;
-
-                            double comLat = (kiLat + heLat)/2;
-                            double comLong = (kiLong + heLong)/2;
-
-                            LatLng kirindiwela = new LatLng(7.0427287,80.1300031);
-                            mMap.addMarker(new MarkerOptions().position(kirindiwela).title("Kirindiwela"));
-
-                            LatLng radawana = new LatLng(heLat,heLong);
-                            mMap.addMarker(new MarkerOptions().position(radawana).title("Henegama"));
-
-                            LatLng sydney = new LatLng(comLat,comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Kirindiwela") && enLo.equals("Waliweriya"))||(stLo.equals("Waliweriya") && enLo.equals("Kirindiwela"))){
-
-                            double kiLat = 7.0427287;
-                            double kiLong = 80.1300031;
-                            double weLat = 7.03150;
-                            double weLong = 80.02781;
-
-                            double comLat = (kiLat + weLat)/2;
-                            double comLong = (kiLong + weLong)/2;
-
-                            LatLng kirindiwela = new LatLng(7.0427287,80.1300031);
-                            mMap.addMarker(new MarkerOptions().position(kirindiwela).title("Kirindiwela"));
-
-                            LatLng weliweriya = new LatLng(weLat,weLong);
-                            mMap.addMarker(new MarkerOptions().position(weliweriya).title("Waliweriya"));
-
-                            LatLng sydney = new LatLng(comLat,comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Kirindiwela") && enLo.equals("Nadungamuwa"))||(stLo.equals("Nadungamuwa") && enLo.equals("Kirindiwela"))){
-                            double kiLat = 7.0427287;
-                            double kiLong = 80.1300031;
-                            double naLat = 7.05312;
-                            double naLong = 80.01614;
-
-                            double comLat = (kiLat + naLat)/2;
-                            double comLong = (kiLong + naLong)/2;
-
-                            LatLng kirindiwela = new LatLng(7.0427287,80.1300031);
-                            mMap.addMarker(new MarkerOptions().position(kirindiwela).title("Kirindiwela"));
-
-                            LatLng nadungamuwa = new LatLng(naLat,naLong);
-                            mMap.addMarker(new MarkerOptions().position(nadungamuwa).title("Nadungamuwa"));
-
-                            LatLng sydney = new LatLng(comLat,comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,11));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Kirindiwela") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Kirindiwela"))){
-                            double kiLat = 7.0427287;
-                            double kiLong = 80.1300031;
-                            double muLat = 7.05312;
-                            double muLong = 80.01614;
-
-                            double comLat = (kiLat + muLat)/2;
-                            double comLong = (kiLong + muLong)/2;
-
-                            LatLng kirindiwela = new LatLng(7.0427287,80.1300031);
-                            mMap.addMarker(new MarkerOptions().position(kirindiwela).title("Kirindiwela"));
-
-                            LatLng mudungoda = new LatLng(muLat,muLong);
-                            mMap.addMarker(new MarkerOptions().position(mudungoda).title("Mudungoda"));
-
-                            LatLng sydney = new LatLng(comLat,comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,11));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Kirindiwela") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Kirindiwela"))) {
-                            double kiLat = 7.0427287;
-                            double kiLong = 80.1300031;
-                            double miLat = 7.07339;
-                            double miLong = 80.01610;
-
-                            double comLat = (kiLat + miLat) / 2;
-                            double comLong = (kiLong + miLong) / 2;
-
-                            LatLng kirindiwela = new LatLng(7.0427287, 80.1300031);
-                            mMap.addMarker(new MarkerOptions().position(kirindiwela).title("Kirindiwela"));
-
-                            LatLng miriswaththa = new LatLng(miLat, miLong);
-                            mMap.addMarker(new MarkerOptions().position(miriswaththa).title("Miriswaththa"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 11));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Kirindiwela") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Kirindiwela"))) {
-                            double kiLat = 7.0427287;
-                            double kiLong = 80.1300031;
-                            double gaLat = 7.09199;
-                            double gaLong = 79.99321;
-
-                            double comLat = (kiLat + gaLat) / 2;
-                            double comLong = (kiLong + gaLong) / 2;
-
-                            LatLng kirindiwela = new LatLng(7.0427287, 80.1300031);
-                            mMap.addMarker(new MarkerOptions().position(kirindiwela).title("Kirindiwela"));
-
-                            LatLng gampaha = new LatLng(gaLat, gaLong);
-                            mMap.addMarker(new MarkerOptions().position(gampaha).title("Gampaha"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 11));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Radawana") && enLo.equals("Henegama"))||(stLo.equals("Henegama") && enLo.equals("Radawana"))) {
-                            double raLat = 7.0312;
-                            double raLong = 80.1045;
-                            double heLat = 7.02166;
-                            double heLong = 80.05446;
-
-                            double comLat = (raLat + heLat) / 2;
-                            double comLong = (raLong + heLong) / 2;
-
-                            LatLng radawana = new LatLng(raLat, raLong);
-                            mMap.addMarker(new MarkerOptions().position(radawana).title("Radawana"));
-
-                            LatLng henegama = new LatLng(heLat, heLong);
-                            mMap.addMarker(new MarkerOptions().position(henegama).title("Henegama"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Radawana") && enLo.equals("Waliweriya"))||(stLo.equals("Waliweriya") && enLo.equals("Radawana"))) {
-                            double raLat = 7.0312;
-                            double raLong = 80.1045;
-                            double waLat = 7.03150;
-                            double waLong = 80.02781;
-
-                            double comLat = (raLat + waLat) / 2;
-                            double comLong = (raLong + waLong) / 2;
-
-                            LatLng radawana = new LatLng(raLat, raLong);
-                            mMap.addMarker(new MarkerOptions().position(radawana).title("Radawana"));
-
-                            LatLng Waliweriya = new LatLng(waLat, waLong);
-                            mMap.addMarker(new MarkerOptions().position(Waliweriya).title("Waliweriya"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Radawana") && enLo.equals("Nadungamuwa"))||(stLo.equals("Nadungamuwa") && enLo.equals("Radawana"))) {
-                            double raLat = 7.0312;
-                            double raLong = 80.1045;
-                            double naLat = 7.05312;
-                            double naLong = 80.01614;
-
-                            double comLat = (raLat + naLat) / 2;
-                            double comLong = (raLong + naLong) / 2;
-
-                            LatLng radawana = new LatLng(raLat, raLong);
-                            mMap.addMarker(new MarkerOptions().position(radawana).title("Radawana"));
-
-                            LatLng Nadungamuwa = new LatLng(naLat, naLong);
-                            mMap.addMarker(new MarkerOptions().position(Nadungamuwa).title("Nadungamuwa"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Radawana") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Radawana"))) {
-                            double raLat = 7.0312;
-                            double raLong = 80.1045;
-                            double muLat = 7.06615;
-                            double muLong = 80.01228;
-
-                            double comLat = (raLat + muLat) / 2;
-                            double comLong = (raLong + muLong) / 2;
-
-                            LatLng radawana = new LatLng(raLat, raLong);
-                            mMap.addMarker(new MarkerOptions().position(radawana).title("Radawana"));
-
-                            LatLng Mudungoda = new LatLng(muLat, muLong);
-                            mMap.addMarker(new MarkerOptions().position(Mudungoda).title("Mudungoda"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Radawana") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Radawana"))) {
-                            double raLat = 7.0312;
-                            double raLong = 80.1045;
-                            double miLat = 7.07339;
-                            double miLong = 80.01610;
-
-                            double comLat = (raLat + miLat) / 2;
-                            double comLong = (raLong + miLong) / 2;
-
-                            LatLng radawana = new LatLng(raLat, raLong);
-                            mMap.addMarker(new MarkerOptions().position(radawana).title("Radawana"));
-
-                            LatLng Miriswaththa = new LatLng(miLat, miLong);
-                            mMap.addMarker(new MarkerOptions().position(Miriswaththa).title("Miriswaththa"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 11));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Radawana") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Radawana"))) {
-                            double raLat = 7.0312;
-                            double raLong = 80.1045;
-                            double gaLat = 7.09199;
-                            double gaLong = 79.99321;
-
-                            double comLat = (raLat + gaLat) / 2;
-                            double comLong = (raLong + gaLong) / 2;
-
-                            LatLng radawana = new LatLng(raLat, raLong);
-                            mMap.addMarker(new MarkerOptions().position(radawana).title("Radawana"));
-
-                            LatLng Gampaha = new LatLng(gaLat, gaLong);
-                            mMap.addMarker(new MarkerOptions().position(Gampaha).title("Gampaha"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 11));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Henegama") && enLo.equals("Waliweriya"))||(stLo.equals("Waliweriya") && enLo.equals("Henegama"))) {
-                            double heLat = 7.02166;
-                            double heLong = 80.05446;
-                            double waLat = 7.03150;
-                            double waLong = 80.02781;
-
-                            double comLat = (heLat + waLat) / 2;
-                            double comLong = (heLong + waLong) / 2;
-
-                            LatLng Henegama = new LatLng(heLat, heLong);
-                            mMap.addMarker(new MarkerOptions().position(Henegama).title("Henegama"));
-
-                            LatLng Waliweriya = new LatLng(waLat, waLong);
-                            mMap.addMarker(new MarkerOptions().position(Waliweriya).title("Waliweriya"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Henegama") && enLo.equals("Nadungamuwa"))||(stLo.equals("Nadungamuwa") && enLo.equals("Henegama"))) {
-                            double heLat = 7.02166;
-                            double heLong = 80.05446;
-                            double naLat = 7.05312;
-                            double naLong = 80.01614;
-
-                            double comLat = (heLat + naLat) / 2;
-                            double comLong = (heLong + naLong) / 2;
-
-                            LatLng Henegama = new LatLng(heLat, heLong);
-                            mMap.addMarker(new MarkerOptions().position(Henegama).title("Henegama"));
-
-                            LatLng Nadungamuwa = new LatLng(naLat, naLong);
-                            mMap.addMarker(new MarkerOptions().position(Nadungamuwa).title("Nadungamuwa"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Henegama") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Henegama"))) {
-                            double heLat = 7.02166;
-                            double heLong = 80.05446;
-                            double muLat = 7.06615;
-                            double muLong = 80.01228;
-
-                            double comLat = (heLat + muLat) / 2;
-                            double comLong = (heLong + muLong) / 2;
-
-                            LatLng Henegama = new LatLng(heLat, heLong);
-                            mMap.addMarker(new MarkerOptions().position(Henegama).title("Henegama"));
-
-                            LatLng Mudungoda = new LatLng(muLat, muLong);
-                            mMap.addMarker(new MarkerOptions().position(Mudungoda).title("Mudungoda"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Henegama") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Henegama"))) {
-                            double heLat = 7.02166;
-                            double heLong = 80.05446;
-                            double miLat = 7.07339;
-                            double miLong = 80.01610;
-
-                            double comLat = (heLat + miLat) / 2;
-                            double comLong = (heLong + miLong) / 2;
-
-                            LatLng Henegama = new LatLng(heLat, heLong);
-                            mMap.addMarker(new MarkerOptions().position(Henegama).title("Henegama"));
-
-                            LatLng Miriswaththa = new LatLng(miLat, miLong);
-                            mMap.addMarker(new MarkerOptions().position(Miriswaththa).title("Miriswaththa"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Henegama") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Henegama"))) {
-                            double heLat = 7.02166;
-                            double heLong = 80.05446;
-                            double gaLat = 7.09199;
-                            double gaLong = 79.99321;
-
-                            double comLat = (heLat + gaLat) / 2;
-                            double comLong = (heLong + gaLong) / 2;
-
-                            LatLng Henegama = new LatLng(heLat, heLong);
-                            mMap.addMarker(new MarkerOptions().position(Henegama).title("Henegama"));
-
-                            LatLng Gampaha = new LatLng(gaLat, gaLong);
-                            mMap.addMarker(new MarkerOptions().position(Gampaha).title("Gampaha"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Waliweriya") && enLo.equals("Nadungamuwa"))||(stLo.equals("Nadungamuwa") && enLo.equals("Waliweriya"))) {
-                            double waLat = 7.03150;
-                            double waLong = 80.02781;
-                            double naLat = 7.05312;
-                            double naLong = 80.01614;
-
-                            double comLat = (waLat + naLat) / 2;
-                            double comLong = (waLong + naLong) / 2;
-
-                            LatLng Waliweriya = new LatLng(waLat, waLong);
-                            mMap.addMarker(new MarkerOptions().position(Waliweriya).title("Waliweriya"));
-
-                            LatLng Nadungamuwa = new LatLng(naLat, naLong);
-                            mMap.addMarker(new MarkerOptions().position(Nadungamuwa).title("Nadungamuwa"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Waliweriya") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Waliweriya"))) {
-                            double waLat = 7.03150;
-                            double waLong = 80.02781;
-                            double muLat = 7.06615;
-                            double muLong = 80.01228;
-
-                            double comLat = (waLat + muLat) / 2;
-                            double comLong = (waLong + muLong) / 2;
-
-                            LatLng Waliweriya = new LatLng(waLat, waLong);
-                            mMap.addMarker(new MarkerOptions().position(Waliweriya).title("Waliweriya"));
-
-                            LatLng Mudungoda = new LatLng(muLat, muLong);
-                            mMap.addMarker(new MarkerOptions().position(Mudungoda).title("Mudungoda"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Waliweriya") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Waliweriya"))) {
-                            double waLat = 7.03150;
-                            double waLong = 80.02781;
-                            double miLat = 7.07339;
-                            double miLong = 80.01610;
-
-                            double comLat = (waLat + miLat) / 2;
-                            double comLong = (waLong + miLong) / 2;
-
-                            LatLng Waliweriya = new LatLng(waLat, waLong);
-                            mMap.addMarker(new MarkerOptions().position(Waliweriya).title("Waliweriya"));
-
-                            LatLng Miriswaththa = new LatLng(miLat, miLong);
-                            mMap.addMarker(new MarkerOptions().position(Miriswaththa).title("Miriswaththa"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Waliweriya") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Waliweriya"))) {
-                            double waLat = 7.03150;
-                            double waLong = 80.02781;
-                            double gaLat = 7.09199;
-                            double gaLong = 79.99321;
-
-                            double comLat = (waLat + gaLat) / 2;
-                            double comLong = (waLong + gaLong) / 2;
-
-                            LatLng Waliweriya = new LatLng(waLat, waLong);
-                            mMap.addMarker(new MarkerOptions().position(Waliweriya).title("Waliweriya"));
-
-                            LatLng Gampaha = new LatLng(gaLat, gaLong);
-                            mMap.addMarker(new MarkerOptions().position(Gampaha).title("Gampaha"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Nadungamuwa") && enLo.equals("Mudungoda"))||(stLo.equals("Mudungoda") && enLo.equals("Nadungamuwa"))) {
-                            double naLat = 7.05312;
-                            double naLong = 80.01614;
-                            double muLat = 7.06615;
-                            double muLong = 80.01228;
-
-                            double comLat = (naLat + muLat) / 2;
-                            double comLong = (naLong + muLong) / 2;
-
-                            LatLng Nadungamuwa = new LatLng(naLat, naLong);
-                            mMap.addMarker(new MarkerOptions().position(Nadungamuwa).title("Nadungamuwa"));
-
-                            LatLng Mudungoda = new LatLng(muLat, muLong);
-                            mMap.addMarker(new MarkerOptions().position(Mudungoda).title("Mudungoda"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Nadungamuwa") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Nadungamuwa"))) {
-                            double naLat = 7.05312;
-                            double naLong = 80.01614;
-                            double miLat = 7.07339;
-                            double miLong = 80.01610;
-
-                            double comLat = (naLat + miLat) / 2;
-                            double comLong = (naLong + miLong) / 2;
-
-                            LatLng Nadungamuwa = new LatLng(naLat, naLong);
-                            mMap.addMarker(new MarkerOptions().position(Nadungamuwa).title("Nadungamuwa"));
-
-                            LatLng Miriswaththa = new LatLng(miLat, miLong);
-                            mMap.addMarker(new MarkerOptions().position(Miriswaththa).title("Miriswaththa"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Nadungamuwa") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Nadungamuwa"))) {
-                            double naLat = 7.05312;
-                            double naLong = 80.01614;
-                            double gaLat = 7.09199;
-                            double gaLong = 79.99321;
-
-                            double comLat = (naLat + gaLat) / 2;
-                            double comLong = (naLong + gaLong) / 2;
-
-                            LatLng Nadungamuwa = new LatLng(naLat, naLong);
-                            mMap.addMarker(new MarkerOptions().position(Nadungamuwa).title("Nadungamuwa"));
-
-                            LatLng Gampaha = new LatLng(gaLat, gaLong);
-                            mMap.addMarker(new MarkerOptions().position(Gampaha).title("Gampaha"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Mudungoda") && enLo.equals("Miriswaththa"))||(stLo.equals("Miriswaththa") && enLo.equals("Mudungoda"))) {
-                            double muLat = 7.06615;
-                            double muLong = 80.01228;
-                            double miLat = 7.07339;
-                            double miLong = 80.01610;
-
-                            double comLat = (muLat + miLat) / 2;
-                            double comLong = (muLong + miLong) / 2;
-
-                            LatLng Mudungoda = new LatLng(muLat, muLong);
-                            mMap.addMarker(new MarkerOptions().position(Mudungoda).title("Mudungoda"));
-
-                            LatLng Miriswaththa = new LatLng(miLat, miLong);
-                            mMap.addMarker(new MarkerOptions().position(Miriswaththa).title("Miriswaththa"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 12));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Mudungoda") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Mudungoda"))) {
-                            double muLat = 7.06615;
-                            double muLong = 80.01228;
-                            double gaLat = 7.09199;
-                            double gaLong = 79.99321;
-
-                            double comLat = (muLat + gaLat) / 2;
-                            double comLong = (muLong + gaLong) / 2;
-
-                            LatLng Mudungoda = new LatLng(muLat, muLong);
-                            mMap.addMarker(new MarkerOptions().position(Mudungoda).title("Mudungoda"));
-
-                            LatLng Gampaha = new LatLng(gaLat, gaLong);
-                            mMap.addMarker(new MarkerOptions().position(Gampaha).title("Gampaha"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
-                            getDriverLocation();
-                        }else if ((stLo.equals("Miriswaththa") && enLo.equals("Gampaha"))||(stLo.equals("Gampaha") && enLo.equals("Miriswaththa"))) {
-                            double miLat = 7.07339;
-                            double miLong = 80.01610;
-                            double gaLat = 7.09199;
-                            double gaLong = 79.99321;
-
-                            double comLat = (miLat + gaLat) / 2;
-                            double comLong = (miLong + gaLong) / 2;
-
-                            LatLng Miriswaththa = new LatLng(miLat, miLong);
-                            mMap.addMarker(new MarkerOptions().position(Miriswaththa).title("Miriswaththa"));
-
-                            LatLng Gampaha = new LatLng(gaLat, gaLong);
-                            mMap.addMarker(new MarkerOptions().position(Gampaha).title("Gampaha"));
-
-                            LatLng sydney = new LatLng(comLat, comLong);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14));
-                            getDriverLocation();
-                        }
-
-                    }else{
-                        Toast.makeText(PassengerFindMap.this,"Please Enter Valid Location! ",Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(PassengerFindMap.this,"Please Enter Valid Location! ",Toast.LENGTH_SHORT).show();
-                    //startLocation.setError("Please Select Start Location");
-                }
             }
 
 
@@ -757,8 +295,10 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                             String isStarted = document.get("isStarted").toString();
 
                             if (isStarted.equals("True")){
+
                                 String direction = document.get("to").toString();
                                 String parengerDirection = startPoint>endPoint? "Kiridiwala" : "Gampaha";
+
                                 if (direction.equals(parengerDirection)) { //Gampaha -> kiridiwala
                                     Log.i("12345", "show buses "+document.getId());
                                     double lat = document.getDouble("lat");
@@ -780,12 +320,14 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                                             String enlo = spinner_end.getSelectedItem().toString();
                                             String trRoute = parengerDirection;
 
-                                            Intent i = new Intent(PassengerFindMap.this,BusInsideDetailsActivity.class);
-                                            i.putExtra("title",markertitle);
-                                            i.putExtra("stLocation",stlo);
-                                            i.putExtra("endLocation",enlo);
-                                            i.putExtra("trRoute",trRoute);
-                                            startActivity(i);
+                                            if (!townList_end.contains(markertitle)){
+                                                Intent i = new Intent(PassengerFindMap.this,BusInsideDetailsActivity.class);
+                                                i.putExtra("title",markertitle);
+                                                i.putExtra("stLocation",stlo);
+                                                i.putExtra("endLocation",enlo);
+                                                i.putExtra("trRoute",trRoute);
+                                                startActivity(i);
+                                            }
                                             return false;
                                         }
                                     });
