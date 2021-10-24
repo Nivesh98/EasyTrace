@@ -257,7 +257,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
 
                             int difer = startPoint-endPoint;
 
-                            if(difer>=-4 && difer<=4){
+                            if(difer>=-3 && difer<=3){
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destinationLatLong.get(startPoint),12));
                             }else {
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destinationLatLong.get(startPoint),11));
