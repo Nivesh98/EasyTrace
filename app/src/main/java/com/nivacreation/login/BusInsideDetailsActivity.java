@@ -2,8 +2,13 @@ package com.nivacreation.login;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +22,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.nivacreation.login.model.AppNotificationChaneel;
 
 public class BusInsideDetailsActivity extends AppCompatActivity {
 
     Button bookSeats;
     TextView busId, startLocation, endLocation, trRoute, driverName;
+
+    //chaennel
+    NotificationManagerCompat notificationManagerCompat;
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -41,6 +50,8 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
         trRoute = findViewById(R.id.route);
         driverName = findViewById(R.id.driver_name);
 
+        //chanell
+        notificationManagerCompat = NotificationManagerCompat.from(BusInsideDetailsActivity.this);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -64,6 +75,25 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        firebaseGetNotification(title);
+    }
+
+    private void firebaseGetNotification(String title) {
+        Log.d("12345", "goes Inside firebaseGetNotification "+title);
+
+            DocumentReference documentReference = fStore.collection("PassedLocation").document(title);
+            documentReference.addSnapshotListener( BusInsideDetailsActivity.this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                        Log.d("12345", "goes Inside firebaseGetNotification "+value.getString("LocationDescription"));
+                        String getHolt = value.getString("LocationDescription");
+                        notificationLocation(getHolt);
+                    Log.d("12345", "goes Inside firebaseGetNotification "+value.getString("LocationDescription"));
+
+                }
+            });
     }
 
     public void userDetails(){
@@ -88,4 +118,31 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
             });
         }
     }
+
+    private void notificationLocation(String getHolt) {
+        Log.d("12345", "goes Inside notification ");
+        if (getHolt != ""){
+            //
+            AppNotificationChaneel.c1 = "c"+ String.valueOf(AppNotificationChaneel.chStart);
+            Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(BusInsideDetailsActivity.this);
+            Notification notification = new NotificationCompat.Builder(BusInsideDetailsActivity.this,AppNotificationChaneel.c1)
+                    .setSmallIcon(R.drawable.bus_icon)
+                    .setContentTitle("Bus Current Location")
+                    .setContentText(getHolt)
+                    .setSound(uri)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_MESSAGE )
+                    .build();
+            managerCompat.notify(AppNotificationChaneel.chStart,notification);
+            //  }
+            Log.d("12345", "Get Holt " + getHolt);
+            AppNotificationChaneel.chStart++;
+        }else{
+            Log.d("12345", "Get Holt " + getHolt);
+        }
+
+    }
+
 }

@@ -173,9 +173,15 @@
 
         <Button
             android:id="@+id/book_seat"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
+            android:layout_width="148dp"
+            android:layout_height="match_parent"
             android:background="@drawable/book_seats" />
+
+        <Button
+            android:id="@+id/busHoltBtn"
+            android:layout_width="131dp"
+            android:layout_height="47dp"
+            android:background="@drawable/get_holt" />
 
     </LinearLayout>
 

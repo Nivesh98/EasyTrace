@@ -38,6 +38,7 @@
         android:roundIcon="@drawable/bus_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Login">
+
         <activity android:name=".AdminNavigationActivity"></activity>
         <activity android:name=".AdminHeaderActivity" />
         <!--

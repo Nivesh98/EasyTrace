@@ -1,13 +1,22 @@
 package com.nivacreation.login;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -42,8 +51,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.nivacreation.login.model.AppNotificationChaneel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -60,6 +71,11 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
     private String mParam1;
     private String mParam2;
+
+    //chanell
+    public  String c1 = "channel1";
+    int chStart = 1;
+    NotificationManagerCompat notificationManagerCompat;
 
     String selectedDestination = "";
 
@@ -83,7 +99,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
     private boolean isrun = false;
 
 
-    private static final int DEFAULT_ZOOM = 12;
+    private static final int DEFAULT_ZOOM = 18;
 
     MarkerOptions marker;
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
@@ -137,21 +153,12 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        //chanell
+        notificationManagerCompat = NotificationManagerCompat.from(getActivity());
+
         spinner_start = view.findViewById(R.id.spinner_start);
 
-
-        //Switch busStatus = (Switch) view.findViewById(R.id.busStatusSwitch);
         Button checkBtn = (Button) view.findViewById(R.id.busStatusBtn);
-
-//        if (busStatus.isChecked() == true){
-//            checkBtn.setText("STOP");
-//            checkBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(getActivity(),"Now Clickable",Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
 
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -165,63 +172,51 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                 Vector<MarkerOptions> markerOptions = new Vector<>();
 
                 markerOptions.add(new MarkerOptions().title("Kirindiwela")
-                        .position(new LatLng(7.0427287,80.1300031))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .position(new LatLng(7.042869765280313, 80.12968951041988))
+                        .snippet("Kirindiwela Bus Stand").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Radawana")
-                        .position(new LatLng(7.0312, 80.1045))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .position(new LatLng(7.0334659995603435, 80.09290565519682))
+                        .snippet("Radawana Bus Stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Henegama")
-                        .position(new LatLng(7.02166,80.05446))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .position(new LatLng(7.022026231737852, 80.05525135700815))
+                        .snippet("Henegama Bus Stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Waliweriya")
-                        .position(new LatLng(7.03150,80.02781))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .position(new LatLng(7.032076348406431, 80.02829747222384))
+                        .snippet("Waliweriya Bus Stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Nadungamuwa")
-                        .position(new LatLng(7.05312,80.01614))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .position(new LatLng(7.053384345245499, 80.01657207619385))
+                        .snippet("Nadungamuwa Bus Stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Mudungoda")
-                        .position(new LatLng(7.06615,80.01228))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .position(new LatLng(7.066219118010275, 80.01296881316584))
+                        .snippet("Mudungoda Bus Stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Miriswaththa")
-                        .position(new LatLng(7.07339,80.01610))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .position(new LatLng(7.073011397441073, 80.01599033016919))
+                        .snippet("Miriswaththa Bus Stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Gampaha")
-                        .position(new LatLng(7.09199,79.99321))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .position(new LatLng(7.091658180200923, 79.99269939532508))
+                        .snippet("Gampaha Bus Stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Ranavirugama 2")
                         .position(new LatLng(7.009945,80.074702))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .snippet("Radawana Bus Stand").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Ranavirugama 1")
                         .position(new LatLng(7.011150,80.075165))
-                        .snippet("Open during MCO : 8am - 6pm").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                        .snippet("Radawana Bus Stand").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
 
                 mMap = googleMap;
-                // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 
                 for (MarkerOptions mark : markerOptions){
                     mMap.addMarker(mark);
                 }
-//                Vector<MarkerOptions> markerOptions = new Vector<>();
-//                markerOptions.add(new MarkerOptions().title("Gampaha")
-//                        .position(new LatLng(7.09199,79.99321))
-//                        .snippet("Open during MCO : 8am - 6pm")
-//                );
-//                for (MarkerOptions mark : markerOptions){
-//                    mMap.addMarker(mark);
-//                }
-
                 getLocationPermission();
                 updateLocationUI();
                 //TaskRunInCycle();
@@ -265,7 +260,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                                     }
 
                                 }
-                            }, 0, 30, TimeUnit.SECONDS);
+                            }, 0, 5, TimeUnit.SECONDS);
                         }else {
                             spinner_start.setEnabled(true);
                             isActive = false;
@@ -304,6 +299,8 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
     private void firebaseUploaded(boolean isRun, String userID, Location lastKnownLocation) {
         DocumentReference documentReference = fStore.collection("BusLocations").document(userID);
         Map<String,Object> user = new HashMap<>();
+        DocumentReference passedLocation = fStore.collection("PassedLocation").document(userID);
+        Map<String,Object> user1 = new HashMap<>();
 
 
         if(isRun){
@@ -319,7 +316,9 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
             user.put("to",selectedDestination);
             user.put("isStarted","False");
             user.put("userID",userID);
+            user1.put("LocationDescription","");
         }
+        passedLocation.set(user1);
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -378,6 +377,8 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
                                 firebaseUploaded(true,userID,lastKnownLocation);
 
+                                getNotification(lastKnownLocation);
+
 
                             }
                         } else {
@@ -394,12 +395,29 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
+
+    private void getNotification(Location lastKnownLocation) {
+        if((7.0104 >lastKnownLocation.getLatitude()&&lastKnownLocation.getLatitude()>=7.0100) &&(80.0749 >=lastKnownLocation.getLongitude()&&lastKnownLocation.getLongitude()>=80.0740)){
+
+            String r1 = "Bus is Ranavirugama1 now.";
+            Toast.makeText(getActivity(), r1, Toast.LENGTH_SHORT).show();
+
+            notificationLocation(r1);
+
+        }else if ((7.0084 >lastKnownLocation.getLatitude()&&lastKnownLocation.getLatitude()>=7.0082) &&(80.0751 >=lastKnownLocation.getLongitude()&&lastKnownLocation.getLongitude()>=80.0748)){
+            String r2 ="Bus is Ranavirugama2 now.";
+            Toast.makeText(getActivity(), r2, Toast.LENGTH_SHORT).show();
+            notificationLocation(r2);
+        }
+        else if ((7.00715 >lastKnownLocation.getLatitude()&&lastKnownLocation.getLatitude()>=7.00701) &&(80.07366 >=lastKnownLocation.getLongitude()&&lastKnownLocation.getLongitude()>=80.07351)){
+            String  r3 ="Bus is Ranavirugama3 now.";
+            Toast.makeText(getActivity(), r3, Toast.LENGTH_SHORT).show();
+            notificationLocation(r3);
+        }
+    }
+
     private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
+
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -490,6 +508,76 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
             }
         });
+
+    }
+    private void notificationLocation(String r1) {
+
+
+
+       //
+            AppNotificationChaneel.c1 = "c"+ String.valueOf(AppNotificationChaneel.chStart);
+            Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getActivity());
+            Notification notification = new NotificationCompat.Builder(getActivity(),AppNotificationChaneel.c1)
+                    .setSmallIcon(R.drawable.bus_icon)
+                    .setContentTitle("Bus Current Location")
+                    .setContentText(r1)
+                    .setSound(uri)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_MESSAGE )
+                    .build();
+            managerCompat.notify(AppNotificationChaneel.chStart,notification);
+            notificationOfFirebase(r1, AppNotificationChaneel.chStart);
+      //  }
+
+
+        AppNotificationChaneel.chStart++;
+
+
+    }
+
+    private void notificationOfFirebase(String r1, int chStart) {
+
+        String userID ;
+        userID = fAuth.getCurrentUser().getUid();
+
+        DocumentReference documentReference = fStore.collection("PassedLocation").document(userID);
+        Map<String,Object> user = new HashMap<>();
+
+        user.put("LocationDescription",r1);
+
+        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG,"onSuccess: Success isStarted False! "+ userID);
+            }
+        });
+
+        notificationOfInboxFirebase(r1, userID,chStart);
+    }
+
+    private void notificationOfInboxFirebase(String r1, String userID, int chStart) {
+
+
+            String index = "b"+String.valueOf(chStart);
+            //String coloIndex = "c"+String.valueOf(chStart);
+
+            DocumentReference documentReference = fStore.collection("BusLocationInbox").document(userID).collection("1").document(index);
+            Map<String,Object> user = new HashMap<>();
+
+            user.put("passedHoalt",r1);
+
+            //documentReference.set(user);
+            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Log.d(TAG,"onSuccess: Success isStarted False! "+ userID);
+                }
+            });
+
+
+
 
     }
 }
