@@ -1,5 +1,6 @@
 package com.nivacreation.login;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -129,6 +130,9 @@ public class SettingFragment_Driver extends Fragment {
                         email = (value.getString("email"));
                         firstName.setText(value.getString("firstName"));
                         lastName.setText(value.getString("lastName"));
+                        contact.setText(value.getString("contact"));
+                        city.setText(value.getString("city"));
+                        street.setText(value.getString("street"));
                         //userTypeTxt.setText(value.getString("User Type"));
                         userType = value.getString("userType");
 
@@ -141,7 +145,21 @@ public class SettingFragment_Driver extends Fragment {
             updateBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    userUpdateDetails();
+
+                    AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                            .setTitle("Information Updating")
+                            .setMessage("Are you sure want to update these details?")
+                            .setPositiveButton("Yes",null)
+                            .setNegativeButton("No",null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            userUpdateDetails();
+                            dialog.dismiss();
+                        }
+                    });
                 }
             });
         }

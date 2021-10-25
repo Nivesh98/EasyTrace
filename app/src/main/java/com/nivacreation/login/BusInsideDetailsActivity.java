@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -26,7 +27,7 @@ import com.nivacreation.login.model.AppNotificationChaneel;
 
 public class BusInsideDetailsActivity extends AppCompatActivity {
 
-    Button bookSeats;
+    Button bookSeats, getHoltBtn;
     TextView busId, startLocation, endLocation, trRoute, driverName;
 
     //chaennel
@@ -42,7 +43,9 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_inside_details);
+
         bookSeats = findViewById(R.id.book_seat);
+        getHoltBtn = findViewById(R.id.busHoltBtn);
 
         busId = findViewById(R.id.bus_id);
         startLocation = findViewById(R.id.stLocation);
@@ -76,7 +79,29 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
             }
         });
 
-        firebaseGetNotification(title);
+        getHoltBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog dialog = new AlertDialog.Builder(BusInsideDetailsActivity.this)
+                        .setTitle("Notification")
+                        .setMessage("Do you want to get notifications regarding bus holts?")
+                        .setPositiveButton("Yes",null)
+                        .setNegativeButton("No",null)
+                        .show();
+                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        firebaseGetNotification(title);
+                        dialog.dismiss();
+                    }
+                });
+
+            }
+        });
+
+
     }
 
     private void firebaseGetNotification(String title) {
