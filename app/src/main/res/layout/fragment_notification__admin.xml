@@ -6,21 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".NotificationFragment_Admin">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/userRecycleView"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/kl"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <RadioGroup
+                android:id="@+id/rgUsers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="9dp"
+                android:gravity="center"
+                android:background="#4670CA">
+
+                <RadioButton
+                    android:id="@+id/rdPassenger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/radio_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="4dp"
+                    android:padding="5dp"
+                    android:text="Passenger"
+
+                    android:textColor="@drawable/text_color"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/rdDriver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/radio_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="4dp"
+                    android:padding="5dp"
+                    android:text="Driver"
+                    android:textColor="@drawable/text_color"
+                    android:textStyle="bold" />
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+            android:orientation="vertical"
+            android:layout_alignTop="@+id/kl"
+            android:layout_marginTop="50dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userRecycleView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>

@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -32,7 +35,12 @@ public class NotificationFragment_Admin extends Fragment {
     UserAdapter userAdapter;
     FirebaseFirestore fStore;
 
-    ProgressDialog progressDialog;
+    private RadioGroup radioGroupUsers;
+    private RadioButton radioButtonUsers;
+
+
+
+    //ProgressDialog progressDialog;
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -74,22 +82,45 @@ public class NotificationFragment_Admin extends Fragment {
 
         fStore = FirebaseFirestore.getInstance();
 
+        radioGroupUsers = view.findViewById(R.id.rgUsers);
+
         userArrayList = new ArrayList<User>();
 
         userAdapter = new UserAdapter(getActivity(),userArrayList);
 
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Fetching Data...");
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(getActivity());
+//        progressDialog.setCancelable(false);
+//        //progressDialog.setMessage("Fetching Data...");
+//        progressDialog.show();
         recyclerView.setAdapter(userAdapter);
+       radioButtonUsers = view.findViewById(R.id.rdPassenger);
 
-        EventChangeListner();
+        radioGroupUsers.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                radioButtonUsers = view.findViewById(checkedId);
+                userArrayList.clear();
+                switch (checkedId)
+                {
+                    case  R.id.rdPassenger :
+
+                        Toast.makeText(getActivity(),radioButtonUsers.getText().toString(),Toast.LENGTH_SHORT).show();
+                       
+                        break;
+                    case R.id.rdDriver:
+
+                        Toast.makeText(getActivity(),radioButtonUsers.getText().toString(),Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                EventChangeListner();
+            }
+
+        });
+
         return view;
     }
 
     private void EventChangeListner() {
-
         fStore = FirebaseFirestore.getInstance();
 
         fStore.collection("Users").orderBy("firstName", Query.Direction.ASCENDING)
@@ -99,8 +130,8 @@ public class NotificationFragment_Admin extends Fragment {
 
                         if(error != null){
 
-                            if (progressDialog.isShowing())
-                                progressDialog.dismiss();
+//                            if (progressDialog.isShowing())
+//                                progressDialog.dismiss();
 
                             Log.e("12345",error.getMessage());
                             return;
@@ -110,14 +141,41 @@ public class NotificationFragment_Admin extends Fragment {
 
                             if (dc.getType() == DocumentChange.Type.ADDED){
 
-                                userArrayList.add(dc.getDocument().toObject(User.class));
+                                String userType = dc.getDocument().get("userType").toString();
+                                Log.e("12345",userType);
+                                Log.e("12345",radioButtonUsers.getText().toString());
+                                if (userType.equals(radioButtonUsers.getText().toString())){
+
+
+                                    userArrayList.add(dc.getDocument().toObject(User.class));
+                                }
+
                             }
 
                             userAdapter.notifyDataSetChanged();
-                            if (progressDialog.isShowing())
-                                progressDialog.dismiss();
+//                            if (progressDialog.isShowing())
+//                                progressDialog.dismiss();
                         }
                     }
                 });
     }
+//    private void findRadioChecked(int checkIdRadio) {
+//        switch (checkIdRadio)
+//        {
+//            case  R.id.rdPassenger :
+//
+//                UserNameRadio = "Passenger";
+//                break;
+////            case R.id.rdAdmin:
+////                radioButtonUsers = findViewById(R.id.rdAdmin);
+////                UserNameRadio = radioButtonUsers.getText().toString();
+////                break;
+//            case R.id.rdDriver:
+//
+//                UserNameRadio = "Driver";
+//                break;
+//        }
+//
+//
+//    }
 }

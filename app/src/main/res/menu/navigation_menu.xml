@@ -17,8 +17,8 @@
 
     <item
         android:id="@+id/navigation_inbox"
-        android:icon="@drawable/inbox"
-        android:title="@string/inbox"/>
+        android:icon="@drawable/notification"
+        android:title="Notifications"/>
     <item
         android:title="@string/others">
         <menu>

@@ -8,12 +8,12 @@
     <fragment
         android:id="@+id/navigation_inbox"
         android:name="com.nivacreation.login.InboxFragment"
-        android:label="Inbox"
+        android:label="Notifications"
         tools:layout="@layout/fragment_inbox" />
     <fragment
         android:id="@+id/navigation_notification"
         android:name="com.nivacreation.login.NotificationFragment"
-        android:label="Notification"
+        android:label="My Wallet"
         tools:layout="@layout/fragment_notification" />
     <fragment
         android:id="@+id/navigation_profile"
