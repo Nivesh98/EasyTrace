@@ -45,6 +45,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.userType.setText(user.getUserType());
         holder.email.setText(user.getEmail());
 
+
+
     }
 
     @Override

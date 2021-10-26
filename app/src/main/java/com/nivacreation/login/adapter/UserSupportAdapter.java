@@ -1,6 +1,8 @@
 package com.nivacreation.login.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,15 @@ public class UserSupportAdapter extends RecyclerView.Adapter<UserSupportAdapter.
         holder.firstname.setText(user.getFirstName());
         holder.lastName.setText(user.getLastName());
         holder.contact.setText(user.getContact());
+
+        holder.contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+user.getContact()));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
