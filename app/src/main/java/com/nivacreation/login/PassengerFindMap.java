@@ -251,7 +251,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                     return;
                 }
 
-                mMap.clear();
+                            mMap.clear();
                             mMap.addMarker(new MarkerOptions().position(destinationLatLong.get(startPoint)).title(stLo));
                             mMap.addMarker(new MarkerOptions().position(destinationLatLong.get(endPoint)).title(enLo));
 
@@ -262,8 +262,6 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                             }else {
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destinationLatLong.get(startPoint),11));
                             }
-
-
                             getDriverLocation();
 
             }

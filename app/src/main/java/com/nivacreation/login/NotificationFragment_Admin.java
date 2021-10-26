@@ -103,13 +103,8 @@ public class NotificationFragment_Admin extends Fragment {
                 switch (checkedId)
                 {
                     case  R.id.rdPassenger :
-
-                        Toast.makeText(getActivity(),radioButtonUsers.getText().toString(),Toast.LENGTH_SHORT).show();
-                       
                         break;
                     case R.id.rdDriver:
-
-                        Toast.makeText(getActivity(),radioButtonUsers.getText().toString(),Toast.LENGTH_SHORT).show();
                         break;
                 }
                 EventChangeListner();

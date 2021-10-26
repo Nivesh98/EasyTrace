@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.nivacreation.login.MainActivity.TAG;
 
@@ -72,7 +76,7 @@ public class SettingFragment_Driver extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_setting__driver, container, false);
         firstName = view.findViewById(R.id.firstName);
         lastName = view.findViewById(R.id.lastName);
         contact = view.findViewById(R.id.contactNum);
@@ -84,8 +88,39 @@ public class SettingFragment_Driver extends Fragment {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
+        contact.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (validateMobile(contact.getText().toString())){
+
+                }else{
+                    contact.setError("Invalid Mobile No! First Digit 0, Include 10 Digits!");
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         userDetails();
         return view;
+    }
+
+    boolean validateMobile(String input){
+
+        Pattern p = Pattern.compile("[0][0-9]{9}");
+        Matcher m = p.matcher(input);
+
+        return m.matches();
     }
     private void userUpdateDetails() {
 

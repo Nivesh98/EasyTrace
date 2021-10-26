@@ -59,8 +59,9 @@
                     android:layout_width="20dp"
                     android:layout_height="30dp"
                     android:layout_margin="10dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="25dp"
                     android:background="@drawable/phone"
+                    android:paddingLeft="5dp"
                     android:padding="30dp">
 
                 </ImageView>
@@ -69,6 +70,7 @@
                     android:id="@+id/contactNum"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
+                    android:layout_marginLeft="12dp"
                     android:hint="Contact Number"
                     android:inputType="phone" />
             </LinearLayout>

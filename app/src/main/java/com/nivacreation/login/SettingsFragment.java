@@ -6,10 +6,14 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,6 +29,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.nivacreation.login.MainActivity.TAG;
 
@@ -86,6 +92,29 @@ public class SettingsFragment extends Fragment {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
+        contact.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (validateMobile(contact.getText().toString())){
+
+                }else{
+                    contact.setError("Invalid Mobile No! First Digit 0, Include 10 Digits!");
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         userDetails();
 //        Bundle bundle = this.getArguments();
 //        String userType = bundle.getString("userType");
@@ -94,6 +123,14 @@ public class SettingsFragment extends Fragment {
 //
 //        Toast.makeText(getActivity(),"userType "+userType+" email "+email+" userId "+userId,Toast.LENGTH_LONG).show();
         return view;
+    }
+
+    boolean validateMobile(String input){
+
+        Pattern p = Pattern.compile("[0][0-9]{9}");
+        Matcher m = p.matcher(input);
+
+        return m.matches();
     }
 
     private void userUpdateDetails() {

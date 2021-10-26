@@ -2,41 +2,46 @@ package com.nivacreation.login;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SupportFragment_Driver#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.nivacreation.login.adapter.UserAdapter;
+import com.nivacreation.login.adapter.UserSupportAdapter;
+import com.nivacreation.login.model.User;
+import com.nivacreation.login.model.UserSupport;
+
+import java.util.ArrayList;
+
 public class SupportFragment_Driver extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    RecyclerView recyclerView;
+    ArrayList<UserSupport> userSupportArrayList;
+    UserSupportAdapter userSupportAdapter;
+    FirebaseFirestore fStore;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public SupportFragment_Driver() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SupportFragment_Driver.
-     */
-    // TODO: Rename and change types and number of parameters
     public static SupportFragment_Driver newInstance(String param1, String param2) {
         SupportFragment_Driver fragment = new SupportFragment_Driver();
         Bundle args = new Bundle();
@@ -58,7 +63,56 @@ public class SupportFragment_Driver extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_support__driver, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_support__driver, container, false);
+
+        recyclerView = view.findViewById(R.id.userRecycleViewAdminSupport);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        fStore = FirebaseFirestore.getInstance();
+
+        userSupportArrayList = new ArrayList<UserSupport>();
+
+        userSupportAdapter = new UserSupportAdapter(getActivity(),userSupportArrayList);
+        recyclerView.setAdapter(userSupportAdapter);
+
+        EventChangeListner();
+
+        return  view;
+    }
+
+    private void EventChangeListner() {
+        fStore = FirebaseFirestore.getInstance();
+
+        fStore.collection("Users").orderBy("firstName", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                        if(error != null){
+                            Log.e("12345",error.getMessage());
+                            return;
+                        }
+
+                        for (DocumentChange dc : value.getDocumentChanges()){
+
+                            if (dc.getType() == DocumentChange.Type.ADDED){
+
+                                String userType = dc.getDocument().get("userType").toString();
+                                Log.e("12345",userType);
+                                if (userType.equals("Admin")){
+
+
+                                    userSupportArrayList.add(dc.getDocument().toObject(UserSupport.class));
+                                }
+
+                            }
+
+                            userSupportAdapter.notifyDataSetChanged();
+
+                        }
+                    }
+                });
     }
 }
