@@ -56,6 +56,7 @@ import com.nivacreation.login.model.AppNotificationChaneel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.Executors;
@@ -68,6 +69,10 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    List<String> list = new ArrayList<>();
+
+    boolean[] booleans = new boolean[36];
 
     private String mParam1;
     private String mParam2;
@@ -231,9 +236,10 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                         }
                         if (!isActive){
                             isActive = true;
+
                             checkBtn.setText("STOP");
                             spinner_start.setEnabled(false);
-
+                            enableBusSeats();
                             //checkBtn.isClickable() = false;
                             Toast.makeText(getActivity(),"Bus Started!",Toast.LENGTH_SHORT).show();
                             // checkBtn.isClickable();
@@ -248,6 +254,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                                             public void run(){
                                                 getDeviceLocation();
                                                 enableMyLocation();
+
                                                 Toast.makeText(getActivity(), "change location",Toast.LENGTH_SHORT).show();
                                                 mMap.clear();
                                                 for (MarkerOptions mark : markerOptions){
@@ -295,6 +302,9 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
         return view;
     }
+
+
+
 
     private void firebaseUploaded(boolean isRun, String userID, Location lastKnownLocation) {
         DocumentReference documentReference = fStore.collection("BusLocations").document(userID);
@@ -553,22 +563,20 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                 Log.d(TAG,"onSuccess: Success isStarted False! "+ userID);
             }
         });
+        list.add(r1);
+        notificationOfInboxFirebase(userID);
 
-        notificationOfInboxFirebase(r1, userID,chStart);
     }
 
-    private void notificationOfInboxFirebase(String r1, String userID, int chStart) {
+    private void notificationOfInboxFirebase(String userID) {
 
+        DocumentReference documentReference = fStore.collection("BusLocationInbox").document(userID);
+        Map<String,Object> user = new HashMap<>();
+        for(int i =0; i<list.size(); i++){
+            String index = "n"+String.valueOf(i+1);
+            user.put(index, list.get(i));
+        }
 
-            String index = "b"+String.valueOf(chStart);
-            //String coloIndex = "c"+String.valueOf(chStart);
-
-            DocumentReference documentReference = fStore.collection("BusLocationInbox").document(userID).collection("1").document(index);
-            Map<String,Object> user = new HashMap<>();
-
-            user.put("passedHoalt",r1);
-
-            //documentReference.set(user);
             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
@@ -576,8 +584,27 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                 }
             });
 
+    }
 
+    private void enableBusSeats() {
 
+        Log.d("12345","inside enable bus seats ");
+        String userID ;
+        userID = fAuth.getCurrentUser().getUid();
+        DocumentReference documentReference = fStore.collection("BusSeats").document(userID);
+        Map<String,Object> seats = new HashMap<>();
+        for(int i = 0; i<booleans.length; i++){
+            booleans[i] =true;
+            String seat = "seat"+i;
+            seats.put(seat,booleans[i]);
+
+        }
+        documentReference.set(seats).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG,"onSuccess: Success isStarted False! "+ userID);
+            }
+        });
 
     }
 }

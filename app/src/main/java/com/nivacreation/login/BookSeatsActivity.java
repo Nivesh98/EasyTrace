@@ -1,654 +1,1127 @@
 package com.nivacreation.login;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-public class BookSeatsActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-    ImageButton seat_1,seat_2,seat_3,seat_4,seat_5,seat_6,seat_7,seat_8,seat_9,seat_10,
-            seat_11,seat_12,seat_13,seat_14,seat_15,seat_16,seat_17,seat_18,seat_19,seat_20,
-            seat_21,seat_22,seat_23,seat_24,seat_25,seat_26,seat_27,seat_28,seat_29,seat_30,
-            seat_31,seat_32,seat_33,seat_34,seat_35,seat_36,seat_37,seat_38,seat_39,seat_40,
-            seat_41,seat_42,seat_43,seat_44,seat_45,seat_46,seat_47,seat_48,seat_49,seat_50;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    boolean isValue = true;
+import static android.content.ContentValues.TAG;
+
+public class BookSeatsActivity extends AppCompatActivity implements View.OnClickListener {
+
+    Button[] buttons = new Button[36];
+    boolean[] booleans = new boolean[36];
+
+    String title, travelRoute,stLocation, edLocation1;
+
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+
+    //    private boolean isValue0 = true, isValue1 = true;
+    int i;
+    int k;
+    int g =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_seats);
 
-        seat_1 = findViewById(R.id.seat_1); seat_11 = findViewById(R.id.seat_11); seat_23 = findViewById(R.id.seat_23);
-        seat_2 = findViewById(R.id.seat_2); seat_12 = findViewById(R.id.seat_12); seat_24 = findViewById(R.id.seat_24);
-        seat_3 = findViewById(R.id.seat_3); seat_13 = findViewById(R.id.seat_13); seat_25 = findViewById(R.id.seat_25);
-        seat_4 = findViewById(R.id.seat_4); seat_14 = findViewById(R.id.seat_14); seat_26 = findViewById(R.id.seat_26);
-        seat_5 = findViewById(R.id.seat_5); seat_15 = findViewById(R.id.seat_15); seat_27 = findViewById(R.id.seat_27);
-        seat_6 = findViewById(R.id.seat_6); seat_16 = findViewById(R.id.seat_16); seat_29 = findViewById(R.id.seat_29);
-        seat_7 = findViewById(R.id.seat_7); seat_17 = findViewById(R.id.seat_17); seat_30 = findViewById(R.id.seat_30);
-        seat_8 = findViewById(R.id.seat_8); seat_18 = findViewById(R.id.seat_18); seat_31 = findViewById(R.id.seat_31);
-        seat_9 = findViewById(R.id.seat_9); seat_19 = findViewById(R.id.seat_19); seat_32 = findViewById(R.id.seat_32);
-        seat_10 = findViewById(R.id.seat_10); seat_20 = findViewById(R.id.seat_20); seat_33 = findViewById(R.id.seat_33);
-        seat_22 = findViewById(R.id.seat_22); seat_21 = findViewById(R.id.seat_21); seat_28 = findViewById(R.id.seat_28);
+        title = getIntent().getStringExtra("title");
+        travelRoute = getIntent().getStringExtra("trRoute");
+        stLocation = getIntent().getStringExtra("stLocation");
+        edLocation1 = getIntent().getStringExtra("endLocation");
 
-        seat_34 = findViewById(R.id.seat_34); seat_45 = findViewById(R.id.seat_45);
-        seat_35 = findViewById(R.id.seat_35); seat_46 = findViewById(R.id.seat_46);
-        seat_36 = findViewById(R.id.seat_36); seat_47 = findViewById(R.id.seat_47);
-        seat_37 = findViewById(R.id.seat_37); seat_48 = findViewById(R.id.seat_48);
-        seat_38 = findViewById(R.id.seat_38); seat_49 = findViewById(R.id.seat_49);
-        seat_39 = findViewById(R.id.seat_39); seat_50 = findViewById(R.id.seat_50);
-        seat_40 = findViewById(R.id.seat_40);
-        seat_41 = findViewById(R.id.seat_41);
-        seat_42 = findViewById(R.id.seat_42);
-        seat_43 = findViewById(R.id.seat_43);
-        seat_44 = findViewById(R.id.seat_44);
+        fStore = FirebaseFirestore.getInstance();
 
-        seat_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button count = findViewById(R.id.count);
 
-                if(isValue){
-                    seat_1.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
+        for (i = 0; i < buttons.length; i++) {
+            String buttonID = "seat" + i;
+            int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+            booleans[i] = true;
+            buttons[i] = findViewById(resID);
+            buttons[i].setOnClickListener(this);
+        }
+
+        //Retriew current seats data from firebasefirestore
+       firebaseAboutSeats(title);
+
+
+        buttons[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[0]) {
+                    buttons[0].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[0] = false;
                     return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[0].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[0] = true;
+
                 }
-                seat_1.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
+            }
+        });
+        buttons[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[1]) {
+                    buttons[1].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[1] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[1].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[1] = true;
+
+                }
+            }
+        });
+
+        buttons[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[2]) {
+                    buttons[2].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[2] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[2].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[2] = true;
+
+                }
+            }
+        });
+
+        buttons[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[3]) {
+                    buttons[3].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[3] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[3].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[3] = true;
+
+                }
+            }
+        });
+
+        buttons[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[4]) {
+                    buttons[4].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[4] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[4].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[4] = true;
+
+                }
+            }
+        });
+        buttons[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[5]) {
+                    buttons[5].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[5] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[5].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[5] = true;
+
+                }
+            }
+        });
+
+        buttons[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[6]) {
+                    buttons[6].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[6] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[6].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[6] = true;
+
+                }
+            }
+        });
+        buttons[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[7]) {
+                    buttons[7].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[7] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[7].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[7] = true;
+
+                }
+            }
+        });
+        buttons[8].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[8]) {
+                    buttons[8].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[8] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[8].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[8] = true;
+
+                }
+            }
+        });
+        buttons[9].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[9]) {
+                    buttons[9].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[9] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[9].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[9] = true;
+
+                }
+            }
+        });
+        buttons[10].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[10]) {
+                    buttons[10].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[10] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[10].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[10] = true;
+
+                }
+            }
+        });
+        buttons[11].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[11]) {
+                    buttons[11].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[11] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[11].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[11] = true;
+
+                }
+            }
+        });
+        buttons[12].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[12]) {
+                    buttons[12].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[12] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[12].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[12] = true;
+
+                }
+            }
+        });
+        buttons[13].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[13]) {
+                    buttons[13].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[13] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[13].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[13] = true;
+
+                }
+            }
+        });
+        buttons[14].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[14]) {
+                    buttons[14].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[14] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[14].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[14] = true;
+
+                }
+            }
+        });
+        buttons[15].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[15]) {
+                    buttons[15].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[15] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[15].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[15] = true;
+
+                }
+            }
+        });
+        buttons[16].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[16]) {
+                    buttons[16].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[16] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[16].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[16] = true;
+
+                }
+            }
+        });
+        buttons[17].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[17]) {
+                    buttons[17].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[17] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[17].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[17] = true;
+
+                }
+            }
+        });
+        buttons[18].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[18]) {
+                    buttons[18].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[18] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[18].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[18] = true;
+
+                }
+            }
+        });
+        buttons[19].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[19]) {
+                    buttons[19].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[19] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[19].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[19] = true;
+
+                }
+            }
+        });
+        buttons[20].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[20]) {
+                    buttons[20].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[20] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[20].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[20] = true;
+
+                }
+            }
+        });
+        buttons[21].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[21]) {
+                    buttons[21].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[21] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[21].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[21] = true;
+
+                }
+            }
+        });
+        buttons[22].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[22]) {
+                    buttons[22].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[22] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[22].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[22] = true;
+
+                }
+            }
+        });
+        buttons[23].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[23]) {
+                    buttons[23].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[23] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[23].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[23] = true;
+
+                }
+            }
+        });
+        buttons[24].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[24]) {
+                    buttons[24].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[24] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[24].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[24] = true;
+
+                }
+            }
+        });
+        buttons[25].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[25]) {
+                    buttons[25].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[25] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[25].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[25] = true;
+
+                }
+            }
+        });
+        buttons[26].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[26]) {
+                    buttons[26].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[26] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[26].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[26] = true;
+
+                }
+            }
+        });
+        buttons[27].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[27]) {
+                    buttons[27].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[27] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[27].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[27] = true;
+
+                }
+            }
+        });
+        buttons[28].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[28]) {
+                    buttons[28].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[28] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[28].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[28] = true;
+
+                }
+            }
+        });
+        buttons[29].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[29]) {
+                    buttons[29].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[29] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[29].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[29] = true;
+
+                }
+            }
+        });
+        buttons[30].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[30]) {
+                    buttons[30].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[30] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[30].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[30] = true;
+
+                }
+            }
+        });
+        buttons[31].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[31]) {
+                    buttons[31].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[31] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[31].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[31] = true;
+
+                }
+            }
+        });
+        buttons[32].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[32]) {
+                    buttons[32].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[32] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[32].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[32] = true;
+
+                }
+            }
+        });
+        buttons[33].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[33]) {
+                    buttons[33].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[33] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[33].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[33] = true;
+
+                }
+            }
+        });
+        buttons[34].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[34]) {
+                    buttons[34].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[34] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[34].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[34] = true;
+
+                }
+            }
+        });
+        buttons[35].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (booleans[35]) {
+                    buttons[35].setBackgroundResource(android.R.color.holo_red_dark);
+                    booleans[35] = false;
+                    return;
+                } else {
+                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                            .setTitle("Cancelling the seat")
+                            .setMessage("Are you sure want to cancel the seat?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    positiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            buttons[35].setBackgroundResource(R.color.teal_200);
+                            dialog.dismiss();
+                        }
+                    });
+                    booleans[35] = true;
+
+                }
+            }
+        });
+        count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String,Object> seats = new HashMap<>();
+                g = 0;
+
+                firebaseAboutSeats(title);
+
+                for (int j = 0; j < buttons.length; j++) {
+
+                    if (booleans[j] == false) {
+                        String seat = "seat"+j;
+                        seats.put(seat,booleans[j]);
+                        g++;
+                    } else {
+                        String seat = "seat"+j;
+                        seats.put(seat,booleans[j]);
+
+                    }
+
+                }
+                FirebaseFirestore.getInstance().collection("BusSeats").document(title).update(seats);
+                Toast.makeText(BookSeatsActivity.this, "Booked seats are " + g, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void firebaseAboutSeats(String title) {
+
+        Log.d("1111","Inside firebaseAboutSeats");
+
+        DocumentReference documentReference = fStore.collection("BusSeats").document(this.title);
+        documentReference.addSnapshotListener(BookSeatsActivity.this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                Log.d("1111","Inside Document Reference");
+
+                if (value != null && value.exists()) {
+
+                    Log.d("1111","Value is not null");
+
+                    for(int l=0; l<booleans.length; l++){
+
+                        Log.d("1111","Inside for loop");
+                        String val = "seat"+l;
+
+                        Boolean getValue = value.getBoolean(val);
+
+                        if(getValue.equals(false)){
+                            booleans[l]=false;
+                            buttons[l].setBackgroundResource(android.R.color.holo_red_dark);
+
+                        }else{
+                            booleans[l]=true;
+                            buttons[l].setBackgroundResource(R.color.teal_200);
+                        }
+
+
+                    }
+
+
+                }else{
+                    Log.d("1111","Value is null");
+                }
 
             }
         });
-        seat_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if(isValue){
-                    seat_2.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_2.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
 
-            }
-        });
-        seat_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_3.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_3.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_4.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_4.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
+    }
 
-            }
-        });
-        seat_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_5.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_5.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_6.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_6.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_7.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_7.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_8.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_8.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_9.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_9.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_10.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_10.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_11.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_11.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_11.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_12.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_12.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_12.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_13.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_13.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_13.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_14.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_14.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_14.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_15.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_15.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_15.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_16.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_16.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_16.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_17.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_17.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_17.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_18.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_18.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_19.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_19.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_19.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_20.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_20.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_20.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_21.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_21.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_21.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_22.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_22.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_22.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_23.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_23.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_23.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_24.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_24.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_24.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_25.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_25.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_25.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_26.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_26.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_26.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_27.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_27.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_27.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_28.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_28.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_28.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_29.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_29.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_29.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_30.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_30.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_30.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_31.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_31.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_31.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_32.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_32.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_32.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_33.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_33.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_33.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_34.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_34.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_34.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_35.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_35.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_35.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_36.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_36.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_36.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_37.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_37.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_37.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_38.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_38.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_38.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_39.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_39.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_39.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_40.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_40.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_40.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_41.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_41.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_41.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_42.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_42.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_42.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_43.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_43.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_43.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_44.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_44.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_44.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_45.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_45.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_45.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_46.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_46.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_46.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_47.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_47.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_47.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_48.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_48.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_48.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_49.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_49.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_49.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
-        seat_50.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValue){
-                    seat_50.setBackgroundResource(android.R.color.holo_red_dark);
-                    isValue = false;
-                    return;
-                }
-                seat_50.setBackgroundResource(android.R.color.background_light);
-                isValue = true;
-            }
-        });
+    @Override
+    public void onClick(View v) {
+
     }
 }

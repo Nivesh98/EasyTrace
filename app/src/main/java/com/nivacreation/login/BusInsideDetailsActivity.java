@@ -30,6 +30,8 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
     Button bookSeats, getHoltBtn;
     TextView busId, startLocation, endLocation, trRoute, driverName;
 
+    String travelRoute,stLocation,edLocation1;
+
     //chaennel
     NotificationManagerCompat notificationManagerCompat;
 
@@ -62,12 +64,12 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
         title = getIntent().getStringExtra("title");
         busId.setText(title);
 
-        String travelRoute = getIntent().getStringExtra("trRoute");
+        travelRoute = getIntent().getStringExtra("trRoute");
         trRoute.setText(travelRoute);
-        String stLocation = getIntent().getStringExtra("stLocation");
+        stLocation = getIntent().getStringExtra("stLocation");
         startLocation.setText(stLocation);
-        String edLocation = getIntent().getStringExtra("endLocation");
-        endLocation.setText(edLocation);
+        edLocation1 = getIntent().getStringExtra("endLocation");
+        endLocation.setText(edLocation1);
 
         userDetails();
 
@@ -75,6 +77,10 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(BusInsideDetailsActivity.this, BookSeatsActivity.class);
+                i.putExtra("title",title);
+                i.putExtra("stLocation",stLocation);
+                i.putExtra("endLocation",edLocation1);
+                i.putExtra("trRoute",travelRoute);
                 startActivity(i);
             }
         });
