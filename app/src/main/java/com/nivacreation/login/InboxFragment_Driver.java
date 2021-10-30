@@ -596,7 +596,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
         for(int i = 0; i<booleans.length; i++){
             booleans[i] =true;
             String seat = "seat"+i;
-            seats.put(seat,booleans[i]);
+            seats.put(seat,"");
 
         }
         documentReference.set(seats).addOnSuccessListener(new OnSuccessListener<Void>() {

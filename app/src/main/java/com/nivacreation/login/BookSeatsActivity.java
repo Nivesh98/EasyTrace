@@ -1053,18 +1053,19 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
             public void onClick(View v) {
                 Map<String,Object> seats = new HashMap<>();
                 g = 0;
-
+                String userID = "87HATPpL1MQ0hhunLRzQkzXQoDt2";
+                //userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 firebaseAboutSeats(title);
 
                 for (int j = 0; j < buttons.length; j++) {
 
                     if (booleans[j] == false) {
                         String seat = "seat"+j;
-                        seats.put(seat,booleans[j]);
+                        seats.put(seat,userID);
                         g++;
                     } else {
                         String seat = "seat"+j;
-                        seats.put(seat,booleans[j]);
+                        seats.put(seat,"");
 
                     }
 
@@ -1095,9 +1096,9 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                         Log.d("1111","Inside for loop");
                         String val = "seat"+l;
 
-                        Boolean getValue = value.getBoolean(val);
+                        String getValue = value.get(val).toString();
 
-                        if(getValue.equals(false)){
+                        if(!getValue.equals("")){
                             booleans[l]=false;
                             buttons[l].setBackgroundResource(android.R.color.holo_red_dark);
 
