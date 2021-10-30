@@ -34,12 +34,15 @@ import static android.content.ContentValues.TAG;
 public class BookSeatsActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button[] buttons = new Button[36];
-    boolean[] booleans = new boolean[36];
+    String[] booleans = new String[36];
 
     String title, travelRoute,stLocation, edLocation1;
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+
+    //String userID = "87HATPpL1MQ0hhunLRzQkzXQoDt2";
+    String userID ;
 
     //    private boolean isValue0 = true, isValue1 = true;
     int i;
@@ -56,14 +59,19 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         stLocation = getIntent().getStringExtra("stLocation");
         edLocation1 = getIntent().getStringExtra("endLocation");
 
+
+
         fStore = FirebaseFirestore.getInstance();
+
+
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Button count = findViewById(R.id.count);
 
         for (i = 0; i < buttons.length; i++) {
             String buttonID = "seat" + i;
             int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-            booleans[i] = true;
+            booleans[i] = "";
             buttons[i] = findViewById(resID);
             buttons[i].setOnClickListener(this);
         }
@@ -75,26 +83,39 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[0]) {
+                if (booleans[0].equals("")) { //Now Empty
                     buttons[0].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[0] = false;
+                    booleans[0] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[0].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[0] = true;
+                    if(!booleans[0].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[0].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[0] = "";
+                            }
+                        });
+
+                    }
+
+
 
                 }
             }
@@ -102,26 +123,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[1]) {
+                if (booleans[1].equals("")) {
                     buttons[1].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[1] = false;
+                    booleans[1] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[1].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[1] = true;
+                    if(!booleans[1].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[1].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[1] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -130,26 +163,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[2]) {
+                if (booleans[2].equals("")) {
                     buttons[2].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[2] = false;
+                    booleans[2] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[2].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[2] = true;
+                    if(!booleans[2].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[2].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[2] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -158,26 +203,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[3]) {
+                if (booleans[3].equals("")) {
                     buttons[3].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[3] = false;
+                    booleans[3] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[3].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[3] = true;
+                    if(!booleans[3].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[3].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[3] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -186,26 +243,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[4]) {
+                if (booleans[4].equals("")) {
                     buttons[4].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[4] = false;
+                    booleans[4] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[4].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[4] = true;
+                    if(!booleans[4].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[4].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[4] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -213,54 +282,77 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[5]) {
+                if (booleans[5].equals("")) {
                     buttons[5].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[5] = false;
+                    booleans[5] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[5].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[5] = true;
+                    if(!booleans[5].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[5].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[5] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
         });
-
         buttons[6].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[6]) {
+                if (booleans[6].equals("")) {
                     buttons[6].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[6] = false;
+                    booleans[6] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[6].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[6] = true;
+                    if(!booleans[6].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[6].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[6] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -268,26 +360,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[7].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[7]) {
+                if (booleans[7].equals("")) {
                     buttons[7].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[7] = false;
+                    booleans[7] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[7].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[7] = true;
+                    if(!booleans[7].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[7].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[7] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -295,26 +399,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[8].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[8]) {
+                if (booleans[8].equals("")) {
                     buttons[8].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[8] = false;
+                    booleans[8] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[8].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[8] = true;
+                    if(!booleans[8].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[8].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[8] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -322,26 +438,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[9].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[9]) {
+                if (booleans[9].equals("")) {
                     buttons[9].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[9] = false;
+                    booleans[9] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[9].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[9] = true;
+                    if(!booleans[9].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[9].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[9] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -349,26 +477,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[10].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[10]) {
+                if (booleans[10].equals("")) {
                     buttons[10].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[10] = false;
+                    booleans[10] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[10].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[10] = true;
+                    if(!booleans[10].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[10].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[10] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -376,26 +516,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[11].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[11]) {
+                if (booleans[11].equals("")) {
                     buttons[11].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[11] = false;
+                    booleans[11] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[11].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[11] = true;
+                    if(!booleans[11].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[11].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[11] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -403,26 +555,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[12].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[12]) {
+                if (booleans[12].equals("")) {
                     buttons[12].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[12] = false;
+                    booleans[12] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[12].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[12] = true;
+                    if(!booleans[12].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[12].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[12] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -430,26 +594,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[13].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[13]) {
+                if (booleans[13].equals("")) {
                     buttons[13].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[13] = false;
+                    booleans[13] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[13].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[13] = true;
+                    if(!booleans[13].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[13].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[13] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -457,26 +633,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[14].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[14]) {
+                if (booleans[14].equals("")) {
                     buttons[14].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[14] = false;
+                    booleans[14] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[14].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[14] = true;
+                    if(!booleans[14].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[14].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[14] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -484,26 +672,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[15].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[15]) {
+                if (booleans[15].equals("")) {
                     buttons[15].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[15] = false;
+                    booleans[15] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[15].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[15] = true;
+                    if(!booleans[15].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[15].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[15] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -511,26 +711,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[16].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[16]) {
+                if (booleans[16].equals("")) {
                     buttons[16].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[16] = false;
+                    booleans[16] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[16].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[16] = true;
+                    if(!booleans[16].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[16].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[16] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -538,26 +750,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[17].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[17]) {
+                if (booleans[17].equals("")) {
                     buttons[17].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[17] = false;
+                    booleans[17] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[17].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[17] = true;
+                    if(!booleans[17].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[17].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[17] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -565,26 +789,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[18].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[18]) {
+                if (booleans[18].equals("")) {
                     buttons[18].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[18] = false;
+                    booleans[18] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[18].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[18] = true;
+                    if(!booleans[18].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[18].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[18] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -592,26 +828,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[19].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[19]) {
+                if (booleans[19].equals("")) {
                     buttons[19].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[19] = false;
+                    booleans[19] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[19].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[19] = true;
+                    if(!booleans[19].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[19].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[19] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -619,26 +867,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[20].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[20]) {
+                if (booleans[20].equals("")) {
                     buttons[20].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[20] = false;
+                    booleans[20] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[20].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[20] = true;
+                    if(!booleans[20].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[20].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[20] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -646,26 +906,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[21].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[21]) {
+                if (booleans[21].equals("")) {
                     buttons[21].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[21] = false;
+                    booleans[21] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[21].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[21] = true;
+                    if(!booleans[21].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[21].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[21] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -673,26 +945,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[22].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[22]) {
+                if (booleans[22].equals("")) {
                     buttons[22].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[22] = false;
+                    booleans[22] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[22].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[22] = true;
+                    if(!booleans[22].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[22].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[22] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -700,26 +984,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[23].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[23]) {
+                if (booleans[23].equals("")) {
                     buttons[23].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[23] = false;
+                    booleans[23] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[23].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[23] = true;
+                    if(!booleans[23].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[23].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[23] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -727,26 +1023,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[24].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[24]) {
+                if (booleans[24].equals("")) {
                     buttons[24].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[24] = false;
+                    booleans[24] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[24].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[24] = true;
+                    if(!booleans[24].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[24].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[24] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -754,26 +1062,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[25].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[25]) {
+                if (booleans[25].equals("")) {
                     buttons[25].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[25] = false;
+                    booleans[25] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[25].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[25] = true;
+                    if(!booleans[25].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[25].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[25] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -781,26 +1101,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[26].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[26]) {
+                if (booleans[26].equals("")) {
                     buttons[26].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[26] = false;
+                    booleans[26] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[26].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[26] = true;
+                    if(!booleans[26].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[26].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[26] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -808,26 +1140,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[27].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[27]) {
+                if (booleans[27].equals("")) {
                     buttons[27].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[27] = false;
+                    booleans[27] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[27].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[27] = true;
+                    if(!booleans[27].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[27].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[27] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -835,26 +1179,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[28].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[28]) {
+                if (booleans[28].equals("")) {
                     buttons[28].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[28] = false;
+                    booleans[28] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[28].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[28] = true;
+                    if(!booleans[28].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[28].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[28] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -862,26 +1218,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[29].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[29]) {
+                if (booleans[29].equals("")) {
                     buttons[29].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[29] = false;
+                    booleans[29] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[29].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[29] = true;
+                    if(!booleans[29].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[29].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[29] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -889,26 +1257,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[30].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[30]) {
+                if (booleans[30].equals("")) {
                     buttons[30].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[30] = false;
+                    booleans[30] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[30].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[30] = true;
+                    if(!booleans[30].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[30].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[30] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -916,26 +1296,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[31].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[31]) {
+                if (booleans[31].equals("")) {
                     buttons[31].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[31] = false;
+                    booleans[31] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[31].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[31] = true;
+                    if(!booleans[31].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[31].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[31] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -943,26 +1335,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[32].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[32]) {
+                if (booleans[32].equals("")) {
                     buttons[32].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[32] = false;
+                    booleans[32] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[32].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[32] = true;
+                    if(!booleans[32].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[32].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[32] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -970,26 +1374,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[33].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[33]) {
+                if (booleans[33].equals("")) {
                     buttons[33].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[33] = false;
+                    booleans[33] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[33].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[33] = true;
+                    if(!booleans[33].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[33].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[33] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -997,26 +1413,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[34].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[34]) {
+                if (booleans[34].equals("")) {
                     buttons[34].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[34] = false;
+                    booleans[34] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[34].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[34] = true;
+                    if(!booleans[34].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[34].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[34] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -1024,26 +1452,38 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[35].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[35]) {
+                if (booleans[35].equals("")) {
                     buttons[35].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[35] = false;
+                    booleans[35] = userID;
                     return;
                 } else {
-                    AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                            .setTitle("Cancelling the seat")
-                            .setMessage("Are you sure want to cancel the seat?")
-                            .setPositiveButton("Yes", null)
-                            .setNegativeButton("No", null)
-                            .show();
-                    Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    positiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            buttons[35].setBackgroundResource(R.color.teal_200);
-                            dialog.dismiss();
-                        }
-                    });
-                    booleans[35] = true;
+                    if(!booleans[35].equals(userID)){
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("OK", null)
+                                .show();
+
+
+                    }else {
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("Are you sure want to cancel the seat?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                buttons[35].setBackgroundResource(R.color.teal_200);
+                                dialog.dismiss();
+                                booleans[35] = "";
+                            }
+                        });
+
+                    }
+
 
                 }
             }
@@ -1053,16 +1493,23 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
             public void onClick(View v) {
                 Map<String,Object> seats = new HashMap<>();
                 g = 0;
-                String userID = "87HATPpL1MQ0hhunLRzQkzXQoDt2";
-                //userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
                 firebaseAboutSeats(title);
 
                 for (int j = 0; j < buttons.length; j++) {
 
-                    if (booleans[j] == false) {
-                        String seat = "seat"+j;
-                        seats.put(seat,userID);
-                        g++;
+                    if(!booleans[j].equals("")) {
+
+                        if(booleans[j].equals(userID)){
+                            String seat = "seat"+j;
+                            seats.put(seat,userID);
+                            g++;
+                        }else{
+                            String seat = "seat"+j;
+                            seats.put(seat,booleans[j]);
+                            g++;
+                        }
+
                     } else {
                         String seat = "seat"+j;
                         seats.put(seat,"");
@@ -1072,8 +1519,20 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                 }
                 FirebaseFirestore.getInstance().collection("BusSeats").document(title).update(seats);
                 Toast.makeText(BookSeatsActivity.this, "Booked seats are " + g, Toast.LENGTH_SHORT).show();
+
+                firebaseUpdateDriverDetails(g);
             }
         });
+    }
+
+    private void firebaseUpdateDriverDetails(int g) {
+
+        int avail = 36-g;
+        Map<String,Object> available = new HashMap<>();
+
+        available.put("available seat",avail);
+
+        FirebaseFirestore.getInstance().collection("Bus").document(title).update(available);
     }
 
     private void firebaseAboutSeats(String title) {
@@ -1099,11 +1558,11 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                         String getValue = value.get(val).toString();
 
                         if(!getValue.equals("")){
-                            booleans[l]=false;
+                            booleans[l]=getValue;
                             buttons[l].setBackgroundResource(android.R.color.holo_red_dark);
 
                         }else{
-                            booleans[l]=true;
+                            booleans[l]="";
                             buttons[l].setBackgroundResource(R.color.teal_200);
                         }
 

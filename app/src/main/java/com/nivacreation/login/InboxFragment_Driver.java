@@ -209,11 +209,15 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                         .snippet("Gampaha Bus Stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Ranavirugama 2")
-                        .position(new LatLng(7.009945,80.074702))
+                        .position(new LatLng(7.008252,80.075031))
                         .snippet("Radawana Bus Stand").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
                 markerOptions.add(new MarkerOptions().title("Ranavirugama 1")
-                        .position(new LatLng(7.011150,80.075165))
+                        .position(new LatLng(7.010274,80.074813))
+                        .snippet("Radawana Bus Stand").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
+                );
+                markerOptions.add(new MarkerOptions().title("Ranavirugama 3")
+                        .position(new LatLng(7.007083,80.073586))
                         .snippet("Radawana Bus Stand").icon(BitmapDescriptorFactory.fromResource(R.drawable.pngwing))
                 );
 
@@ -312,6 +316,11 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
         DocumentReference passedLocation = fStore.collection("PassedLocation").document(userID);
         Map<String,Object> user1 = new HashMap<>();
 
+        DocumentReference driverDetails = fStore.collection("Bus").document(userID);
+        Map<String,Object> driver = new HashMap<>();
+
+        Map<String,Object> driver1 = new HashMap<>();
+
 
         if(isRun){
             user.put("lat",lastKnownLocation.getLatitude());
@@ -321,14 +330,35 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
             user.put("userID",userID);
             user.put("location",lastKnownLocation.getBearing());
 
+            driver.put("seat",36);
+            driver.put("available seat",36);
+
+            if (selectedDestination.equals("Kirindiwela")){
+                driver.put("from","Gampaha");
+                driver.put("to",selectedDestination);
+            }else{
+                driver.put("from","Kirindiwela");
+                driver.put("to",selectedDestination);
+            }
+
+
+            driver.put("id",userID);
+
 
         }else{
             user.put("to",selectedDestination);
             user.put("isStarted","False");
             user.put("userID",userID);
             user1.put("LocationDescription","");
+
+            driver1.put("from","");
+            driver1.put("to","");
+            driver1.put("available seat",null);
         }
+
+        driverDetails.set(driver);
         passedLocation.set(user1);
+        FirebaseFirestore.getInstance().collection("Bus").document(userID).update(driver1);
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -377,10 +407,10 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
                                 mMap.addMarker(new MarkerOptions().position(currentlocation).title("current location").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_top_icon)).rotation(lastKnownLocation.getBearing()).anchor((float)0.5,(float)0.5));
 
-                                Toast.makeText(getActivity(), "latitude:" + lastKnownLocation.getLatitude() + " longitude:" +lastKnownLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), "latitude:" + lastKnownLocation.getLatitude() + " longitude:" +lastKnownLocation.getLongitude(), Toast.LENGTH_SHORT).show();
 
                                 drawCircle(new LatLng(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude()),2);
-                                Toast.makeText(getActivity(), "circle is here", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), "circle is here", Toast.LENGTH_SHORT).show();
 
                                 String userID ;
                                 userID = fAuth.getCurrentUser().getUid();

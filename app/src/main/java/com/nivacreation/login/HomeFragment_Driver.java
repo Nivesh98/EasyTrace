@@ -54,7 +54,7 @@ import static com.nivacreation.login.MainActivity.TAG;
 public class HomeFragment_Driver extends Fragment {
 
     private static final int RESULT_OK = -1;
-    TextView userFullNameTxt, userEmailTxt, userTypeTxt;
+    TextView userFullNameTxt, userEmailTxt, userTypeTxt, seats, availableSeats, from, to;
     Button logOutBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -103,11 +103,19 @@ public class HomeFragment_Driver extends Fragment {
         userFullNameTxt = view.findViewById(R.id.txtUserFullName);
         userTypeTxt = view.findViewById(R.id.txtUserType);
         toolbar = view.findViewById(R.id.toolBar_logout);
+        seats =view.findViewById(R.id.seats);
+        availableSeats =view.findViewById(R.id.availableSeats);
+        from =view.findViewById(R.id.from);
+        to =view.findViewById(R.id.to);
 
         logOutBtn = view.findViewById(R.id.logout);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+
+        //get details about seats
+        String uId =fAuth.getCurrentUser().getUid();
+        getDeatilsBusSeats(seats,availableSeats,from,to, uId);
 
         //QR Genareter im below
 
@@ -158,6 +166,34 @@ public class HomeFragment_Driver extends Fragment {
         });
 
         return view;
+    }
+
+    private void getDeatilsBusSeats(TextView seats, TextView availableSeats, TextView from, TextView to, String uId) {
+
+        String seat = seats.getText().toString();
+        String ava = availableSeats.getText().toString();
+        String fro = from.getText().toString();
+        String t = to.getText().toString();
+
+        DocumentReference documentReference = fStore.collection("Bus").document(uId);
+        documentReference.addSnapshotListener( getActivity(), new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                if (value != null && value.exists()) {
+
+                    seats.setText(value.get("seat").toString());
+                    availableSeats.setText(value.get("available seat").toString());
+                    from.setText(value.getString("from"));
+                    to.setText(value.getString("to"));
+
+
+                }
+
+            }
+        });
+
+
     }
 
 
