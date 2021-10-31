@@ -130,7 +130,10 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
 
                         Log.d("12345", "goes Inside firebaseGetNotification "+value.getString("LocationDescription"));
                         String getHolt = value.getString("LocationDescription");
-                        notificationLocation(getHolt);
+
+                            notificationLocation(getHolt);
+
+
                     Log.d("12345", "goes Inside firebaseGetNotification "+value.getString("LocationDescription"));
 
                 }
