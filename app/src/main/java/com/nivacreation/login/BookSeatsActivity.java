@@ -24,7 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +38,12 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     Button[] buttons = new Button[36];
     String[] booleans = new String[36];
 
+    Calendar calender;
+    SimpleDateFormat simpleDateFormat;
+    String time;
+
     String title, travelRoute,stLocation, edLocation1;
+    int stInt, enInt;
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -48,6 +55,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     int i;
     int k;
     int g =0;
+    int c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +66,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         travelRoute = getIntent().getStringExtra("trRoute");
         stLocation = getIntent().getStringExtra("stLocation");
         edLocation1 = getIntent().getStringExtra("endLocation");
+        stInt =getIntent().getIntExtra("stInt",stInt);
+        enInt =getIntent().getIntExtra("enInt",enInt);
 
+        Log.d("1111","start "+stInt);
+        Log.d("1111","end "+enInt);
 
+        calender = Calendar.getInstance();
+        simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        time =simpleDateFormat.format(calender.getTime());
 
         fStore = FirebaseFirestore.getInstance();
 
@@ -1493,6 +1508,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
             public void onClick(View v) {
                 Map<String,Object> seats = new HashMap<>();
                 g = 0;
+                c = 0;
 
                 firebaseAboutSeats(title);
 
@@ -1504,6 +1520,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                             String seat = "seat"+j;
                             seats.put(seat,userID);
                             g++;
+                            c++;
                         }else{
                             String seat = "seat"+j;
                             seats.put(seat,booleans[j]);
@@ -1521,16 +1538,131 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                 Toast.makeText(BookSeatsActivity.this, "Booked seats are " + g, Toast.LENGTH_SHORT).show();
 
                 firebaseUpdateDriverDetails(g);
+                firebasePassengerAboutBooking(c,userID,title);
             }
         });
+    }
+
+    private void firebasePassengerAboutBooking(int c, String userID, String title) {
+        DocumentReference documentReference = fStore.collection("User Booking").document(userID);
+        Map<String,Object> book = new HashMap<>();
+
+        book.put("busID",title);
+        book.put("enLocation",edLocation1);
+        book.put("stLocation",stLocation);
+        book.put("seats",c);
+
+        int diff =stInt-enInt;
+        Log.d("1111","differ "+diff);
+        if ((1==diff) || (-1==diff)){
+            double k = Double.valueOf(c);
+            double pay = (50*k*0.2);
+            double fPay = (50*k);
+            double oBook = (50*0.2);
+            book.put("onePayment",oBook);
+            double rem = (50*0.8*k);
+            book.put("remain",rem);
+            book.put("forOne",50);
+            book.put("fullPayment",fPay);
+            book.put("paid",pay);
+            book.put("time",time);
+        }else if ((2==diff) || (-2==diff)){
+            double k = Double.valueOf(c);
+            double pay = (100*k*0.2);
+            double fPay = (100*k);
+            double oBook = (100*0.2);
+            book.put("onePayment",oBook);
+            double rem = (100*0.8*k);
+            book.put("remain",rem);
+            book.put("forOne",100);
+            book.put("fullPayment",fPay);
+            book.put("paid",pay);
+            book.put("time",time);
+        }else if ((3==diff) || (-3==diff)){
+            double k = Double.valueOf(c);
+            double pay = (180*k*0.2);
+            double fPay = (180*k);
+            double oBook = (180*0.2);
+            book.put("onePayment",oBook);
+            double rem = (180*0.8*k);
+            book.put("remain",rem);
+            book.put("forOne",180);
+            book.put("fullPayment",fPay);
+            book.put("paid",pay);
+            book.put("time",time);
+        }else if ((4==diff) || (-4==diff)){
+            double k = Double.valueOf(c);
+            double pay = (250*k*0.2);
+            double fPay = (250*k);
+            double oBook = (250*0.2);
+            book.put("onePayment",oBook);
+            double rem = (250*0.8*k);
+            book.put("remain",rem);
+            book.put("forOne",250);
+            book.put("fullPayment",fPay);
+            book.put("paid",pay);
+            book.put("time",time);
+        }else if ((5==diff) || (-5==diff)){
+            double k = Double.valueOf(c);
+            double pay = (400*k*0.2);
+            double fPay = (400*k);
+            double oBook = (400*0.2);
+            book.put("onePayment",oBook);
+            double rem = (400*0.8*k);
+            book.put("remain",rem);
+            book.put("forOne",400);
+            book.put("fullPayment",fPay);
+            book.put("paid",pay);
+            book.put("time",time);
+        }else if ((6==diff) || (-6==diff)){
+            double k = Double.valueOf(c);
+            double pay = (550*k*0.2);
+            double fPay = (550*k);
+            double oBook = (550*0.2);
+            book.put("onePayment",oBook);
+            double rem = (550*0.8*k);
+            book.put("remain",rem);
+            book.put("forOne",550);
+            book.put("fullPayment",fPay);
+            book.put("paid",pay);
+            book.put("time",time);
+        }else if ((7==diff) || (-7==diff)){
+            double k = Double.valueOf(c);
+            double pay = (900*k*0.2);
+            double fPay = (900*k);
+            double oBook = (900*0.2);
+            book.put("onePayment",oBook);
+            double rem = (900*0.8*k);
+            book.put("remain",rem);
+            book.put("forOne",900);
+            book.put("fullPayment",fPay);
+            book.put("paid",pay);
+            book.put("time",time);
+        }
+
+
+        documentReference.set(book);
+
     }
 
     private void firebaseUpdateDriverDetails(int g) {
 
         int avail = 36-g;
+        //DocumentReference documentReference = fStore.collection("Bus").document(userID);
         Map<String,Object> available = new HashMap<>();
 
         available.put("available seat",avail);
+        available.put("seat",36);
+        available.put("id",title);
+
+        if (travelRoute.equals("Kirindiwela")){
+            available.put("from",travelRoute);
+            available.put("to","Gampaha");
+        }else{
+            available.put("from","Kirindiwela");
+            available.put("to",travelRoute);
+        }
+
 
         FirebaseFirestore.getInstance().collection("Bus").document(title).update(available);
     }

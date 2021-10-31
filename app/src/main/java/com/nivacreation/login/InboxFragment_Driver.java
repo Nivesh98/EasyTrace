@@ -351,9 +351,11 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
             user.put("userID",userID);
             user1.put("LocationDescription","");
 
-            driver1.put("from","");
-            driver1.put("to","");
-            driver1.put("available seat",null);
+            driver.put("seat",36);
+            driver.put("from","");
+            driver.put("to","");
+            driver.put("available seat",36);
+            driver.put("id",userID);
         }
 
         driverDetails.set(driver);

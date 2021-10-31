@@ -9,8 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.nivacreation.login.R;
 import com.nivacreation.login.model.Bus;
 import com.nivacreation.login.model.TransactionDetails;
@@ -24,11 +27,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private List<TransactionDetails> transactionDetails ;
     private Context context;
 
-    public TransactionAdapter(Context context, ItemClickListener itemClickListener, List<TransactionDetails> transactionDetails) {
+    public TransactionAdapter(Context context, EventListener<DocumentSnapshot> itemClickListener, List<TransactionDetails> transactionDetails) {
         this.context = context;
-        this.itemClickListener = itemClickListener;
+        this.itemClickListener = (ItemClickListener) itemClickListener;
         this.layoutInflater = LayoutInflater.from(context);
         this.transactionDetails = transactionDetails;
+    }
+
+    public TransactionAdapter(Context context, FragmentActivity activity, List<TransactionDetails> transactionList) {
     }
 
     @NonNull
@@ -42,9 +48,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.tvCost.setText(transactionDetails.get(position).getCost());
-        holder.tvDate.setText(transactionDetails.get(position).getDate());
-        holder.tvStartEnd.setText(transactionDetails.get(position).getFromTo());
+        holder.tvCost.setText("Rs : "+(int) transactionDetails.get(position).getFullPayment());
+        holder.tvDate.setText(transactionDetails.get(position).getTime());
+        holder.tvStartEnd.setText(transactionDetails.get(position).getStLocation()+" - "+transactionDetails.get(position).getEnLocation());
 
         holder.transactionRecycler.setOnClickListener(new View.OnClickListener() {
             @Override

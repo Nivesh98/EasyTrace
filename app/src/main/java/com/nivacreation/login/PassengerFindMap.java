@@ -271,16 +271,16 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
     }
 
     private void getDriverLocation() {
-
+        Log.i("12345", "inside getDevice location");
 
         if (fAuth.getCurrentUser().getUid() != null){
-
+            Log.i("12345", "user not null");
             userId = fAuth.getCurrentUser().getUid();
 
             fStore.collection("BusLocations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    Log.d("12345", "is Success"+ task.isSuccessful());
+                    Log.i("12345", "is Success"+ task.isSuccessful());
                     if (task.isSuccessful()) {
                         List<String> list = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -295,7 +295,7 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                             if (isStarted.equals("True")){
 
                                 String direction = document.get("to").toString();
-                                String parengerDirection = startPoint>endPoint? "Kiridiwala" : "Gampaha";
+                                String parengerDirection = startPoint>endPoint? "Kirindiwela" : "Gampaha";
 
                                 if (direction.equals(parengerDirection)) { //Gampaha -> kiridiwala
                                     Log.i("12345", "show buses "+document.getId());
@@ -322,6 +322,8 @@ public class PassengerFindMap extends FragmentActivity implements OnMapReadyCall
                                                 Intent i = new Intent(PassengerFindMap.this,BusInsideDetailsActivity.class);
                                                 i.putExtra("title",markertitle);
                                                 i.putExtra("stLocation",stlo);
+                                                i.putExtra("stInt",startPoint);
+                                                i.putExtra("enInt",endPoint);
                                                 i.putExtra("endLocation",enlo);
                                                 i.putExtra("trRoute",trRoute);
                                                 startActivity(i);

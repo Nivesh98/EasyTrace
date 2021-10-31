@@ -30,6 +30,8 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
     Button bookSeats, getHoltBtn;
     TextView busId, startLocation, endLocation, trRoute, driverName;
 
+    int stInt,enInt;
+
     String travelRoute,stLocation,edLocation1;
 
     //chaennel
@@ -71,6 +73,12 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
         edLocation1 = getIntent().getStringExtra("endLocation");
         endLocation.setText(edLocation1);
 
+        stInt = getIntent().getIntExtra("stInt",stInt);
+        enInt = getIntent().getIntExtra("enInt",enInt);
+
+        Log.d("1111","start "+stInt);
+        Log.d("1111","end "+enInt);
+
         userDetails();
 
         bookSeats.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +88,8 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
                 i.putExtra("title",title);
                 i.putExtra("stLocation",stLocation);
                 i.putExtra("endLocation",edLocation1);
+                i.putExtra("stInt",stInt);
+                i.putExtra("enInt",enInt);
                 i.putExtra("trRoute",travelRoute);
                 startActivity(i);
             }
