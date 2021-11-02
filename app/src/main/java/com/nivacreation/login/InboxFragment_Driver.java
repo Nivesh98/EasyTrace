@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -48,7 +49,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.nivacreation.login.model.AppNotificationChaneel;
@@ -73,6 +77,9 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
     List<String> list = new ArrayList<>();
 
     boolean[] booleans = new boolean[36];
+    double avail = 0;
+
+    double avalFirebase = 0;
 
     private String mParam1;
     private String mParam2;
@@ -321,6 +328,10 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
         Map<String,Object> driver1 = new HashMap<>();
 
+        double seats = getAvailableSeats(userID);
+        avalFirebase = seats;
+
+
 
         if(isRun){
             user.put("lat",lastKnownLocation.getLatitude());
@@ -331,7 +342,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
             user.put("location",lastKnownLocation.getBearing());
 
             driver.put("seat",36);
-            driver.put("available seat",36);
+            driver.put("available seat",avalFirebase);
 
             if (selectedDestination.equals("Kirindiwela")){
                 driver.put("from","Gampaha");
@@ -367,6 +378,32 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
                 Log.d(TAG,"onSuccess: Success isStarted False! "+ userID);
             }
         });
+    }
+
+    private double getAvailableSeats(String userID) {
+
+
+
+        DocumentReference documentReference = fStore.collection("Bus").document(userID);
+        documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                Log.i("1111","Inside Document Reference");
+
+                if (value != null && value.exists()) {
+                    Log.i("1111","available seat "+value.getDouble("available seat"));
+                   avail = value.getDouble("available seat");
+
+                }else{
+                    Log.i("1111","Value is null");
+                }
+
+            }
+        });
+        Log.i("1111","Out side available seats "+avail);
+        return avail;
+
     }
 
     @Override
