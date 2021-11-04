@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,19 @@ public class NotificationFragment extends Fragment implements TransactionAdapter
 
     private String mParam1;
     private String mParam2;
+
+    String stLoEnLo;
+    String enLoca;
+    String time;
+    double fullPayment;
+    String fPay;
+
+    RecyclerView transactionRecyclerView;
+    TransactionAdapter busAdapter;
+    TransactionDetails transactionDetails;
+    List<TransactionDetails> transactionList;
+
+    DocumentReference documentReference;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore fStore;
@@ -75,38 +89,44 @@ public class NotificationFragment extends Fragment implements TransactionAdapter
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         String userID = mAuth.getCurrentUser().getUid();
-
-        firebaseTransaction(userID);
-
-        List<TransactionDetails> transactionList = new ArrayList<>();
-        DocumentReference documentReference = fStore.collection("User Booking").document(userID);
+        transactionList = new ArrayList<>();
+        Log.i("12345","Outside firebaseAboutSeats");
+        documentReference = fStore.collection("User Booking").document(userID);
         documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                Log.i("12345","Inside firebaseAboutSeats");
 
                 if (value != null && value.exists()) {
 
-                    String stLoEnLo = value.getString("stLocation");
-                    String enLoca = value.getString("enLocation");
-                    String time =value.getString("time");
-                    double fullPayment =value.getDouble("fullPayment");
+                    Log.i("12345","Inside if con");
+                    stLoEnLo = value.getString("stLocation");
+                    enLoca = value.getString("enLocation");
+                    time =value.getString("time");
+                    fullPayment =value.getDouble("fullPayment");
+                    fPay = String.valueOf(fullPayment);
+                    Log.i("12345","st Loca "+stLoEnLo+" endLocation "+enLoca);
 
+                    transactionDetails = new TransactionDetails();
+                    Log.i("12345","st Loca "+fPay);
+                    transactionDetails.setCost("Rs: "+fPay);
+                    Log.i("12345","st Loca "+time);
+                    transactionDetails.setDate(time);
+                    Log.i("12345","st Loca "+stLoEnLo+" endLocation "+enLoca);
+                    transactionDetails.setFromTo(stLoEnLo+" - "+enLoca);
 
-                    TransactionDetails transactionDetails = new TransactionDetails();
-                    transactionDetails.setFullPayment(fullPayment);
-                    transactionDetails.setTime(time);
-                    transactionDetails.setStLocation(stLoEnLo);
-                    transactionDetails.setEnLocation(enLoca);
                     transactionList.add(transactionDetails);
-
-
                 }
             }
         });
 
-        RecyclerView transactionRecyclerView = view.findViewById(R.id.transactionRecyclerView);
+
+
+        Log.i("12345","st Loca "+fPay);
+
+        transactionRecyclerView = view.findViewById(R.id.transactionRecyclerView);
         transactionRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        TransactionAdapter busAdapter = new TransactionAdapter(getContext(),getActivity(), transactionList);
+        busAdapter = new TransactionAdapter(getContext(),this, transactionList);
         transactionRecyclerView.setAdapter(busAdapter);
 
         swipeButton.setOnStateChangeListener(new OnStateChangeListener() {
@@ -119,11 +139,6 @@ public class NotificationFragment extends Fragment implements TransactionAdapter
         });
 
         return view;
-    }
-
-    private void firebaseTransaction(String userID) {
-
-
     }
 
     @Override

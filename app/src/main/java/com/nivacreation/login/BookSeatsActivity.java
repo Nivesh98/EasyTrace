@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,11 +74,11 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         Log.d("1111","end "+enInt);
 
         calender = Calendar.getInstance();
-        simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+
+        simpleDateFormat = new SimpleDateFormat("dd-MMM HH:mm:ss");
         time =simpleDateFormat.format(calender.getTime());
 
         fStore = FirebaseFirestore.getInstance();
-
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
