@@ -57,6 +57,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     int k;
     int g =0;
     int c;
+    int y =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1545,9 +1546,12 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void firebasePassengerAboutBooking(int c, String userID, String title) {
-        DocumentReference documentReference = fStore.collection("User Booking").document(userID);
-        Map<String,Object> book = new HashMap<>();
 
+        String num = String.valueOf(y);
+        DocumentReference documentReference = fStore.collection("User Booking").document(userID);
+        DocumentReference document1 = fStore.collection("User Booking History").document(userID).collection(userID).document(num);
+        Map<String,Object> book = new HashMap<>();
+        y++;
         book.put("busID",title);
         book.put("enLocation",edLocation1);
         book.put("stLocation",stLocation);
@@ -1642,6 +1646,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         }
 
 
+        document1.set(book);
         documentReference.set(book);
 
     }

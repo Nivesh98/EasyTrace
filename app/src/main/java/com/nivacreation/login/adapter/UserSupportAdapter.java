@@ -58,6 +58,7 @@ public class UserSupportAdapter extends RecyclerView.Adapter<UserSupportAdapter.
 
     @Override
     public int getItemCount() {
+
         return userSupportArrayList.size();
     }
 
