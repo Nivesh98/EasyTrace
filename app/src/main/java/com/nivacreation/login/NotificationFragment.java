@@ -119,7 +119,7 @@ public class NotificationFragment extends Fragment{
         String userId = fAuth.getCurrentUser().getUid();
         fStore = FirebaseFirestore.getInstance();
 
-        fStore.collection("User Booking History").document(userId).collection("1")
+        fStore.collection("User Booking History").document(userId).collection(userId)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {

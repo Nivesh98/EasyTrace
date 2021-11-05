@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -49,6 +50,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
+    DocumentReference document1;
+
     //String userID = "87HATPpL1MQ0hhunLRzQkzXQoDt2";
     String userID ;
 
@@ -57,7 +60,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     int k;
     int g =0;
     int c;
-    int y =1;
+    int y =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1547,107 +1550,142 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
     private void firebasePassengerAboutBooking(int c, String userID, String title) {
 
-        String num = String.valueOf(y);
-        DocumentReference documentReference = fStore.collection("User Booking").document(userID);
-        DocumentReference document1 = fStore.collection("User Booking History").document(userID).collection(userID).document(num);
-        Map<String,Object> book = new HashMap<>();
-        y++;
-        book.put("busID",title);
-        book.put("enLocation",edLocation1);
-        book.put("stLocation",stLocation);
-        book.put("seats",c);
+        Log.i("12345", "firebasePassengerAboutBooking Outside");
 
-        int diff =stInt-enInt;
-        Log.d("1111","differ "+diff);
-        if ((1==diff) || (-1==diff)){
-            double k = Double.valueOf(c);
-            double pay = (50*k*0.2);
-            double fPay = (50*k);
-            double oBook = (50*0.2);
-            book.put("onePayment",oBook);
-            double rem = (50*0.8*k);
-            book.put("remain",rem);
-            book.put("forOne",50);
-            book.put("fullPayment",fPay);
-            book.put("paid",pay);
-            book.put("time",time);
-        }else if ((2==diff) || (-2==diff)){
-            double k = Double.valueOf(c);
-            double pay = (100*k*0.2);
-            double fPay = (100*k);
-            double oBook = (100*0.2);
-            book.put("onePayment",oBook);
-            double rem = (100*0.8*k);
-            book.put("remain",rem);
-            book.put("forOne",100);
-            book.put("fullPayment",fPay);
-            book.put("paid",pay);
-            book.put("time",time);
-        }else if ((3==diff) || (-3==diff)){
-            double k = Double.valueOf(c);
-            double pay = (180*k*0.2);
-            double fPay = (180*k);
-            double oBook = (180*0.2);
-            book.put("onePayment",oBook);
-            double rem = (180*0.8*k);
-            book.put("remain",rem);
-            book.put("forOne",180);
-            book.put("fullPayment",fPay);
-            book.put("paid",pay);
-            book.put("time",time);
-        }else if ((4==diff) || (-4==diff)){
-            double k = Double.valueOf(c);
-            double pay = (250*k*0.2);
-            double fPay = (250*k);
-            double oBook = (250*0.2);
-            book.put("onePayment",oBook);
-            double rem = (250*0.8*k);
-            book.put("remain",rem);
-            book.put("forOne",250);
-            book.put("fullPayment",fPay);
-            book.put("paid",pay);
-            book.put("time",time);
-        }else if ((5==diff) || (-5==diff)){
-            double k = Double.valueOf(c);
-            double pay = (400*k*0.2);
-            double fPay = (400*k);
-            double oBook = (400*0.2);
-            book.put("onePayment",oBook);
-            double rem = (400*0.8*k);
-            book.put("remain",rem);
-            book.put("forOne",400);
-            book.put("fullPayment",fPay);
-            book.put("paid",pay);
-            book.put("time",time);
-        }else if ((6==diff) || (-6==diff)){
-            double k = Double.valueOf(c);
-            double pay = (550*k*0.2);
-            double fPay = (550*k);
-            double oBook = (550*0.2);
-            book.put("onePayment",oBook);
-            double rem = (550*0.8*k);
-            book.put("remain",rem);
-            book.put("forOne",550);
-            book.put("fullPayment",fPay);
-            book.put("paid",pay);
-            book.put("time",time);
-        }else if ((7==diff) || (-7==diff)){
-            double k = Double.valueOf(c);
-            double pay = (900*k*0.2);
-            double fPay = (900*k);
-            double oBook = (900*0.2);
-            book.put("onePayment",oBook);
-            double rem = (900*0.8*k);
-            book.put("remain",rem);
-            book.put("forOne",900);
-            book.put("fullPayment",fPay);
-            book.put("paid",pay);
-            book.put("time",time);
-        }
+        fStore.collection("User Booking History").document(userID).collection(userID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                y = queryDocumentSnapshots.size();
+                Log.i("12345", "firebasePassengerAboutBooking Inside ="+y);
+                document1 = fStore.collection("User Booking History").document(userID).collection(userID).document(String.valueOf(y+1));
+                Log.i("12345", "firebasePassengerAboutBooking Inside 2 ="+y+1);
+                DocumentReference documentReference = fStore.collection("User Booking").document(userID);
+
+                Map<String,Object> book = new HashMap<>();
+                book.put("busID",title);
+                book.put("enLocation",edLocation1);
+                book.put("stLocation",stLocation);
+                book.put("seats",c);
+
+                int diff =stInt-enInt;
+                Log.d("1111","differ "+diff);
+                if ((1==diff) || (-1==diff)){
+                    double k = Double.valueOf(c);
+                    double pay = (50*k*0.2);
+                    double fPay = (50*k);
+                    double oBook = (50*0.2);
+                    book.put("onePayment",oBook);
+                    double rem = (50*0.8*k);
+                    book.put("remain",rem);
+                    book.put("forOne",50);
+                    book.put("fullPayment",fPay);
+                    book.put("paid",pay);
+                    book.put("time",time);
+                }else if ((2==diff) || (-2==diff)){
+                    double k = Double.valueOf(c);
+                    double pay = (100*k*0.2);
+                    double fPay = (100*k);
+                    double oBook = (100*0.2);
+                    book.put("onePayment",oBook);
+                    double rem = (100*0.8*k);
+                    book.put("remain",rem);
+                    book.put("forOne",100);
+                    book.put("fullPayment",fPay);
+                    book.put("paid",pay);
+                    book.put("time",time);
+                }else if ((3==diff) || (-3==diff)){
+                    double k = Double.valueOf(c);
+                    double pay = (180*k*0.2);
+                    double fPay = (180*k);
+                    double oBook = (180*0.2);
+                    book.put("onePayment",oBook);
+                    double rem = (180*0.8*k);
+                    book.put("remain",rem);
+                    book.put("forOne",180);
+                    book.put("fullPayment",fPay);
+                    book.put("paid",pay);
+                    book.put("time",time);
+                }else if ((4==diff) || (-4==diff)){
+                    double k = Double.valueOf(c);
+                    double pay = (250*k*0.2);
+                    double fPay = (250*k);
+                    double oBook = (250*0.2);
+                    book.put("onePayment",oBook);
+                    double rem = (250*0.8*k);
+                    book.put("remain",rem);
+                    book.put("forOne",250);
+                    book.put("fullPayment",fPay);
+                    book.put("paid",pay);
+                    book.put("time",time);
+                }else if ((5==diff) || (-5==diff)){
+                    double k = Double.valueOf(c);
+                    double pay = (400*k*0.2);
+                    double fPay = (400*k);
+                    double oBook = (400*0.2);
+                    book.put("onePayment",oBook);
+                    double rem = (400*0.8*k);
+                    book.put("remain",rem);
+                    book.put("forOne",400);
+                    book.put("fullPayment",fPay);
+                    book.put("paid",pay);
+                    book.put("time",time);
+                }else if ((6==diff) || (-6==diff)){
+                    double k = Double.valueOf(c);
+                    double pay = (550*k*0.2);
+                    double fPay = (550*k);
+                    double oBook = (550*0.2);
+                    book.put("onePayment",oBook);
+                    double rem = (550*0.8*k);
+                    book.put("remain",rem);
+                    book.put("forOne",550);
+                    book.put("fullPayment",fPay);
+                    book.put("paid",pay);
+                    book.put("time",time);
+                }else if ((7==diff) || (-7==diff)){
+                    double k = Double.valueOf(c);
+                    double pay = (900*k*0.2);
+                    double fPay = (900*k);
+                    double oBook = (900*0.2);
+                    book.put("onePayment",oBook);
+                    double rem = (900*0.8*k);
+                    book.put("remain",rem);
+                    book.put("forOne",900);
+                    book.put("fullPayment",fPay);
+                    book.put("paid",pay);
+                    book.put("time",time);
+                }
 
 
-        document1.set(book);
-        documentReference.set(book);
+                document1.set(book);
+                documentReference.set(book);
+            }
+        });
+
+//        fStore.collection("User Booking History").document(userID).collection(userID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                Log.d("12345", "is Success"+ task.isSuccessful());
+//                if (task.isSuccessful()) {
+//
+//                    y = task.getResult().size();
+//                    Log.i("12345", "firebasePassengerAboutBooking Inside For"+y);
+////                    for (QueryDocumentSnapshot document : task.getResult()) {
+////
+////                        y++;
+////                        Log.i("12345", "firebasePassengerAboutBooking Inside For"+y);
+////                    }
+//
+//                } else {
+//
+//                    Log.d("12345", "Error getting documents: ", task.getException());
+//
+//                }
+//            }
+//        });
+
+        //String num = String.valueOf(y+1);
+
 
     }
 

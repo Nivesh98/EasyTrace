@@ -117,8 +117,11 @@ public class InboxFragment extends Fragment {
 
                         if (document.getId().equals("8RRcncO8IANHf7vsbVBZyi65MO92")){
 
+                            int m = document.getData().size();
+
+
                             int i =1;
-                            for (int j =1; j<4; j++){
+                            for (int j =1; j<=m; j++){
 
                                 String user = "n"+j;
                                 String userType = document.get(user).toString();
