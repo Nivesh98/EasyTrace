@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,11 +41,13 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     Button[] buttons = new Button[36];
     String[] booleans = new String[36];
 
+    String isAct22;
+
     Calendar calender;
     SimpleDateFormat simpleDateFormat;
     String time;
 
-    String title, travelRoute,stLocation, edLocation1;
+    String title, travelRoute,stLocation, edLocation1, titleQr, titleBus;
     int stInt, enInt;
 
     FirebaseAuth fAuth;
@@ -67,13 +70,32 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_seats);
 
-        title = getIntent().getStringExtra("title");
+        titleBus = getIntent().getStringExtra("title");
         travelRoute = getIntent().getStringExtra("trRoute");
         stLocation = getIntent().getStringExtra("stLocation");
         edLocation1 = getIntent().getStringExtra("endLocation");
         stInt =getIntent().getIntExtra("stInt",stInt);
         enInt =getIntent().getIntExtra("enInt",enInt);
 
+        //titleQr = getIntent().getStringExtra("titleQr");
+
+        String isAct2 = PreferenceManager
+                .getDefaultSharedPreferences(this).getString("isAct2", "Empty");
+
+        String isAct1 = PreferenceManager
+                .getDefaultSharedPreferences(this).getString("isAct1", "Empty");
+
+        isAct22 = PreferenceManager
+                .getDefaultSharedPreferences(this).getString("isAct22", "Empty");
+
+        title = titleBus;
+
+        Log.i("12345","Qr title out side = " + isAct22);
+        if (!isAct22.equals("")){
+            Log.i("12345","Qr title = " + isAct22);
+            title = isAct22;
+        }
+        Log.i("12345","title out side = " + title);
         Log.d("1111","start "+stInt);
         Log.d("1111","end "+enInt);
 
@@ -87,6 +109,11 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Button count = findViewById(R.id.count);
+
+
+
+        Log.i("12345","Qr Activity Value = " + isAct1);
+        Log.i("12345","Bus Activity Value = " + isAct2);
 
         for (i = 0; i < buttons.length; i++) {
             String buttonID = "seat" + i;
@@ -1544,8 +1571,13 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 firebaseUpdateDriverDetails(g);
                 firebasePassengerAboutBooking(c,userID,title);
+
+
             }
         });
+
+        PreferenceManager
+                .getDefaultSharedPreferences(BookSeatsActivity.this).edit().putString("isAct22", "").apply();
     }
 
     private void firebasePassengerAboutBooking(int c, String userID, String title) {
@@ -1760,4 +1792,5 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
 
     }
+
 }

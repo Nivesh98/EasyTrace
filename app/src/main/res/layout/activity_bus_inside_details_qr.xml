@@ -156,9 +156,10 @@
 
         <Button
             android:layout_width="169dp"
+            android:id="@+id/select_seat"
             android:layout_height="55dp"
             android:layout_gravity="center"
-            android:background="@drawable/pay_here_btn" />
+            android:background="@drawable/select_seat" />
 
     </LinearLayout>
 </LinearLayout>

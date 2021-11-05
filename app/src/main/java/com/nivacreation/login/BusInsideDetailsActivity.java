@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -75,6 +76,9 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
 
         stInt = getIntent().getIntExtra("stInt",stInt);
         enInt = getIntent().getIntExtra("enInt",enInt);
+
+        PreferenceManager
+                .getDefaultSharedPreferences(this).edit().putString("isAct2", "2").apply();
 
         Log.d("1111","start "+stInt);
         Log.d("1111","end "+enInt);
