@@ -173,19 +173,21 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v) {
 
-                if (booleans[0].equals("")&& isAct2.equals("2")) { //Now Empty
-                    Log.i("1234"," 0 btn = 1"+isAct2+" "+isAct1);
+                if (booleans[0].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[0].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[0] = userID+"2";
-                    Log.i("12345","Btn 0 = "+ booleans[0]+" "+userID+"2"+" "+userID);
+                    booleans[0] = userID+"#";
                     return;
-                } else if (booleans[0].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[0].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[0].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[0] = userID+"1";
+                    booleans[0] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[0].equals(userID+"1") && isAct1.equals("1")){
+                    if(!booleans[0].equals(userID+"*") && isAct1.equals("*")){
+                        
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -193,28 +195,13 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else if(!booleans[0].equals(userID+"2")&& isAct2.equals("2")){
+                    }else if(!booleans[0].equals(userID+"#")&& isAct2.equals("#")){
 
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
                                 .setPositiveButton("Ok", null)
                                 .show();
-//                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-//                                .setTitle("Cancelling the seat")
-//                                .setMessage("Are you sure want to cancel the seat?")
-//                                .setPositiveButton("Yes", null)
-//                                .setNegativeButton("No", null)
-//                                .show();
-//                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-//                        positiveButton.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                buttons[0].setBackgroundResource(R.color.teal_200);
-//                                dialog.dismiss();
-//                                booleans[0] = "";
-//                            }
-//                        });
 
                     } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
@@ -243,17 +230,22 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[1].equals("")) {
+
+                if (booleans[1].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[1].setBackgroundResource(android.R.color.holo_red_dark);
-                     booleans[1] = userID+"2";
+                    booleans[1] = userID+"#";
                     return;
-                } else if (booleans[1].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[1].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[1].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[1] = userID+"1";
+                    booleans[1] = userID+"*";
                     return;
-                }else {
-                    if(!booleans[1].equals(userID+"1")||!booleans[1].equals(userID+"2")){
+
+                } else {
+                    if(!booleans[1].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -261,7 +253,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[1].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -281,6 +281,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
@@ -288,17 +289,22 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[2].equals("")) {
+
+                if (booleans[2].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[2].setBackgroundResource(android.R.color.holo_red_dark);
-                      booleans[2] = userID+"2";
+                    booleans[2] = userID+"#";
                     return;
-                } else if (booleans[2].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[2].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[2].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[2] = userID+"1";
+                    booleans[2] = userID+"*";
                     return;
-                }else {
-                    if(!booleans[2].equals(userID+"1")||!booleans[2].equals(userID+"2")){
+
+                } else {
+                    if(!booleans[2].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -306,7 +312,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[2].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -326,6 +340,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
@@ -333,17 +348,22 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[3].equals("")) {
+
+                if (booleans[3].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[3].setBackgroundResource(android.R.color.holo_red_dark);
-                       booleans[3] = userID+"2";
+                    booleans[3] = userID+"#";
                     return;
-                } else if (booleans[3].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[3].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[3].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[3] = userID+"1";
+                    booleans[3] = userID+"*";
                     return;
-                }else {
-                    if(!booleans[3].equals(userID+"1")||!booleans[3].equals(userID+"2")){
+
+                } else {
+                    if(!booleans[3].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -351,7 +371,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[3].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -371,6 +399,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
@@ -378,17 +407,22 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[4].equals("")) {
+
+                if (booleans[4].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[4].setBackgroundResource(android.R.color.holo_red_dark);
-                       booleans[4] = userID+"2";
+                    booleans[4] = userID+"#";
                     return;
-                } else if (booleans[4].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[4].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[4].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[4] = userID+"1";
+                    booleans[4] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[4].equals(userID+"1")||!booleans[4].equals(userID+"2")){
+                    if(!booleans[4].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -396,7 +430,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[4].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -416,23 +458,29 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[5].equals("")) {
+
+                if (booleans[5].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[5].setBackgroundResource(android.R.color.holo_red_dark);
-                       booleans[5] = userID+"2";
+                    booleans[5] = userID+"#";
                     return;
-                } else if (booleans[5].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[5].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[5].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[5] = userID+"1";
+                    booleans[5] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[5].equals(userID+"1")||!booleans[5].equals(userID+"2")){
+                    if(!booleans[5].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -440,7 +488,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[5].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -460,23 +516,29 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[6].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[6].equals("")) {
+
+                if (booleans[6].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[6].setBackgroundResource(android.R.color.holo_red_dark);
-                       booleans[6] = userID+"2";
+                    booleans[6] = userID+"#";
                     return;
-                } else if (booleans[6].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[6].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[6].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[6] = userID+"1";
+                    booleans[6] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[6].equals(userID+"1")||!booleans[6].equals(userID+"2")){
+                    if(!booleans[6].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -484,7 +546,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[6].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -504,23 +574,29 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[7].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[7].equals("")) {
+
+                if (booleans[7].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[7].setBackgroundResource(android.R.color.holo_red_dark);
-                       booleans[7] = userID+"2";
+                    booleans[7] = userID+"#";
                     return;
-                } else if (booleans[7].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[7].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[7].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[7] = userID+"1";
+                    booleans[7] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[7].equals(userID+"1")||!booleans[7].equals(userID+"2")){
+                    if(!booleans[7].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -528,7 +604,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[7].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -548,23 +632,29 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[8].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[8].equals("")) {
+
+                if (booleans[8].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[8].setBackgroundResource(android.R.color.holo_red_dark);
-                      booleans[8] = userID+"2";
+                    booleans[8] = userID+"#";
                     return;
-                } else if (booleans[8].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[8].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[8].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[8] = userID+"1";
+                    booleans[8] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[8].equals(userID+"1")||!booleans[8].equals(userID+"2")){
+                    if(!booleans[8].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -572,7 +662,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[8].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -592,23 +690,29 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[9].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[9].equals("")) {
+
+                if (booleans[9].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[9].setBackgroundResource(android.R.color.holo_red_dark);
-                       booleans[9] = userID+"2";
+                    booleans[9] = userID+"#";
                     return;
-                } else if (booleans[9].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[9].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[9].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[9] = userID+"1";
+                    booleans[9] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[9].equals(userID+"1")||!booleans[9].equals(userID+"2")){
+                    if(!booleans[9].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -616,7 +720,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[9].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -636,23 +748,29 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[10].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[10].equals("")) {
+
+                if (booleans[10].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[10].setBackgroundResource(android.R.color.holo_red_dark);
-                     booleans[10] = userID+"2";
+                    booleans[10] = userID+"#";
                     return;
-                } else if (booleans[10].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[10].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[10].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[10] = userID+"1";
+                    booleans[10] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[10].equals(userID+"1")||!booleans[10].equals(userID+"2")){
+                    if(!booleans[10].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -660,7 +778,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[10].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -680,23 +806,29 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[11].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[11].equals("")) {
+
+                if (booleans[11].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[11].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[11] = userID+"2";
+                    booleans[11] = userID+"#";
                     return;
-                } else if (booleans[11].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[11].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[11].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[11] = userID+"1";
+                    booleans[11] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[11].equals(userID+"1")||!booleans[11].equals(userID+"2")){
+                    if(!booleans[11].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -704,7 +836,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[11].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -724,23 +864,29 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[12].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[12].equals("")) {
+
+                if (booleans[12].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[12].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[12] = userID+"2";
+                    booleans[12] = userID+"#";
                     return;
-                } else if (booleans[12].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[12].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[12].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[12] = userID+"1";
+                    booleans[12] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[12].equals(userID+"1")||!booleans[12].equals(userID+"2")){
+                    if(!booleans[12].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -748,7 +894,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[12].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -768,23 +922,29 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[13].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[13].equals("")) {
+
+                if (booleans[13].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[13].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[13] = userID+"2";
+                    booleans[13] = userID+"#";
                     return;
-                } else if (booleans[13].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[13].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[13].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[13] = userID+"1";
+                    booleans[13] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[13].equals(userID+"1")||!booleans[13].equals(userID+"2")){
+                    if(!booleans[13].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
@@ -792,7 +952,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[13].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -812,31 +980,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[14].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[14].equals("")) {
+
+                if (booleans[14].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[14].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[14] = userID+"2";
+                    booleans[14] = userID+"#";
                     return;
-                } else if (booleans[14].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[14].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[14].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[14] = userID+"1";
+                    booleans[14] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[14].equals(userID+"1")||!booleans[14].equals(userID+"2")){
+                    if(!booleans[14].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[14].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -856,31 +1038,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[15].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[15].equals("")) {
+
+                if (booleans[15].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[15].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[15] = userID+"2";
+                    booleans[15] = userID+"#";
                     return;
-                } else if (booleans[15].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[15].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[15].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[15] = userID+"1";
+                    booleans[15] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[15].equals(userID+"1")||!booleans[15].equals(userID+"2")){
+                    if(!booleans[15].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[15].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -900,31 +1096,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[16].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[16].equals("")) {
+
+                if (booleans[16].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[16].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[16] = userID+"2";
+                    booleans[16] = userID+"#";
                     return;
-                } else if (booleans[16].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[16].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[16].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[16] = userID+"1";
+                    booleans[16] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[16].equals(userID+"1")||!booleans[16].equals(userID+"2")){
+                    if(!booleans[16].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[16].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -944,31 +1154,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[17].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[17].equals("")) {
+
+                if (booleans[17].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[17].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[17] = userID+"2";
+                    booleans[17] = userID+"#";
                     return;
-                } else if (booleans[17].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[17].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[17].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[17] = userID+"1";
+                    booleans[17] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[17].equals(userID+"1")||!booleans[17].equals(userID+"2")){
+                    if(!booleans[17].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[17].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -988,31 +1212,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[18].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[18].equals("")) {
+
+                if (booleans[18].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[18].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[18] = userID+"2";
+                    booleans[18] = userID+"#";
                     return;
-                } else if (booleans[18].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[18].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[18].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[18] = userID+"1";
+                    booleans[18] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[18].equals(userID+"1")||!booleans[18].equals(userID+"2")){
+                    if(!booleans[18].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[18].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1032,31 +1270,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[19].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[19].equals("")) {
+
+                if (booleans[19].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[19].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[19] = userID+"2";
+                    booleans[19] = userID+"#";
                     return;
-                } else if (booleans[19].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[19].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[19].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[19] = userID+"1";
+                    booleans[19] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[19].equals(userID+"1")||!booleans[19].equals(userID+"2")){
+                    if(!booleans[19].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[19].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1076,31 +1328,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[20].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[20].equals("")) {
+
+                if (booleans[20].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[20].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[20] = userID+"2";
+                    booleans[20] = userID+"#";
                     return;
-                } else if (booleans[20].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[20].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[20].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[20] = userID+"1";
+                    booleans[20] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[20].equals(userID+"1")||!booleans[20].equals(userID+"2")){
+                    if(!booleans[20].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[20].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1120,31 +1386,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[21].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[21].equals("")) {
+
+                if (booleans[21].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[21].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[21] = userID+"2";
+                    booleans[21] = userID+"#";
                     return;
-                } else if (booleans[21].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[21].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[21].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[21] = userID+"1";
+                    booleans[21] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[21].equals(userID+"1")||!booleans[21].equals(userID+"2")){
+                    if(!booleans[21].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[21].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1164,31 +1444,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[22].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[22].equals("")) {
+
+                if (booleans[22].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[22].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[22] = userID+"2";
+                    booleans[22] = userID+"#";
                     return;
-                } else if (booleans[22].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[22].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[22].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[22] = userID+"1";
+                    booleans[22] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[22].equals(userID+"1")||!booleans[22].equals(userID+"2")){
+                    if(!booleans[22].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[22].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1208,31 +1502,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[23].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[23].equals("")) {
+
+                if (booleans[23].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[23].setBackgroundResource(android.R.color.holo_red_dark);
-                  booleans[23] = userID+"2";
+                    booleans[23] = userID+"#";
                     return;
-                } else if (booleans[23].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[23].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[23].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[23] = userID+"1";
+                    booleans[23] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[23].equals(userID+"1")||!booleans[23].equals(userID+"2")){
+                    if(!booleans[23].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[23].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1252,31 +1560,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[24].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[24].equals("")) {
+
+                if (booleans[24].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[24].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[24] = userID+"2";
+                    booleans[24] = userID+"#";
                     return;
-                } else if (booleans[24].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[24].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[24].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[24] = userID+"1";
+                    booleans[24] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[24].equals(userID+"1")||!booleans[24].equals(userID+"2")){
+                    if(!booleans[24].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[24].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1296,31 +1618,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[25].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[25].equals("")) {
+
+                if (booleans[25].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[25].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[25] = userID+"2";
+                    booleans[25] = userID+"#";
                     return;
-                } else if (booleans[25].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[25].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[25].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[25] = userID+"1";
+                    booleans[25] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[25].equals(userID+"1")||!booleans[25].equals(userID+"2")){
+                    if(!booleans[25].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[25].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1340,31 +1676,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[26].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[26].equals("")) {
+
+                if (booleans[26].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[26].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[26] = userID+"2";
+                    booleans[26] = userID+"#";
                     return;
-                } else if (booleans[26].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[26].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[26].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[26] = userID+"1";
+                    booleans[26] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[26].equals(userID+"1")||!booleans[26].equals(userID+"2")){
+                    if(!booleans[26].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[26].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1384,31 +1734,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[27].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[27].equals("")) {
+
+                if (booleans[27].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[27].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[27] = userID+"2";
+                    booleans[27] = userID+"#";
                     return;
-                } else if (booleans[27].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[27].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[27].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[27] = userID+"1";
+                    booleans[27] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[27].equals(userID+"1")||!booleans[27].equals(userID+"2")){
+                    if(!booleans[27].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[27].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1428,31 +1792,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[28].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[28].equals("")) {
+
+                if (booleans[28].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[28].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[28] = userID+"2";
+                    booleans[28] = userID+"#";
                     return;
-                } else if (booleans[28].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[28].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[28].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[28] = userID+"1";
+                    booleans[28] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[28].equals(userID+"1")||!booleans[28].equals(userID+"2")){
+                    if(!booleans[28].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[28].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1472,31 +1850,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[29].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[29].equals("")) {
+
+                if (booleans[29].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[29].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[29] = userID+"2";
+                    booleans[29] = userID+"#";
                     return;
-                } else if (booleans[29].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[29].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[29].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[29] = userID+"1";
+                    booleans[29] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[29].equals(userID+"1")||!booleans[29].equals(userID+"2")){
+                    if(!booleans[29].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[29].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1516,31 +1908,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[30].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[30].equals("")) {
+
+                if (booleans[30].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[30].setBackgroundResource(android.R.color.holo_red_dark);
-                    booleans[30] = userID+"2";
+                    booleans[30] = userID+"#";
                     return;
-                } else if (booleans[30].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[30].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[30].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[30] = userID+"1";
+                    booleans[30] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[30].equals(userID+"1")||!booleans[30].equals(userID+"2")){
+                    if(!booleans[30].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[30].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1560,31 +1966,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[31].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[31].equals("")) {
+
+                if (booleans[31].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[31].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[31] = userID+"2";
+                    booleans[31] = userID+"#";
                     return;
-                } else if (booleans[31].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[31].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[31].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[31] = userID+"1";
+                    booleans[31] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[31].equals(userID+"1")||!booleans[31].equals(userID+"2")){
+                    if(!booleans[31].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[31].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1604,31 +2024,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[32].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[32].equals("")) {
+
+                if (booleans[32].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[32].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[32] = userID+"2";
+                    booleans[32] = userID+"#";
                     return;
-                } else if (booleans[32].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[32].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[32].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[32] = userID+"1";
+                    booleans[32] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[32].equals(userID+"1")||!booleans[32].equals(userID+"2")){
+                    if(!booleans[32].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[32].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1648,31 +2082,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[33].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[33].equals("")) {
+
+                if (booleans[33].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[33].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[33] = userID+"2";
+                    booleans[33] = userID+"#";
                     return;
-                } else if (booleans[33].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[33].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[33].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[33] = userID+"1";
+                    booleans[33] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[33].equals(userID+"1")||!booleans[33].equals(userID+"2")){
+                    if(!booleans[33].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[33].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1692,31 +2140,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[34].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[34].equals("")) {
+
+                if (booleans[34].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[34].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[34] = userID+"2";
+                    booleans[34] = userID+"#";
                     return;
-                } else if (booleans[34].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[34].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[34].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[34] = userID+"1";
+                    booleans[34] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[34].equals(userID+"1")||!booleans[34].equals(userID+"2")){
+                    if(!booleans[34].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[34].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1736,31 +2198,45 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
         buttons[35].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (booleans[35].equals("")) {
+
+                if (booleans[35].equals("")&& isAct2.equals("#")) { //Now Empty
+
                     buttons[35].setBackgroundResource(android.R.color.holo_red_dark);
-                   booleans[35] = userID+"2";
+                    booleans[35] = userID+"#";
                     return;
-                } else if (booleans[35].equals("")&& isAct1.equals("1")) { //Now Empty
-                    Log.i("1234"," 0 btn = 2"+isAct2+" "+isAct1);
+
+                } else if (booleans[35].equals("")&& isAct1.equals("*")) { //Now Empty
+
                     buttons[35].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[35] = userID+"1";
+                    booleans[35] = userID+"*";
                     return;
+
                 } else {
-                    if(!booleans[35].equals(userID+"1")||!booleans[35].equals(userID+"2")){
+                    if(!booleans[35].equals(userID+"*") && isAct1.equals("*")){
+
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("You Can't Cancel the Seat")
-                                .setPositiveButton("OK", null)
+                                .setPositiveButton("Ok", null)
                                 .show();
 
 
-                    }else {
+                    }else if(!booleans[35].equals(userID+"#")&& isAct2.equals("#")){
+
+                        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                                .setTitle("Cancelling the seat")
+                                .setMessage("You Can't Cancel the Seat")
+                                .setPositiveButton("Ok", null)
+                                .show();
+
+                    } else{
                         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                                 .setTitle("Cancelling the seat")
                                 .setMessage("Are you sure want to cancel the seat?")
@@ -1780,6 +2256,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     }
 
 
+
                 }
             }
         });
@@ -1796,14 +2273,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                     if(!booleans[j].equals("")) {
 
-                        if(booleans[j].equals(userID+"2")){
+                        if(booleans[j].equals(userID+"#")){
                             String seat = "seat"+j;
-                            seats.put(seat,userID+"2");
+                            seats.put(seat,userID+"#");
                             g++;
                             c++;
-                        }else if(booleans[j].equals(userID+"1")){
+                        }else if(booleans[j].equals(userID+"*")){
                             String seat = "seat"+j;
-                            seats.put(seat,userID+"1");
+                            seats.put(seat,userID+"*");
                             g++;
                             c++;
                         }else{
@@ -1858,15 +2335,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
         Log.i("12345", "firebasePassengerAboutBooking Outside");
 
-        fStore.collection("User Booking History").document(userID+"2").collection(userID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        fStore.collection("User Booking History").document(userID+"#").collection(userID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
                 y = queryDocumentSnapshots.size();
                 Log.i("12345", "firebasePassengerAboutBooking Inside ="+y);
-                document1 = fStore.collection("User Booking History").document(userID+"2").collection(userID).document(String.valueOf(y+1));
+                document1 = fStore.collection("User Booking History").document(userID+"#").collection(userID).document(String.valueOf(y+1));
                 Log.i("12345", "firebasePassengerAboutBooking Inside 2 ="+y+1);
-                DocumentReference documentReference = fStore.collection("User Booking").document(userID+"2");
+                DocumentReference documentReference = fStore.collection("User Booking").document(userID+"#");
 
                 Map<String,Object> book = new HashMap<>();
                 book.put("busID",title);
@@ -2018,10 +2495,10 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                             String n = getValue;
 
-                            if ((n.substring(n.length()-1)).equals("2")){
+                            if ((n.substring(n.length()-1)).equals("#")){
                                 booleans[l]=getValue;
                                 buttons[l].setBackgroundResource(android.R.color.holo_red_dark);
-                                 }else{
+                                 }else if ((n.substring(n.length()-1)).equals("*")){
                                 booleans[l]=getValue;
                                 buttons[l].setBackgroundResource(android.R.color.holo_orange_light);
                             }

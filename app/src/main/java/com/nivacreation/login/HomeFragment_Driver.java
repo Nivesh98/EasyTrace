@@ -135,6 +135,7 @@ public class HomeFragment_Driver extends Fragment {
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
+
                 Picasso.get().load(uri).into(userImageP);
             }
         });

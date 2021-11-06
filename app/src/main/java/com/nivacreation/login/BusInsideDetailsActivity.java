@@ -78,7 +78,7 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
         enInt = getIntent().getIntExtra("enInt",enInt);
 
         PreferenceManager
-                .getDefaultSharedPreferences(this).edit().putString("isAct2", "2").apply();
+                .getDefaultSharedPreferences(this).edit().putString("isAct2", "#").apply();
 
         Log.d("1111","start "+stInt);
         Log.d("1111","end "+enInt);
@@ -96,7 +96,7 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
                 i.putExtra("enInt",enInt);
                 i.putExtra("trRoute",travelRoute);
                 PreferenceManager
-                        .getDefaultSharedPreferences(BusInsideDetailsActivity.this).edit().putString("isAct2", "2").apply();
+                        .getDefaultSharedPreferences(BusInsideDetailsActivity.this).edit().putString("isAct2", "#").apply();
                 startActivity(i);
             }
         });

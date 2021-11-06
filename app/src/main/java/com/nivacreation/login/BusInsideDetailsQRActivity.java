@@ -59,7 +59,7 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
         route.setText(trRoute);
 
         PreferenceManager
-                .getDefaultSharedPreferences(this).edit().putString("isAct1", "1").apply();
+                .getDefaultSharedPreferences(this).edit().putString("isAct1", "*").apply();
         PreferenceManager
                 .getDefaultSharedPreferences(this).edit().putString("isAct22", dId).apply();
         PreferenceManager
@@ -80,7 +80,7 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
                 Intent i = new Intent(BusInsideDetailsQRActivity.this, BookSeatsActivity.class);
                 //i.putExtra("titleQr",dId);
                 PreferenceManager
-                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isAct1", "1").apply();
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isAct1", "*").apply();
                 PreferenceManager
                         .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isAct22", dId).apply();
                 PreferenceManager
