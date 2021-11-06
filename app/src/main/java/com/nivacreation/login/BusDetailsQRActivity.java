@@ -23,6 +23,9 @@ public class BusDetailsQRActivity extends AppCompatActivity {
     Button submit;
 
     String selectedDestinationEnd = "";
+    String selectedDestinationStart = "";
+
+    int startPoint = 0, endPoint =0;
 
     //..........Start Location...........
 
@@ -58,8 +61,10 @@ public class BusDetailsQRActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position == 0){
+                    selectedDestinationStart ="";
                 }else {
-                    String STown = parent.getItemAtPosition(position).toString();
+                    startPoint = position;
+                    selectedDestinationStart = parent.getItemAtPosition(position).toString();
                 }
             }
 
@@ -94,7 +99,7 @@ public class BusDetailsQRActivity extends AppCompatActivity {
                 if(position == 0){
                     selectedDestinationEnd = "";
                 }else {
-
+                    endPoint =position;
                     selectedDestinationEnd = parent.getItemAtPosition(position).toString();
 
                 }
@@ -115,10 +120,20 @@ public class BusDetailsQRActivity extends AppCompatActivity {
                     Toast.makeText(BusDetailsQRActivity.this,"Please Select EndPoint!",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(selectedDestinationStart.equals("")){
+                    Toast.makeText(BusDetailsQRActivity.this,"Please Select StartPoint!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String parengerDirection = startPoint>endPoint? "Kirindiwela" : "Gampaha";
 
                 Intent i = new Intent(BusDetailsQRActivity.this, BusInsideDetailsQRActivity.class);
                 i.putExtra("passengerID",passengerId);
                 i.putExtra("driverID",driverId);
+                i.putExtra("stLocation", selectedDestinationStart);
+                i.putExtra("enLocation",selectedDestinationEnd);
+                i.putExtra("trRoute",parengerDirection);
+                i.putExtra("stInt",startPoint);
+                i.putExtra("enInt",endPoint);
                 startActivity(i);
             }
         });

@@ -26,7 +26,9 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String dId;
+    String dId, stLocation, endLocation, trRoute;
+
+    int stInt, enInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +47,52 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
 
         String pId = getIntent().getStringExtra("passengerID");
         dId = getIntent().getStringExtra("driverID");
+        stLocation = getIntent().getStringExtra("stLocation");
+        endLocation = getIntent().getStringExtra("enLocation");
+        trRoute = getIntent().getStringExtra("trRoute");
+
+        stInt = getIntent().getIntExtra("stInt",stInt);
+        enInt = getIntent().getIntExtra("enInt", enInt);
+
         busId.setText(dId);
         passengerId.setText(pId);
+        route.setText(trRoute);
 
         PreferenceManager
                 .getDefaultSharedPreferences(this).edit().putString("isAct1", "1").apply();
         PreferenceManager
                 .getDefaultSharedPreferences(this).edit().putString("isAct22", dId).apply();
+        PreferenceManager
+                .getDefaultSharedPreferences(this).edit().putString("isActTR", trRoute).apply();
+        PreferenceManager
+                .getDefaultSharedPreferences(this).edit().putString("isActStLocation", stLocation).apply();
+        PreferenceManager
+                .getDefaultSharedPreferences(this).edit().putString("isActEnLocation", endLocation).apply();
+
+        PreferenceManager
+                .getDefaultSharedPreferences(this).edit().putString("isActStInt", String.valueOf(stInt)).apply();
+        PreferenceManager
+                .getDefaultSharedPreferences(this).edit().putString("isActEnInt", String.valueOf(enInt)).apply();
 
         selectSeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(BusInsideDetailsQRActivity.this, BookSeatsActivity.class);
                 //i.putExtra("titleQr",dId);
+                PreferenceManager
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isAct1", "1").apply();
+                PreferenceManager
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isAct22", dId).apply();
+                PreferenceManager
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isActTR", trRoute).apply();
+                PreferenceManager
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isActStLocation", stLocation).apply();
+                PreferenceManager
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isActEnLocation", endLocation).apply();
+                PreferenceManager
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isActStInt", String.valueOf(stInt)).apply();
+                PreferenceManager
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isActEnInt", String.valueOf(enInt)).apply();
                 startActivity(i);
             }
         });

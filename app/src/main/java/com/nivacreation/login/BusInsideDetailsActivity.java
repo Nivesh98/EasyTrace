@@ -95,6 +95,8 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
                 i.putExtra("stInt",stInt);
                 i.putExtra("enInt",enInt);
                 i.putExtra("trRoute",travelRoute);
+                PreferenceManager
+                        .getDefaultSharedPreferences(BusInsideDetailsActivity.this).edit().putString("isAct2", "2").apply();
                 startActivity(i);
             }
         });
