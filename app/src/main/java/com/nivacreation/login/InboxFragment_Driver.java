@@ -107,7 +107,7 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
     private GoogleMap mMap;
 
     //map change live location
-    private ScheduledExecutorService scheduler;
+    public ScheduledExecutorService scheduler;
     private boolean isrun = false;
 
 
@@ -148,7 +148,6 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -310,7 +309,6 @@ public class InboxFragment_Driver extends Fragment implements OnMapReadyCallback
 
             }
         });
-
         return view;
     }
 

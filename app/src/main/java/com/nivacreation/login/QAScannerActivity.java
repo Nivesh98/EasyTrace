@@ -107,14 +107,14 @@ public class QAScannerActivity extends AppCompatActivity  {
                                 }
 
                                 String driverQrCode = document.get("userID").toString();
-
+                                String d =driverQrCode;
                                 list.add(driverQrCode);
                                 Log.i("12345", "driver qr: "+driverQrCode+" text: "+text);
 
                                 if (text.trim().toString().equals(driverQrCode.trim().toString())) {
 
                                     String pUserId = userId;
-                                    String dUserId = text.trim().toString();
+                                    String dUserId = d;
                                     Intent i = new Intent(QAScannerActivity.this, BusDetailsQRActivity.class);
                                     i.putExtra("passengerUserId",pUserId);
                                     i.putExtra("driverUserId",dUserId);

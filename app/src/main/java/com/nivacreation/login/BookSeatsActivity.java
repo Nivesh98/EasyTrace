@@ -2471,9 +2471,9 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
     private void firebaseAboutSeats(String title) {
 
-        Log.d("1111","Inside firebaseAboutSeats");
+        Log.d("12345","Inside firebaseAboutSeats"+ title);
 
-        DocumentReference documentReference = fStore.collection("BusSeats").document(this.title);
+        DocumentReference documentReference = fStore.collection("BusSeats").document(title);
         documentReference.addSnapshotListener(BookSeatsActivity.this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
@@ -2528,4 +2528,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
