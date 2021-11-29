@@ -44,7 +44,7 @@ public class BusDetailsQRActivity extends AppCompatActivity {
 
         ArrayList<String> townList_start = new ArrayList<>();
 
-        townList_start.add("Select Start Location");
+        townList_start.add("Kirindiwela");
         townList_start.add("Kirindiwela");
         townList_start.add("Radawana");
         townList_start.add("Henegama");
@@ -60,12 +60,15 @@ public class BusDetailsQRActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position == 0){
-                    selectedDestinationStart ="";
-                }else {
                     startPoint = position;
                     selectedDestinationStart = parent.getItemAtPosition(position).toString();
-                }
+
+//                if(position == 0){
+//                    selectedDestinationStart ="";
+//                }else {
+//                    startPoint = position;
+//                    selectedDestinationStart = parent.getItemAtPosition(position).toString();
+//                }
             }
 
             @Override

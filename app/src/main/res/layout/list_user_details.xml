@@ -151,12 +151,14 @@
                android:layout_width="130dp"
                android:layout_height="40dp"
                android:gravity="center"
+               android:visibility="invisible"
                android:layout_marginRight="20dp"
                android:background="@drawable/update_user_adapter"
                android:id="@+id/updateBtn"/>
            <Button
                android:layout_width="130dp"
                android:layout_height="40dp"
+               android:visibility="invisible"
                android:background="@drawable/delete_user_adapter"
                android:id="@+id/deleteBtn"/>
 

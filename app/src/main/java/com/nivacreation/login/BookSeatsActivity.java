@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -41,6 +42,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     Button[] buttons = new Button[36];
     String[] booleans = new String[36];
 
+    boolean checkOne = false;
+
     String isAct22;
     String isAct2;
     String isAct1;
@@ -60,7 +63,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
-    DocumentReference document1;
+    DocumentReference document1,document2;
 
     //String userID = "87HATPpL1MQ0hhunLRzQkzXQoDt2";
     String userID ;
@@ -70,7 +73,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     int k;
     int g =0;
     int c;
-    int y =0;
+    int y =0, x=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,32 +89,39 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
         //titleQr = getIntent().getStringExtra("titleQr");
 
+        Log.d("1111","stInt"+stInt);
+        Log.d("1111","enInt"+enInt);
+        Log.d("1111","enInt"+titleBus);
         isAct2 = PreferenceManager
-                .getDefaultSharedPreferences(this).getString("isAct2", "Empty");
+                .getDefaultSharedPreferences(this).getString("isAct2", "");
 
         isAct1 = PreferenceManager
-                .getDefaultSharedPreferences(this).getString("isAct1", "Empty");
+                .getDefaultSharedPreferences(this).getString("isAct1", "");
 
         isAct22 = PreferenceManager
-                .getDefaultSharedPreferences(this).getString("isAct22", "Empty");
+                .getDefaultSharedPreferences(this).getString("isAct22", "");
 
         isActTR = PreferenceManager
-                .getDefaultSharedPreferences(this).getString("isActTR", "Empty");
+                .getDefaultSharedPreferences(this).getString("isActTR", "");
 
         isActStLocation = PreferenceManager
-                .getDefaultSharedPreferences(this).getString("isActStLocation", "Empty");
+                .getDefaultSharedPreferences(this).getString("isActStLocation", "");
 
         isActEnLocation = PreferenceManager
-                .getDefaultSharedPreferences(this).getString("isActEnLocation", "Empty");
+                .getDefaultSharedPreferences(this).getString("isActEnLocation", "");
 
-        isActStInt = PreferenceManager
-                .getDefaultSharedPreferences(this).getString("isActStInt", "Empty");
+        int StInt = PreferenceManager
+                .getDefaultSharedPreferences(this).getInt("isAct", 0);
 
-        isActEnInt = PreferenceManager
-                .getDefaultSharedPreferences(this).getString("isActEnInt", "Empty");
+        int EnInt = PreferenceManager
+                .getDefaultSharedPreferences(this).getInt("isActo", 0);
 
+        Log.d("1111","stIntsa "+StInt);
+        Log.d("1111","enIntsa "+EnInt);
         title = titleBus;
 
+
+        Log.d("1111","title1 "+title);
         if (!isActTR.equals("")){
             travelRoute = isActTR;
         }
@@ -123,13 +133,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         if (!isActEnLocation.equals("")){
             edLocation1 = isActEnLocation;
         }
-
-        if (!isActStInt.equals("")){
-            stInt = Integer.valueOf(isActStInt);
+Log.d("1111","isActStInt "+isActStInt);
+        if (StInt!=0){
+            stInt = Integer.valueOf(StInt);
         }
 
-        if (!isActEnInt.equals("")){
-            enInt = Integer.valueOf(isActEnInt);
+
+        if (EnInt!=0){
+            enInt = Integer.valueOf(EnInt);
         }
 
         Log.i("12345","Qr title out side = " + isAct22);
@@ -150,9 +161,6 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        Button count = findViewById(R.id.count);
-
-
 
         Log.i("12345","Qr Activity Value = " + isAct1);
         Log.i("12345","Bus Activity Value = " + isAct2);
@@ -172,7 +180,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[0].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[0].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[0].setBackgroundResource(android.R.color.holo_red_dark);
@@ -180,11 +189,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     return;
 
                 } else if (booleans[0].equals("")&& isAct1.equals("*")) { //Now Empty
-
-                    buttons[0].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[0] = userID+"*";
-                    return;
-
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[0].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[0] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
                 } else {
                     if(!booleans[0].equals(userID+"*") && isAct1.equals("*")){
                         
@@ -217,6 +229,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[0].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[0] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -231,6 +244,9 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v) {
 
+                ColorDrawable buttonColor = (ColorDrawable) buttons[1].getBackground();
+                int color = buttonColor.getColor();
+
                 if (booleans[1].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[1].setBackgroundResource(android.R.color.holo_red_dark);
@@ -239,9 +255,15 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[1].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[1].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[1] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[1].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[1] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
+
 
                 } else {
                     if(!booleans[1].equals(userID+"*") && isAct1.equals("*")){
@@ -275,6 +297,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[1].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[1] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -289,7 +312,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[2].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[2].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[2].setBackgroundResource(android.R.color.holo_red_dark);
@@ -298,9 +322,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[2].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[2].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[2] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[2].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[2] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[2].equals(userID+"*") && isAct1.equals("*")){
@@ -334,6 +363,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[2].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[2] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -348,7 +378,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[3].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[3].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[3].setBackgroundResource(android.R.color.holo_red_dark);
@@ -357,9 +388,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[3].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[3].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[3] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[3].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[3] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[3].equals(userID+"*") && isAct1.equals("*")){
@@ -393,6 +429,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[3].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[3] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -407,7 +444,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[4].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[4].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[4].setBackgroundResource(android.R.color.holo_red_dark);
@@ -416,9 +454,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[4].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[4].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[4] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[4].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[4] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[4].equals(userID+"*") && isAct1.equals("*")){
@@ -452,6 +495,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[4].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[4] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -465,7 +509,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[5].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[5].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[5].setBackgroundResource(android.R.color.holo_red_dark);
@@ -474,9 +519,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[5].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[5].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[5] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[5].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[5] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[5].equals(userID+"*") && isAct1.equals("*")){
@@ -510,6 +560,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[5].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[5] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -523,7 +574,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[6].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[6].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[6].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[6].setBackgroundResource(android.R.color.holo_red_dark);
@@ -532,9 +584,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[6].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[6].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[6] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[6].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[6] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[6].equals(userID+"*") && isAct1.equals("*")){
@@ -568,6 +625,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[6].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[6] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -581,7 +639,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[7].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[7].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[7].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[7].setBackgroundResource(android.R.color.holo_red_dark);
@@ -590,9 +649,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[7].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[7].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[7] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[7].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[7] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[7].equals(userID+"*") && isAct1.equals("*")){
@@ -626,6 +690,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[7].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[7] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -639,7 +704,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[8].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[8].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[8].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[8].setBackgroundResource(android.R.color.holo_red_dark);
@@ -648,9 +714,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[8].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[8].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[8] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[8].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[8] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[8].equals(userID+"*") && isAct1.equals("*")){
@@ -684,6 +755,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[8].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[8] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -697,7 +769,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[9].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[9].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[9].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[9].setBackgroundResource(android.R.color.holo_red_dark);
@@ -706,9 +779,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[9].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[9].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[9] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[9].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[9] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[9].equals(userID+"*") && isAct1.equals("*")){
@@ -742,6 +820,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[9].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[9] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -755,7 +834,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[10].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[10].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[10].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[10].setBackgroundResource(android.R.color.holo_red_dark);
@@ -764,9 +844,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[10].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[10].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[10] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[10].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[10] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[10].equals(userID+"*") && isAct1.equals("*")){
@@ -800,6 +885,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[10].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[10] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -813,7 +899,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[11].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[11].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[11].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[11].setBackgroundResource(android.R.color.holo_red_dark);
@@ -822,9 +909,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[11].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[11].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[11] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[11].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[11] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[11].equals(userID+"*") && isAct1.equals("*")){
@@ -858,6 +950,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[11].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[11] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -871,7 +964,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[12].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[12].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[12].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[12].setBackgroundResource(android.R.color.holo_red_dark);
@@ -880,9 +974,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[12].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[12].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[12] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[12].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[12] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[12].equals(userID+"*") && isAct1.equals("*")){
@@ -916,6 +1015,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[12].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[12] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -929,7 +1029,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[13].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[13].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[13].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[13].setBackgroundResource(android.R.color.holo_red_dark);
@@ -938,9 +1039,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[13].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[13].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[13] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[13].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[13] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[13].equals(userID+"*") && isAct1.equals("*")){
@@ -974,6 +1080,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[13].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[13] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -987,7 +1094,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[14].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[14].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[14].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[14].setBackgroundResource(android.R.color.holo_red_dark);
@@ -996,9 +1104,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[14].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[14].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[14] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[14].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[14] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[14].equals(userID+"*") && isAct1.equals("*")){
@@ -1032,6 +1145,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[14].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[14] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1045,7 +1159,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[15].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[15].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[15].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[15].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1054,9 +1169,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[15].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[15].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[15] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[15].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[15] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[15].equals(userID+"*") && isAct1.equals("*")){
@@ -1090,6 +1210,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[15].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[15] = "";
+                                checkOne =false;
                             }
                         });
 
@@ -1103,7 +1224,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[16].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[16].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[16].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[16].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1112,9 +1234,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[16].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[16].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[16] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[16].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[16] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[16].equals(userID+"*") && isAct1.equals("*")){
@@ -1148,6 +1275,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[16].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[16] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1161,7 +1289,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[17].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[17].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[17].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[17].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1170,9 +1299,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[17].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[17].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[17] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[17].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[17] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[17].equals(userID+"*") && isAct1.equals("*")){
@@ -1206,6 +1340,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[17].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[17] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1219,7 +1354,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[18].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[18].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[18].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[18].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1228,9 +1364,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[18].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[18].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[18] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[18].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[18] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[18].equals(userID+"*") && isAct1.equals("*")){
@@ -1264,6 +1405,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[18].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[18] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1277,7 +1419,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[19].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[19].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[19].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[19].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1286,9 +1429,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[19].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[19].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[19] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[19].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[19] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[19].equals(userID+"*") && isAct1.equals("*")){
@@ -1322,6 +1470,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[19].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[19] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1335,7 +1484,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[20].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[20].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[20].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[20].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1344,9 +1494,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[20].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[20].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[20] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[20].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[20] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[20].equals(userID+"*") && isAct1.equals("*")){
@@ -1380,6 +1535,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[20].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[20] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1393,7 +1549,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[21].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[21].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[21].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[21].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1402,9 +1559,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[21].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[21].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[21] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[21].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[21] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[21].equals(userID+"*") && isAct1.equals("*")){
@@ -1438,6 +1600,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[21].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[21] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1451,7 +1614,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[22].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[22].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[22].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[22].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1460,9 +1624,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[22].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[22].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[22] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[22].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[22] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[22].equals(userID+"*") && isAct1.equals("*")){
@@ -1496,6 +1665,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[22].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[22] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1509,7 +1679,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[23].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[23].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[23].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[23].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1518,9 +1689,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[23].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[23].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[23] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[23].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[23] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[23].equals(userID+"*") && isAct1.equals("*")){
@@ -1554,6 +1730,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[23].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[23] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1567,7 +1744,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[24].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[24].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[24].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[24].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1576,9 +1754,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[24].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[24].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[24] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[24].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[24] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[24].equals(userID+"*") && isAct1.equals("*")){
@@ -1612,6 +1795,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[24].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[24] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1625,7 +1809,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[25].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[25].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[25].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[25].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1634,9 +1819,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[25].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[25].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[25] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[25].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[25] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[25].equals(userID+"*") && isAct1.equals("*")){
@@ -1670,6 +1860,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[25].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[25] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1683,7 +1874,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[26].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[26].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[26].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[26].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1692,9 +1884,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[26].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[26].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[26] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[26].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[26] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[26].equals(userID+"*") && isAct1.equals("*")){
@@ -1728,6 +1925,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[26].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[26] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1741,7 +1939,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[27].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[27].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[27].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[27].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1750,9 +1949,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[27].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[27].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[27] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[27].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[27] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[27].equals(userID+"*") && isAct1.equals("*")){
@@ -1786,6 +1990,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[27].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[27] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1799,7 +2004,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[28].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[28].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[28].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[28].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1808,9 +2014,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[28].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[28].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[28] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[28].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[28] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[28].equals(userID+"*") && isAct1.equals("*")){
@@ -1844,6 +2055,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[28].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[28] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1857,7 +2069,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[29].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[29].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[29].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[29].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1866,9 +2079,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[29].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[29].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[29] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[29].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[29] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[29].equals(userID+"*") && isAct1.equals("*")){
@@ -1902,6 +2120,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[29].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[29] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1915,7 +2134,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[30].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[30].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[30].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[30].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1924,9 +2144,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[30].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[30].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[30] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[30].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[30] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[30].equals(userID+"*") && isAct1.equals("*")){
@@ -1960,6 +2185,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[30].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[30] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -1973,7 +2199,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[31].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[31].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[31].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[31].setBackgroundResource(android.R.color.holo_red_dark);
@@ -1982,9 +2209,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[31].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[31].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[31] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[31].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[31] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[31].equals(userID+"*") && isAct1.equals("*")){
@@ -2018,6 +2250,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[31].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[31] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -2031,7 +2264,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[32].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[32].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[32].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[32].setBackgroundResource(android.R.color.holo_red_dark);
@@ -2040,9 +2274,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[32].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[32].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[32] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[32].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[32] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[32].equals(userID+"*") && isAct1.equals("*")){
@@ -2076,6 +2315,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[32].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[32] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -2089,7 +2329,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[33].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[33].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[33].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[33].setBackgroundResource(android.R.color.holo_red_dark);
@@ -2098,9 +2339,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[33].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[33].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[33] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[33].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[33] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[33].equals(userID+"*") && isAct1.equals("*")){
@@ -2134,6 +2380,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[33].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[33] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -2147,7 +2394,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[34].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[34].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[34].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[34].setBackgroundResource(android.R.color.holo_red_dark);
@@ -2156,9 +2404,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[34].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[34].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[34] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[34].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[34] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[34].equals(userID+"*") && isAct1.equals("*")){
@@ -2192,6 +2445,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[34].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[34] = "";
+                                checkOne=false;
                             }
                         });
 
@@ -2205,7 +2459,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         buttons[35].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ColorDrawable buttonColor = (ColorDrawable) buttons[35].getBackground();
+                int color = buttonColor.getColor();
                 if (booleans[35].equals("")&& isAct2.equals("#")) { //Now Empty
 
                     buttons[35].setBackgroundResource(android.R.color.holo_red_dark);
@@ -2214,9 +2469,14 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
                 } else if (booleans[35].equals("")&& isAct1.equals("*")) { //Now Empty
 
-                    buttons[35].setBackgroundResource(android.R.color.holo_orange_light);
-                    booleans[35] = userID+"*";
-                    return;
+                    if (color == getResources().getColor(R.color.teal_200)){
+                        if (checkOne==false){
+                            buttons[35].setBackgroundResource(android.R.color.holo_orange_light);
+                            booleans[35] = userID+"*";
+                            checkOne=true;
+                            return;
+                        }
+                    }
 
                 } else {
                     if(!booleans[35].equals(userID+"*") && isAct1.equals("*")){
@@ -2250,6 +2510,7 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                                 buttons[35].setBackgroundResource(R.color.teal_200);
                                 dialog.dismiss();
                                 booleans[35] = "";
+                                checkOne =false;
                             }
                         });
 
@@ -2258,51 +2519,6 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
 
                 }
-            }
-        });
-        count.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Map<String,Object> seats = new HashMap<>();
-                g = 0;
-                c = 0;
-
-                firebaseAboutSeats(title);
-
-                for (int j = 0; j < buttons.length; j++) {
-
-                    if(!booleans[j].equals("")) {
-
-                        if(booleans[j].equals(userID+"#")){
-                            String seat = "seat"+j;
-                            seats.put(seat,userID+"#");
-                            g++;
-                            c++;
-                        }else if(booleans[j].equals(userID+"*")){
-                            String seat = "seat"+j;
-                            seats.put(seat,userID+"*");
-                            g++;
-                            c++;
-                        }else{
-                            String seat = "seat"+j;
-                            seats.put(seat,booleans[j]);
-                            g++;
-                        }
-
-                    } else {
-                        String seat = "seat"+j;
-                        seats.put(seat,"");
-
-                    }
-
-                }
-                FirebaseFirestore.getInstance().collection("BusSeats").document(title).update(seats);
-                Toast.makeText(BookSeatsActivity.this, "Booked seats are " + g, Toast.LENGTH_SHORT).show();
-
-                firebaseUpdateDriverDetails(g);
-                firebasePassengerAboutBooking(c,userID,title);
-
-
             }
         });
 
@@ -2325,10 +2541,10 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                 .getDefaultSharedPreferences(BookSeatsActivity.this).edit().putString("isActEnLocation", "").apply();
 
         PreferenceManager
-                .getDefaultSharedPreferences(BookSeatsActivity.this).edit().putString("isActStInt", "").apply();
+                .getDefaultSharedPreferences(BookSeatsActivity.this).edit().putInt("isAct",0).apply();
 
         PreferenceManager
-                .getDefaultSharedPreferences(BookSeatsActivity.this).edit().putString("isActEnInt", "").apply();
+                .getDefaultSharedPreferences(BookSeatsActivity.this).edit().putInt("isActo",0).apply();
     }
 
     private void firebasePassengerAboutBooking(int c, String userID, String title) {
@@ -2439,9 +2655,111 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
                     book.put("time",time);
                 }
 
+                x = queryDocumentSnapshots.size();
+                Log.i("12345", "firebasePassengerAboutBooking Inside ="+x);
+                document2 = fStore.collection("User Booking History").document(userID+"*").collection(userID).document(String.valueOf(x+1));
+                Log.i("12345", "firebasePassengerAboutBooking Inside 2 ="+x+1);
+                DocumentReference documentReference1 = fStore.collection("User Booking").document(userID+"*");
+
+                Map<String,Object> book1 = new HashMap<>();
+                book1.put("busID",title);
+                book1.put("enLocation",edLocation1);
+                book1.put("stLocation",stLocation);
+                book1.put("seats",c);
+
+                int diff1 =stInt-enInt;
+                Log.d("1111","differ "+diff1);
+                if ((1==diff1) || (-1==diff1)){
+                    double k = Double.valueOf(c);
+                    double pay = (50*k*0.2);
+                    double fPay = (50*k);
+                    double oBook = (50*0.2);
+                    book1.put("onePayment",oBook);
+                    double rem = (50*0.8*k);
+                    book1.put("remain",rem);
+                    book1.put("forOne",50);
+                    book1.put("fullPayment",fPay);
+                    book1.put("paid",pay);
+                    book1.put("time",time);
+                }else if ((2==diff1) || (-2==diff1)){
+                    double k = Double.valueOf(c);
+                    double pay = (100*k*0.2);
+                    double fPay = (100*k);
+                    double oBook = (100*0.2);
+                    book1.put("onePayment",oBook);
+                    double rem = (100*0.8*k);
+                    book1.put("remain",rem);
+                    book1.put("forOne",100);
+                    book1.put("fullPayment",fPay);
+                    book1.put("paid",pay);
+                    book1.put("time",time);
+                }else if ((3==diff1) || (-3==diff1)){
+                    double k = Double.valueOf(c);
+                    double pay = (180*k*0.2);
+                    double fPay = (180*k);
+                    double oBook = (180*0.2);
+                    book1.put("onePayment",oBook);
+                    double rem = (180*0.8*k);
+                    book1.put("remain",rem);
+                    book1.put("forOne",180);
+                    book1.put("fullPayment",fPay);
+                    book1.put("paid",pay);
+                    book1.put("time",time);
+                }else if ((4==diff1) || (-4==diff1)){
+                    double k = Double.valueOf(c);
+                    double pay = (250*k*0.2);
+                    double fPay = (250*k);
+                    double oBook = (250*0.2);
+                    book1.put("onePayment",oBook);
+                    double rem = (250*0.8*k);
+                    book1.put("remain",rem);
+                    book1.put("forOne",250);
+                    book1.put("fullPayment",fPay);
+                    book1.put("paid",pay);
+                    book1.put("time",time);
+                }else if ((5==diff1) || (-5==diff1)){
+                    double k = Double.valueOf(c);
+                    double pay = (400*k*0.2);
+                    double fPay = (400*k);
+                    double oBook = (400*0.2);
+                    book1.put("onePayment",oBook);
+                    double rem = (400*0.8*k);
+                    book1.put("remain",rem);
+                    book1.put("forOne",400);
+                    book1.put("fullPayment",fPay);
+                    book1.put("paid",pay);
+                    book1.put("time",time);
+                }else if ((6==diff1) || (-6==diff1)){
+                    double k = Double.valueOf(c);
+                    double pay = (550*k*0.2);
+                    double fPay = (550*k);
+                    double oBook = (550*0.2);
+                    book1.put("onePayment",oBook);
+                    double rem = (550*0.8*k);
+                    book1.put("remain",rem);
+                    book1.put("forOne",550);
+                    book1.put("fullPayment",fPay);
+                    book1.put("paid",pay);
+                    book1.put("time",time);
+                }else if ((7==diff1) || (-7==diff1)){
+                    double k = Double.valueOf(c);
+                    double pay = (900*k*0.2);
+                    double fPay = (900*k);
+                    double oBook = (900*0.2);
+                    book1.put("onePayment",oBook);
+                    double rem = (900*0.8*k);
+                    book1.put("remain",rem);
+                    book1.put("forOne",900);
+                    book1.put("fullPayment",fPay);
+                    book1.put("paid",pay);
+                    book1.put("time",time);
+                }
+
 
                 document1.set(book);
+                document2.set(book1);
                 documentReference.set(book);
+                documentReference1.set(book1);
             }
         });
 
@@ -2530,6 +2848,68 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+
+        AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
+                .setTitle("Confirm Booking Seats")
+                .setMessage("Do you confirm your reservation details?")
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("No", null)
+                .show();
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String,Object> seats = new HashMap<>();
+                g = 0;
+                c = 0;
+                Log.d("1111","title2 "+title);
+                firebaseAboutSeats(title);
+
+                for (int j = 0; j < buttons.length; j++) {
+
+                    if(!booleans[j].equals("")) {
+
+                        if(booleans[j].equals(userID+"#")){
+                            String seat = "seat"+j;
+                            seats.put(seat,userID+"#");
+                            g++;
+                            c++;
+                        }else if(booleans[j].equals(userID+"*")){
+                            String seat = "seat"+j;
+                            seats.put(seat,userID+"*");
+                            g++;
+                            c++;
+                        }else{
+                            String seat = "seat"+j;
+                            seats.put(seat,booleans[j]);
+                            g++;
+                        }
+
+                    } else {
+                        String seat = "seat"+j;
+                        seats.put(seat,"");
+
+                    }
+
+                }
+                FirebaseFirestore.getInstance().collection("BusSeats").document(title).update(seats);
+                Toast.makeText(BookSeatsActivity.this, "Booked seats are " + g, Toast.LENGTH_SHORT).show();
+
+                firebaseUpdateDriverDetails(g);
+                firebasePassengerAboutBooking(c,userID,title);
+                BookSeatsActivity.super.onBackPressed();
+                dialog.dismiss();
+            }
+        });
+
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BookSeatsActivity.super.onBackPressed();
+                dialog.dismiss();
+            }
+        });
     }
 }

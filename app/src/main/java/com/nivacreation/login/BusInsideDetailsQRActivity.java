@@ -70,9 +70,9 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this).edit().putString("isActEnLocation", endLocation).apply();
 
         PreferenceManager
-                .getDefaultSharedPreferences(this).edit().putString("isActStInt", String.valueOf(stInt)).apply();
+                .getDefaultSharedPreferences(this).edit().putInt("isAct", Integer.valueOf(stInt)).apply();
         PreferenceManager
-                .getDefaultSharedPreferences(this).edit().putString("isActEnInt", String.valueOf(enInt)).apply();
+                .getDefaultSharedPreferences(this).edit().putInt("isActo", Integer.valueOf(enInt)).apply();
 
         selectSeat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,9 +90,9 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
                 PreferenceManager
                         .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isActEnLocation", endLocation).apply();
                 PreferenceManager
-                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isActStInt", String.valueOf(stInt)).apply();
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putInt("isAct", Integer.valueOf(stInt)).apply();
                 PreferenceManager
-                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putString("isActEnInt", String.valueOf(enInt)).apply();
+                        .getDefaultSharedPreferences(BusInsideDetailsQRActivity.this).edit().putInt("isActo", Integer.valueOf(enInt)).apply();
                 startActivity(i);
             }
         });

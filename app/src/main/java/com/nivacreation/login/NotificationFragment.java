@@ -119,7 +119,7 @@ public class NotificationFragment extends Fragment{
         String userId = fAuth.getCurrentUser().getUid();
         fStore = FirebaseFirestore.getInstance();
 
-        fStore.collection("User Booking History").document(userId).collection(userId)
+        fStore.collection("User Booking History").document(userId+"#").collection(userId)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
@@ -136,6 +136,31 @@ public class NotificationFragment extends Fragment{
                                String userType = dc.getDocument().toString();
                                Log.e("12345",userType);
                                     userSupportArrayList.add(dc.getDocument().toObject(TransactionDetails.class));
+                            }
+                            userSupportAdapter.notifyDataSetChanged();
+
+                        }
+                    }
+                });
+
+
+        fStore.collection("User Booking History").document(userId+"*").collection(userId)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                        if(error != null){
+                            Log.e("12345",error.getMessage());
+                            return;
+                        }
+
+                        for (DocumentChange dc : value.getDocumentChanges()){
+
+                            if (dc.getType() == DocumentChange.Type.ADDED){
+
+                                String userType = dc.getDocument().toString();
+                                Log.e("12345",userType);
+                                userSupportArrayList.add(dc.getDocument().toObject(TransactionDetails.class));
                             }
                             userSupportAdapter.notifyDataSetChanged();
 
