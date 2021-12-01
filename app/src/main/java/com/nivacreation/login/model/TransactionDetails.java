@@ -40,8 +40,16 @@ public class TransactionDetails {
 
 
 
-    String busID, enLocation,stLocation, time;
+    String busID, enLocation,stLocation, time, userId;
     double  forOne, fullPayment, onePayment, paid, remain, seats;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getBusID() {
         return busID;

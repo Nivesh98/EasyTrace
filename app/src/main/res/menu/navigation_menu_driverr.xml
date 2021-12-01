@@ -19,6 +19,11 @@
         android:id="@+id/navigation_inbox_driver"
         android:icon="@drawable/ic_baseline_location_on_24"
         android:title="Map"/>
+
+    <item
+        android:id="@+id/navigation_transaction_driver"
+        android:icon="@drawable/wallet"
+        android:title="Transaction"/>
     <item
         android:title="@string/others">
         <menu>

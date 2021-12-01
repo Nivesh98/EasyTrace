@@ -42,4 +42,10 @@
         android:name="com.nivacreation.login.AboutUsFragment_Driver"
         android:label="About Us"
         tools:layout="@layout/fragment_about_us__driver"/>
+
+    <fragment
+        android:id="@+id/navigation_transaction_driver"
+        android:name="com.nivacreation.login.DriverTransactionFragment"
+        android:label="Transaction"
+        tools:layout="@layout/fragment_driver_transaction" />
 </navigation>

@@ -84,12 +84,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 //    }
 
 
-    Context context;
-    ArrayList<TransactionDetails> userSupportArrayList;
+    Context context, contextDriver;
+    ArrayList<TransactionDetails> userSupportArrayList, userSupportArrayDriver;
 
     public TransactionAdapter(Context context, ArrayList<TransactionDetails> userSupportArrayList){
+
         this.context = context;
         this.userSupportArrayList = userSupportArrayList;
+
     }
 
     @NonNull
@@ -97,6 +99,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public TransactionAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_transaction,parent,false);
+
         return new TransactionAdapter.ViewHolder(view);
     }
 
@@ -107,6 +110,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.tvDate.setText(user.getTime());
         holder.tvStartEnd.setText(user.getStLocation()+" - "+user.getEnLocation());
         holder.tvCost.setText(String.valueOf(user.getPaid()));
+
 
     }
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DriverTransactionFragment">
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/passenger_profile_notification"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <com.ebanx.swipebtn.SwipeButton
+            android:id="@+id/swipeBtnDriverTransaction"
+            android:layout_width="290dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:button_background="@drawable/button_design_swipe"
+            app:button_bottom_padding="15dp"
+            app:button_image_disabled="@drawable/ic_baseline_arrow_forward_ios_24_swipe"
+            app:button_image_enabled="@drawable/ic_baseline_arrow_back_ios_24_swipe"
+            app:button_left_padding="15dp"
+            app:button_right_padding="15dp"
+            app:button_top_padding="15dp"
+            app:inner_text="Swipe to Home"
+            app:inner_text_background="@drawable/text_design_swipe"
+            app:inner_text_bottom_padding="15dp"
+            app:inner_text_size="10sp"
+            app:inner_text_top_padding="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.952">
+
+        </com.ebanx.swipebtn.SwipeButton>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/driverTransactionFragment"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_marginTop="150dp"
+            app:layout_constraintBottom_toTopOf="@+id/swipeBtnDriverTransaction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -2596,6 +2596,8 @@ Log.d("1111","isActStInt "+isActStInt);
                     book.put("enLocation",edLocation1);
                     book.put("stLocation",stLocation);
                     book.put("seats",cc);
+                    String bb = userID;
+                    book.put("userId",bb.substring(0,6)+"#");
 
                     int diff =stInt-enInt;
                     Log.d("1111","differ "+diff);
@@ -2790,6 +2792,8 @@ Log.d("1111","isActStInt "+isActStInt);
                     book1.put("enLocation",edLocation1);
                     book1.put("stLocation",stLocation);
                     book1.put("seats",c);
+                    String bb = userID;
+                    book1.put("userId",bb.substring(0,6)+"*");
 
                     int diff1 =stInt-enInt;
                     Log.d("1111","differ "+diff1);
