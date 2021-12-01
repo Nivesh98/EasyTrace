@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
 
     Button selectSeat;
 
-    TextView busId, passengerId, driverName, route;
+    TextView busId, passengerId, driverName, route,availableSeats;
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -39,6 +40,7 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
         passengerId = findViewById(R.id.passengerId);
         driverName = findViewById(R.id.driver_name);
         route = findViewById(R.id.route);
+        availableSeats =findViewById(R.id.available_seats);
 
         selectSeat = findViewById(R.id.select_seat);
 
@@ -54,8 +56,8 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
         stInt = getIntent().getIntExtra("stInt",stInt);
         enInt = getIntent().getIntExtra("enInt", enInt);
 
-        busId.setText(dId);
-        passengerId.setText(pId);
+        busId.setText("Bus_"+dId.substring(0,6));
+        passengerId.setText("P_"+pId.substring(0,6));
         route.setText(trRoute);
 
         PreferenceManager
@@ -119,6 +121,23 @@ public class BusInsideDetailsQRActivity extends AppCompatActivity {
                 }
             });
         }
+
+        DocumentReference documentReference1 = fStore.collection("Bus").document(dId.trim());
+        documentReference1.addSnapshotListener( BusInsideDetailsQRActivity.this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                if (value != null && value.exists()) {
+
+
+                    availableSeats.setText(value.getDouble("available seat").toString());
+
+
+                    Log.d("12345", "Get driver Name " + value.getString("firstName") + " " + value.getString("lastName"));
+                }
+
+            }
+        });
 
     }
 }

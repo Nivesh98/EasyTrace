@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#4AD80D"
                     android:textStyle="bold"
-                    android:text="45"/>
+                    android:text="36"/>
             </LinearLayout>
 
             <LinearLayout

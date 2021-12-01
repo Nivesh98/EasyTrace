@@ -29,7 +29,7 @@ import com.nivacreation.login.model.AppNotificationChaneel;
 public class BusInsideDetailsActivity extends AppCompatActivity {
 
     Button bookSeats, getHoltBtn;
-    TextView busId, startLocation, endLocation, trRoute, driverName;
+    TextView busId, startLocation, endLocation, trRoute, driverName, availableSeats;
 
     int stInt,enInt;
 
@@ -57,6 +57,7 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
         endLocation = findViewById(R.id.endLocation);
         trRoute = findViewById(R.id.route);
         driverName = findViewById(R.id.driver_name);
+        availableSeats = findViewById(R.id.available_seats);
 
         //chanell
         notificationManagerCompat = NotificationManagerCompat.from(BusInsideDetailsActivity.this);
@@ -65,7 +66,7 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         title = getIntent().getStringExtra("title");
-        busId.setText(title);
+        busId.setText("Bus_"+title.substring(0,6));
 
         travelRoute = getIntent().getStringExtra("trRoute");
         trRoute.setText(travelRoute);
@@ -167,6 +168,23 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
                 }
             });
         }
+
+        DocumentReference documentReference1 = fStore.collection("Bus").document(title);
+        documentReference1.addSnapshotListener( BusInsideDetailsActivity.this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                if (value != null && value.exists()) {
+
+
+                    availableSeats.setText(value.getDouble("available seat").toString());
+
+
+                    Log.d("12345", "Get driver Name " + value.getString("firstName") + " " + value.getString("lastName"));
+                }
+
+            }
+        });
     }
 
     private void notificationLocation(String getHolt) {

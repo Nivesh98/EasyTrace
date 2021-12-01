@@ -16,134 +16,124 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp">
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Passenger ID:"
+            android:text="Passenger ID: "
             android:layout_marginTop="5dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/passengerId"
             android:textColor="@color/white"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="20dp"
             android:textSize="18sp"
             android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
        >
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bus ID:"
-            android:layout_marginTop="0dp"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bus_id"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Driver Name:"
+            android:text="Bus ID: "
             android:layout_marginTop="5dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bus_id"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="20dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Driver Name: "
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/driver_name"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="20dp"
             android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Travel Route:"
+            android:text="Travel Route: "
             android:layout_marginTop="5dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/route"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="20dp"
             android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Available Seats:"
+            android:text="Available Seats: "
             android:layout_marginTop="5dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50"
+            android:text=""
             android:id="@+id/available_seats"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Payment:"
             android:layout_marginTop="5dp"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/paymentBus"
-            android:textColor="@color/white"
-            android:textSize="18sp"
+            android:paddingLeft="20dp"
             android:textStyle="bold"/>
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -152,12 +142,12 @@
         android:paddingLeft="30dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="50dp">
 
         <Button
-            android:layout_width="169dp"
             android:id="@+id/select_seat"
-            android:layout_height="55dp"
+            android:layout_width="103dp"
+            android:layout_height="38dp"
             android:layout_gravity="center"
             android:background="@drawable/select_seat" />
 

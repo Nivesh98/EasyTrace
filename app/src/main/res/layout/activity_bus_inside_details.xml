@@ -12,23 +12,27 @@
     <ImageView
         android:layout_width="115dp"
         android:layout_height="115dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         android:src="@drawable/bus_icon" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bus ID:"
+            android:text="Bus ID: "
             android:layout_marginTop="18dp"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="18dp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:id="@+id/bus_id" />
@@ -37,10 +41,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Driver Name:"
             android:layout_marginTop="3dp"
@@ -48,9 +52,11 @@
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="3dp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:id="@+id/driver_name" />
@@ -59,10 +65,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Travel Route:"
             android:layout_marginTop="3dp"
@@ -71,9 +77,11 @@
             android:textSize="20dp"
             />
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="3dp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:id="@+id/route" />
@@ -81,10 +89,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Location:"
             android:layout_marginTop="3dp"
@@ -92,9 +100,11 @@
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="3dp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:id="@+id/stLocation" />
@@ -102,10 +112,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="End Location:"
             android:layout_marginTop="3dp"
@@ -113,43 +123,25 @@
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="3dp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:id="@+id/endLocation" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Payment Per One Seat:"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:id="@+id/payment" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Available Seats:"
             android:layout_marginTop="3dp"
@@ -157,9 +149,11 @@
             android:textSize="20dp"
             android:textStyle="bold"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="3dp"
             android:id="@+id/available_seats"
             android:textStyle="bold"
             android:textColor="@color/white"/>
@@ -169,18 +163,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        >
+        android:layout_marginTop="50dp">
 
         <Button
             android:id="@+id/book_seat"
-            android:layout_width="148dp"
-            android:layout_height="match_parent"
+            android:layout_width="119dp"
+            android:layout_height="47dp"
             android:background="@drawable/book_seats" />
 
         <Button
             android:id="@+id/busHoltBtn"
-            android:layout_width="131dp"
+            android:layout_width="112dp"
             android:layout_height="47dp"
+            android:layout_marginLeft="30dp"
             android:background="@drawable/get_holt" />
 
     </LinearLayout>

@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -30,13 +29,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.nivacreation.login.model.BusInsideDetailsForAdminActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 
 public class InboxFragment_Admin extends Fragment implements OnMapReadyCallback {
@@ -222,10 +218,11 @@ public class InboxFragment_Admin extends Fragment implements OnMapReadyCallback 
                                             }else{
 
                                                 Intent i = new Intent(getActivity(), BusInsideDetailsForAdminActivity.class);
+                                                i.putExtra("title",markertitle);
                                                 startActivity(i);
 //                                            if (!townList_end.contains(markertitle)){
 //                                                Intent i = new Intent(PassengerFindMap.this,BusInsideDetailsActivity.class);
-//                                                i.putExtra("title",markertitle);
+//
 //                                                i.putExtra("stLocation",stlo);
 //                                                i.putExtra("stInt",startPoint);
 //                                                i.putExtra("enInt",endPoint);

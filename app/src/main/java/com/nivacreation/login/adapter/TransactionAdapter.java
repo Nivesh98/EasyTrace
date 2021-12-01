@@ -106,7 +106,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         holder.tvDate.setText(user.getTime());
         holder.tvStartEnd.setText(user.getStLocation()+" - "+user.getEnLocation());
-        holder.tvCost.setText(String.valueOf(user.getFullPayment()));
+        holder.tvCost.setText(String.valueOf(user.getPaid()));
 
     }
 

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,6 +45,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
 
     boolean checkOne = false;
 
+    Button positiveButton;
+
     String isAct22;
     String isAct2;
     String isAct1;
@@ -52,6 +55,8 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     String isActEnLocation;
     String isActStInt;
     String isActEnInt;
+
+    double k,pay,fPay,oBook,rem;
 
     Calendar calender;
     SimpleDateFormat simpleDateFormat;
@@ -68,12 +73,18 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
     //String userID = "87HATPpL1MQ0hhunLRzQkzXQoDt2";
     String userID ;
 
+    AlertDialog dialog1;
+
     //    private boolean isValue0 = true, isValue1 = true;
     int i;
-    int k;
     int g =0;
     int c;
     int y =0, x=0;
+
+    AlertDialog.Builder builder;
+    TextView busID, route,seatsDialog,payment,timeDia,remain;
+    Button okDial;
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +97,20 @@ public class BookSeatsActivity extends AppCompatActivity implements View.OnClick
         edLocation1 = getIntent().getStringExtra("endLocation");
         stInt =getIntent().getIntExtra("stInt",stInt);
         enInt =getIntent().getIntExtra("enInt",enInt);
+
+        builder = new AlertDialog.Builder(BookSeatsActivity.this);
+        builder.setTitle("Payment Details");
+
+        view = getLayoutInflater().inflate(R.layout.payment_popup,null);
+
+        busID = view.findViewById(R.id.busIDTextDialog);
+        route = view.findViewById(R.id.busRouteTextDialog);
+        seatsDialog = view.findViewById(R.id.busSeatTextDialog);
+        payment = view.findViewById(R.id.busPaymentTextDialog);
+        timeDia = view.findViewById(R.id.busTimeTextDialog);
+        remain = view.findViewById(R.id.busRemainTextDialog);
+
+        okDial = view.findViewById(R.id.okDialogBtn);
 
         //titleQr = getIntent().getStringExtra("titleQr");
 
@@ -2549,221 +2574,346 @@ Log.d("1111","isActStInt "+isActStInt);
 
     private void firebasePassengerAboutBooking(int c, String userID, String title) {
 
+
         Log.i("12345", "firebasePassengerAboutBooking Outside");
 
-        fStore.collection("User Booking History").document(userID+"#").collection(userID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+        if (isAct2.equals("#")){
+            fStore.collection("User Booking History").document(userID+"#").collection(userID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                y = queryDocumentSnapshots.size();
-                Log.i("12345", "firebasePassengerAboutBooking Inside ="+y);
-                document1 = fStore.collection("User Booking History").document(userID+"#").collection(userID).document(String.valueOf(y+1));
-                Log.i("12345", "firebasePassengerAboutBooking Inside 2 ="+y+1);
-                DocumentReference documentReference = fStore.collection("User Booking").document(userID+"#");
+                    k--;
+                    y = queryDocumentSnapshots.size();
+                    Log.i("12345", "firebasePassengerAboutBooking Inside ="+y);
+                    document1 = fStore.collection("User Booking History").document(userID+"#").collection(userID).document(String.valueOf(y+1));
+                    Log.i("12345", "firebasePassengerAboutBooking Inside 2 ="+y+1);
+                    DocumentReference documentReference = fStore.collection("User Booking").document(userID+"#");
 
-                Map<String,Object> book = new HashMap<>();
-                book.put("busID",title);
-                book.put("enLocation",edLocation1);
-                book.put("stLocation",stLocation);
-                book.put("seats",c);
+                    int cc = c;
+                    cc = cc-1;
+                    Map<String,Object> book = new HashMap<>();
+                    book.put("busID",title);
+                    book.put("enLocation",edLocation1);
+                    book.put("stLocation",stLocation);
+                    book.put("seats",cc);
 
-                int diff =stInt-enInt;
-                Log.d("1111","differ "+diff);
-                if ((1==diff) || (-1==diff)){
-                    double k = Double.valueOf(c);
-                    double pay = (50*k*0.2);
-                    double fPay = (50*k);
-                    double oBook = (50*0.2);
-                    book.put("onePayment",oBook);
-                    double rem = (50*0.8*k);
-                    book.put("remain",rem);
-                    book.put("forOne",50);
-                    book.put("fullPayment",fPay);
-                    book.put("paid",pay);
-                    book.put("time",time);
-                }else if ((2==diff) || (-2==diff)){
-                    double k = Double.valueOf(c);
-                    double pay = (100*k*0.2);
-                    double fPay = (100*k);
-                    double oBook = (100*0.2);
-                    book.put("onePayment",oBook);
-                    double rem = (100*0.8*k);
-                    book.put("remain",rem);
-                    book.put("forOne",100);
-                    book.put("fullPayment",fPay);
-                    book.put("paid",pay);
-                    book.put("time",time);
-                }else if ((3==diff) || (-3==diff)){
-                    double k = Double.valueOf(c);
-                    double pay = (180*k*0.2);
-                    double fPay = (180*k);
-                    double oBook = (180*0.2);
-                    book.put("onePayment",oBook);
-                    double rem = (180*0.8*k);
-                    book.put("remain",rem);
-                    book.put("forOne",180);
-                    book.put("fullPayment",fPay);
-                    book.put("paid",pay);
-                    book.put("time",time);
-                }else if ((4==diff) || (-4==diff)){
-                    double k = Double.valueOf(c);
-                    double pay = (250*k*0.2);
-                    double fPay = (250*k);
-                    double oBook = (250*0.2);
-                    book.put("onePayment",oBook);
-                    double rem = (250*0.8*k);
-                    book.put("remain",rem);
-                    book.put("forOne",250);
-                    book.put("fullPayment",fPay);
-                    book.put("paid",pay);
-                    book.put("time",time);
-                }else if ((5==diff) || (-5==diff)){
-                    double k = Double.valueOf(c);
-                    double pay = (400*k*0.2);
-                    double fPay = (400*k);
-                    double oBook = (400*0.2);
-                    book.put("onePayment",oBook);
-                    double rem = (400*0.8*k);
-                    book.put("remain",rem);
-                    book.put("forOne",400);
-                    book.put("fullPayment",fPay);
-                    book.put("paid",pay);
-                    book.put("time",time);
-                }else if ((6==diff) || (-6==diff)){
-                    double k = Double.valueOf(c);
-                    double pay = (550*k*0.2);
-                    double fPay = (550*k);
-                    double oBook = (550*0.2);
-                    book.put("onePayment",oBook);
-                    double rem = (550*0.8*k);
-                    book.put("remain",rem);
-                    book.put("forOne",550);
-                    book.put("fullPayment",fPay);
-                    book.put("paid",pay);
-                    book.put("time",time);
-                }else if ((7==diff) || (-7==diff)){
-                    double k = Double.valueOf(c);
-                    double pay = (900*k*0.2);
-                    double fPay = (900*k);
-                    double oBook = (900*0.2);
-                    book.put("onePayment",oBook);
-                    double rem = (900*0.8*k);
-                    book.put("remain",rem);
-                    book.put("forOne",900);
-                    book.put("fullPayment",fPay);
-                    book.put("paid",pay);
-                    book.put("time",time);
+                    int diff =stInt-enInt;
+                    Log.d("1111","differ "+diff);
+                    if ((1==diff) || (-1==diff)){
+                        k = Double.valueOf(cc);
+                        pay = (50*k*0.2);
+                        fPay = (50*k);
+                        oBook = (50*0.2);
+                        book.put("onePayment",oBook);
+                        rem = (50*0.8*k);
+                        book.put("remain",rem);
+                        book.put("forOne",50);
+                        book.put("fullPayment",fPay);
+                        book.put("paid",pay);
+                        book.put("time",time);
+                        String paydia = String.valueOf(pay);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+
+                        String cDia = String.valueOf(cc);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((2==diff) || (-2==diff)){
+                        k = Double.valueOf(cc);
+                        pay = (100*k*0.2);
+                        fPay = (100*k);
+                        oBook = (100*0.2);
+                        book.put("onePayment",oBook);
+                        rem = (100*0.8*k);
+                        book.put("remain",rem);
+                        book.put("forOne",100);
+                        book.put("fullPayment",fPay);
+                        book.put("paid",pay);
+                        book.put("time",time);
+                        String paydia = String.valueOf(pay);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+
+                        String cDia = String.valueOf(cc);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((3==diff) || (-3==diff)){
+                        k = Double.valueOf(cc);
+                        pay = (180*k*0.2);
+                        fPay = (180*k);
+                        oBook = (180*0.2);
+                        book.put("onePayment",oBook);
+                        rem = (180*0.8*k);
+                        book.put("remain",rem);
+                        book.put("forOne",180);
+                        book.put("fullPayment",fPay);
+                        book.put("paid",pay);
+                        book.put("time",time);
+                        String paydia = String.valueOf(pay);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+
+                        String cDia = String.valueOf(cc);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((4==diff) || (-4==diff)){
+                        k = Double.valueOf(cc);
+                        pay = (250*k*0.2);
+                        fPay = (250*k);
+                        oBook = (250*0.2);
+                        book.put("onePayment",oBook);
+                        rem = (250*0.8*k);
+                        book.put("remain",rem);
+                        book.put("forOne",250);
+                        book.put("fullPayment",fPay);
+                        book.put("paid",pay);
+                        book.put("time",time);
+                        String paydia = String.valueOf(pay);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+
+                        String cDia = String.valueOf(cc);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((5==diff) || (-5==diff)){
+                        k = Double.valueOf(cc);
+                        pay = (400*k*0.2);
+                        fPay = (400*k);
+                        oBook = (400*0.2);
+                        book.put("onePayment",oBook);
+                        rem = (400*0.8*k);
+                        book.put("remain",rem);
+                        book.put("forOne",400);
+                        book.put("fullPayment",fPay);
+                        book.put("paid",pay);
+                        book.put("time",time);
+                        String paydia = String.valueOf(pay);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+
+                        String cDia = String.valueOf(cc);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((6==diff) || (-6==diff)){
+                        k = Double.valueOf(cc);
+                        pay = (550*k*0.2);
+                        fPay = (550*k);
+                        oBook = (550*0.2);
+                        book.put("onePayment",oBook);
+                        rem = (550*0.8*k);
+                        book.put("remain",rem);
+                        book.put("forOne",550);
+                        book.put("fullPayment",fPay);
+                        book.put("paid",pay);
+                        book.put("time",time);
+                        String paydia = String.valueOf(pay);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+
+                        String cDia = String.valueOf(cc);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((7==diff) || (-7==diff)){
+                        k = Double.valueOf(cc);
+                        pay = (900*k*0.2);
+                        fPay = (900*k);
+                        oBook = (900*0.2);
+                        book.put("onePayment",oBook);
+                        rem = (900*0.8*k);
+                        book.put("remain",rem);
+                        book.put("forOne",900);
+                        book.put("fullPayment",fPay);
+                        book.put("paid",pay);
+                        book.put("time",time);
+                        String paydia = String.valueOf(pay);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+
+                        String cDia = String.valueOf(cc);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }
+
+
+                    document1.set(book);
+
+                    documentReference.set(book);
+
                 }
+            });
+        }else if (isAct1.equals("*")){
+            fStore.collection("User Booking Live History").document(userID+"*").collection(userID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    x = queryDocumentSnapshots.size();
+                    document2 = fStore.collection("User Booking Live History").document(userID+"*").collection(userID).document(String.valueOf(x+1));
 
-                x = queryDocumentSnapshots.size();
-                Log.i("12345", "firebasePassengerAboutBooking Inside ="+x);
-                document2 = fStore.collection("User Booking History").document(userID+"*").collection(userID).document(String.valueOf(x+1));
-                Log.i("12345", "firebasePassengerAboutBooking Inside 2 ="+x+1);
-                DocumentReference documentReference1 = fStore.collection("User Booking").document(userID+"*");
+                    DocumentReference documentReference1 = fStore.collection("User Booking Live").document(userID+"*");
 
-                Map<String,Object> book1 = new HashMap<>();
-                book1.put("busID",title);
-                book1.put("enLocation",edLocation1);
-                book1.put("stLocation",stLocation);
-                book1.put("seats",c);
+                    Map<String,Object> book1 = new HashMap<>();
+                    book1.put("busID",title);
+                    book1.put("enLocation",edLocation1);
+                    book1.put("stLocation",stLocation);
+                    book1.put("seats",c);
 
-                int diff1 =stInt-enInt;
-                Log.d("1111","differ "+diff1);
-                if ((1==diff1) || (-1==diff1)){
-                    double k = Double.valueOf(c);
-                    double pay = (50*k*0.2);
-                    double fPay = (50*k);
-                    double oBook = (50*0.2);
-                    book1.put("onePayment",oBook);
-                    double rem = (50*0.8*k);
-                    book1.put("remain",rem);
-                    book1.put("forOne",50);
-                    book1.put("fullPayment",fPay);
-                    book1.put("paid",pay);
-                    book1.put("time",time);
-                }else if ((2==diff1) || (-2==diff1)){
-                    double k = Double.valueOf(c);
-                    double pay = (100*k*0.2);
-                    double fPay = (100*k);
-                    double oBook = (100*0.2);
-                    book1.put("onePayment",oBook);
-                    double rem = (100*0.8*k);
-                    book1.put("remain",rem);
-                    book1.put("forOne",100);
-                    book1.put("fullPayment",fPay);
-                    book1.put("paid",pay);
-                    book1.put("time",time);
-                }else if ((3==diff1) || (-3==diff1)){
-                    double k = Double.valueOf(c);
-                    double pay = (180*k*0.2);
-                    double fPay = (180*k);
-                    double oBook = (180*0.2);
-                    book1.put("onePayment",oBook);
-                    double rem = (180*0.8*k);
-                    book1.put("remain",rem);
-                    book1.put("forOne",180);
-                    book1.put("fullPayment",fPay);
-                    book1.put("paid",pay);
-                    book1.put("time",time);
-                }else if ((4==diff1) || (-4==diff1)){
-                    double k = Double.valueOf(c);
-                    double pay = (250*k*0.2);
-                    double fPay = (250*k);
-                    double oBook = (250*0.2);
-                    book1.put("onePayment",oBook);
-                    double rem = (250*0.8*k);
-                    book1.put("remain",rem);
-                    book1.put("forOne",250);
-                    book1.put("fullPayment",fPay);
-                    book1.put("paid",pay);
-                    book1.put("time",time);
-                }else if ((5==diff1) || (-5==diff1)){
-                    double k = Double.valueOf(c);
-                    double pay = (400*k*0.2);
-                    double fPay = (400*k);
-                    double oBook = (400*0.2);
-                    book1.put("onePayment",oBook);
-                    double rem = (400*0.8*k);
-                    book1.put("remain",rem);
-                    book1.put("forOne",400);
-                    book1.put("fullPayment",fPay);
-                    book1.put("paid",pay);
-                    book1.put("time",time);
-                }else if ((6==diff1) || (-6==diff1)){
-                    double k = Double.valueOf(c);
-                    double pay = (550*k*0.2);
-                    double fPay = (550*k);
-                    double oBook = (550*0.2);
-                    book1.put("onePayment",oBook);
-                    double rem = (550*0.8*k);
-                    book1.put("remain",rem);
-                    book1.put("forOne",550);
-                    book1.put("fullPayment",fPay);
-                    book1.put("paid",pay);
-                    book1.put("time",time);
-                }else if ((7==diff1) || (-7==diff1)){
-                    double k = Double.valueOf(c);
-                    double pay = (900*k*0.2);
-                    double fPay = (900*k);
-                    double oBook = (900*0.2);
-                    book1.put("onePayment",oBook);
-                    double rem = (900*0.8*k);
-                    book1.put("remain",rem);
-                    book1.put("forOne",900);
-                    book1.put("fullPayment",fPay);
-                    book1.put("paid",pay);
-                    book1.put("time",time);
+                    int diff1 =stInt-enInt;
+                    Log.d("1111","differ "+diff1);
+                    if ((2==diff1) || (-2==diff1)){
+                        double k = Double.valueOf(c);
+                        book1.put("paid",50);
+                        book1.put("time",time);
+                        String paydia = String.valueOf(50*k);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+                        String cDia = String.valueOf(c);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((3==diff1) || (-3==diff1)){
+                        double k = Double.valueOf(c);
+                        book1.put("paid",100);
+                        book1.put("time",time);
+                        String paydia = String.valueOf(100*k);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+                        String cDia = String.valueOf(c);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((4==diff1) || (-4==diff1)){
+                        double k = Double.valueOf(c);
+                        book1.put("paid",180);
+                        book1.put("time",time);
+                        String paydia = String.valueOf(180*k);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+                        String cDia = String.valueOf(c);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((5==diff1) || (-5==diff1)){
+                        double k = Double.valueOf(c);
+                        book1.put("paid",250);
+                        book1.put("time",time);
+                        String paydia = String.valueOf(250*k);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+                        String cDia = String.valueOf(c);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((6==diff1) || (-6==diff1)){
+                        double k = Double.valueOf(c);
+                        book1.put("paid",400);
+                        book1.put("time",time);
+                        String paydia = String.valueOf(400*k);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+                        String cDia = String.valueOf(c);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((7==diff1) || (-7==diff1)){
+                        double k = Double.valueOf(c);
+                        book1.put("paid",550);
+                        book1.put("time",time);
+                        String paydia = String.valueOf(550*k);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+                        String cDia = String.valueOf(c);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }else if ((8==diff1) || (-8==diff1)){
+                        double k = Double.valueOf(c);
+                        book1.put("paid",900);
+                        book1.put("time",time);
+                        String paydia = String.valueOf(900*k);
+                        String remDia = String.valueOf(rem);
+                        payment.setText(paydia);
+                        remain.setText(remDia);
+                        String d = title.substring(0,6);
+                        busID.setText("Bus_"+d);
+                        route.setText(stLocation+" - "+edLocation1);
+                        String cDia = String.valueOf(c);
+                        seatsDialog.setText(cDia);
+
+                        timeDia.setText(time);
+                    }
+                    document2.set(book1);
+                    documentReference1.set(book1);
+
+
                 }
+            });
 
+        }
+Log.d("1111","pay "+pay);
+        Log.d("1111","remain "+rem);
 
-                document1.set(book);
-                document2.set(book1);
-                documentReference.set(book);
-                documentReference1.set(book1);
-            }
-        });
 
     }
+
+
 
     private void firebaseUpdateDriverDetails(int g) {
 
@@ -2849,6 +2999,8 @@ Log.d("1111","isActStInt "+isActStInt);
     @Override
     public void onBackPressed() {
 
+        builder.setView(view);
+        dialog1 = builder.create();
 
         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
                 .setTitle("Confirm Booking Seats")
@@ -2856,10 +3008,12 @@ Log.d("1111","isActStInt "+isActStInt);
                 .setPositiveButton("Yes", null)
                 .setNegativeButton("No", null)
                 .show();
-        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        dialog1.dismiss();
+        positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Map<String,Object> seats = new HashMap<>();
                 g = 0;
                 c = 0;
@@ -2898,8 +3052,21 @@ Log.d("1111","isActStInt "+isActStInt);
 
                 firebaseUpdateDriverDetails(g);
                 firebasePassengerAboutBooking(c,userID,title);
-                BookSeatsActivity.super.onBackPressed();
+
+
+                dialog1.show();
                 dialog.dismiss();
+
+
+            }
+        });
+
+        okDial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog1.dismiss();
+                BookSeatsActivity.super.onBackPressed();
             }
         });
 

@@ -39,7 +39,7 @@
         android:roundIcon="@drawable/bus_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Login">
-        <activity android:name=".model.BusInsideDetailsForAdminActivity"></activity>
+        <activity android:name=".BusInsideDetailsForAdminActivity"></activity>
         <activity android:name=".AdminNavigationActivity" />
         <activity android:name=".AdminHeaderActivity" />
         <!--

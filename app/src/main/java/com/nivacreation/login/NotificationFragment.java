@@ -44,9 +44,9 @@ public class NotificationFragment extends Fragment{
 
     TextView firstNum, secondNum, thirdNum, fourthNum;
 
-    RecyclerView recyclerView;
-    ArrayList<TransactionDetails> userSupportArrayList;
-    TransactionAdapter userSupportAdapter;
+    RecyclerView recyclerView,recyclerView1;
+    ArrayList<TransactionDetails> userSupportArrayList,userSupportArrayList1;
+    TransactionAdapter userSupportAdapter,userSupportAdapter1;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
 
@@ -144,7 +144,7 @@ public class NotificationFragment extends Fragment{
                 });
 
 
-        fStore.collection("User Booking History").document(userId+"*").collection(userId)
+        fStore.collection("User Booking Live History").document(userId+"*").collection(userId)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
