@@ -3007,7 +3007,7 @@ Log.d("1111","pay "+pay);
         dialog1 = builder.create();
 
         AlertDialog dialog = new AlertDialog.Builder(BookSeatsActivity.this)
-                .setTitle("Confirm Booking Seats")
+                .setTitle("Confirm Seats")
                 .setMessage("Do you confirm your reservation details?")
                 .setPositiveButton("Yes", null)
                 .setNegativeButton("No", null)

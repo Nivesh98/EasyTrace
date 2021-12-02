@@ -83,7 +83,10 @@ public class BusInsideDetailsForAdminActivity extends AppCompatActivity {
 
                         startLocation.setText(value.getString("from"));
                         endLocation.setText(value.getString("to"));
-                        availableSeat.setText(value.getDouble("available seat").toString());
+                        //availableSeat.setText(value.getDouble("available seat").toString());
+                        double ff = value.getDouble("available seat");
+                        int kk = ((int) ff);
+                        availableSeat.setText(String.valueOf(kk));
                         trRoute.setText(value.getString("to"));
 
                         Log.d("12345", "Get driver Name " + value.getString("firstName") + " " + value.getString("lastName"));

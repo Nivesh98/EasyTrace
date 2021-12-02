@@ -225,6 +225,10 @@ public class DriverTransactionFragment extends Fragment {
                                     DocumentReference document1 = fStore.collection("Driver Transaction").document(userId);
                                     DocumentReference documentReference = fStore.collection("Driver Transaction").document(userId);
                                     Map<String,Object> book = new HashMap<>();
+//                                    book.put("busID",userId);
+//                                    book.put("total booking",sum);
+//                                    book.put("total remain",remainD);
+//                                    book.put("time",time);
                                     documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
                                         @Override
                                         public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
@@ -309,10 +313,10 @@ public class DriverTransactionFragment extends Fragment {
                                     DocumentReference documentReference = fStore.collection("Driver Transaction").document(userId);
                                     Map<String,Object> book = new HashMap<>();
 
-                                    book.put("busID",userId);
-                                    book.put("total booking",sum);
-                                    book.put("total remain",0);
-                                    book.put("time",time);
+//                                    book.put("busID",userId);
+//                                    book.put("total booking",sum);
+//                                    book.put("total remain",0);
+//                                    book.put("time",time);
                                     documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
                                         @Override
                                         public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {

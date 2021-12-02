@@ -177,7 +177,9 @@ public class BusInsideDetailsActivity extends AppCompatActivity {
                 if (value != null && value.exists()) {
 
 
-                    availableSeats.setText(value.getDouble("available seat").toString());
+                    double ff = value.getDouble("available seat");
+                    int kk = ((int) ff);
+                    availableSeats.setText(String.valueOf(kk));
 
 
                     Log.d("12345", "Get driver Name " + value.getString("firstName") + " " + value.getString("lastName"));
